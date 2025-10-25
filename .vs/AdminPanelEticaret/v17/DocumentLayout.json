@@ -1,0 +1,131 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{28C02F2B-5679-4DA2-B447-CA17FA846D1F}|AdminPanelEticaret\\AdminPanelEticaret.csproj|c:\\users\\zi\u015Fan y\u00FCce\\source\\repos\\adminpaneleticaret\\adminpaneleticaret\\views\\urun\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{28C02F2B-5679-4DA2-B447-CA17FA846D1F}|AdminPanelEticaret\\AdminPanelEticaret.csproj|solutionrelative:adminpaneleticaret\\views\\urun\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{28C02F2B-5679-4DA2-B447-CA17FA846D1F}|AdminPanelEticaret\\AdminPanelEticaret.csproj|c:\\users\\zi\u015Fan y\u00FCce\\source\\repos\\adminpaneleticaret\\adminpaneleticaret\\controllers\\uruncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{28C02F2B-5679-4DA2-B447-CA17FA846D1F}|AdminPanelEticaret\\AdminPanelEticaret.csproj|solutionrelative:adminpaneleticaret\\controllers\\uruncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{28C02F2B-5679-4DA2-B447-CA17FA846D1F}|AdminPanelEticaret\\AdminPanelEticaret.csproj|c:\\users\\zi\u015Fan y\u00FCce\\source\\repos\\adminpaneleticaret\\adminpaneleticaret\\views\\musteri\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{28C02F2B-5679-4DA2-B447-CA17FA846D1F}|AdminPanelEticaret\\AdminPanelEticaret.csproj|solutionrelative:adminpaneleticaret\\views\\musteri\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{28C02F2B-5679-4DA2-B447-CA17FA846D1F}|AdminPanelEticaret\\AdminPanelEticaret.csproj|c:\\users\\zi\u015Fan y\u00FCce\\source\\repos\\adminpaneleticaret\\adminpaneleticaret\\views\\kategori\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{28C02F2B-5679-4DA2-B447-CA17FA846D1F}|AdminPanelEticaret\\AdminPanelEticaret.csproj|solutionrelative:adminpaneleticaret\\views\\kategori\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{28C02F2B-5679-4DA2-B447-CA17FA846D1F}|AdminPanelEticaret\\AdminPanelEticaret.csproj|c:\\users\\zi\u015Fan y\u00FCce\\source\\repos\\adminpaneleticaret\\adminpaneleticaret\\controllers\\satislarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{28C02F2B-5679-4DA2-B447-CA17FA846D1F}|AdminPanelEticaret\\AdminPanelEticaret.csproj|solutionrelative:adminpaneleticaret\\controllers\\satislarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{28C02F2B-5679-4DA2-B447-CA17FA846D1F}|AdminPanelEticaret\\AdminPanelEticaret.csproj|c:\\users\\zi\u015Fan y\u00FCce\\source\\repos\\adminpaneleticaret\\adminpaneleticaret\\views\\satislar\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{28C02F2B-5679-4DA2-B447-CA17FA846D1F}|AdminPanelEticaret\\AdminPanelEticaret.csproj|solutionrelative:adminpaneleticaret\\views\\satislar\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 481,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UrunController.cs",
+              "DocumentMoniker": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\AdminPanelEticaret\\Controllers\\UrunController.cs",
+              "RelativeDocumentMoniker": "AdminPanelEticaret\\Controllers\\UrunController.cs",
+              "ToolTip": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\AdminPanelEticaret\\Controllers\\UrunController.cs",
+              "RelativeToolTip": "AdminPanelEticaret\\Controllers\\UrunController.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAIwDsAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T19:22:47.565Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\AdminPanelEticaret\\Views\\Urun\\Index.cshtml",
+              "RelativeDocumentMoniker": "AdminPanelEticaret\\Views\\Urun\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\AdminPanelEticaret\\Views\\Urun\\Index.cshtml",
+              "RelativeToolTip": "AdminPanelEticaret\\Views\\Urun\\Index.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAH0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-06T16:16:00.562Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\AdminPanelEticaret\\Views\\Musteri\\Index.cshtml",
+              "RelativeDocumentMoniker": "AdminPanelEticaret\\Views\\Musteri\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\AdminPanelEticaret\\Views\\Musteri\\Index.cshtml",
+              "RelativeToolTip": "AdminPanelEticaret\\Views\\Musteri\\Index.cshtml",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACIAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-06T16:12:55.755Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\AdminPanelEticaret\\Views\\Kategori\\Index.cshtml",
+              "RelativeDocumentMoniker": "AdminPanelEticaret\\Views\\Kategori\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\AdminPanelEticaret\\Views\\Kategori\\Index.cshtml",
+              "RelativeToolTip": "AdminPanelEticaret\\Views\\Kategori\\Index.cshtml",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAiwE8AAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-06T16:10:36.529Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\AdminPanelEticaret\\Views\\Satislar\\Index.cshtml",
+              "RelativeDocumentMoniker": "AdminPanelEticaret\\Views\\Satislar\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\AdminPanelEticaret\\Views\\Satislar\\Index.cshtml",
+              "RelativeToolTip": "AdminPanelEticaret\\Views\\Satislar\\Index.cshtml",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAE0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-06T16:01:17.049Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SatislarController.cs",
+              "DocumentMoniker": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\AdminPanelEticaret\\Controllers\\SatislarController.cs",
+              "RelativeDocumentMoniker": "AdminPanelEticaret\\Controllers\\SatislarController.cs",
+              "ToolTip": "C:\\Users\\Zi\u015Fan Y\u00FCce\\source\\repos\\AdminPanelEticaret\\AdminPanelEticaret\\Controllers\\SatislarController.cs",
+              "RelativeToolTip": "AdminPanelEticaret\\Controllers\\SatislarController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T15:35:52.401Z"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 160,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+﻿@using AdminPanelEticaret.Models.Siniflar
+@using Newtonsoft.Json
+@model Urun
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var urunAdlari = ViewBag.CokSatanlar != null
+       ? JsonConvert.SerializeObject(((IEnumerable<dynamic>)ViewBag.CokSatanlar).Select(x => (string)x.UrunAdi))
+       : "[]";
+
+    var adetler = ViewBag.CokSatanlar != null
+        ? JsonConvert.SerializeObject(((IEnumerable<dynamic>)ViewBag.CokSatanlar).Select(x => (int)x.Adet))
+        : "[]";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">📊 İstatistikler</h2>
+
+    <!-- Üst 4 Kutu -->
+    <div class="row text-white">
+        <div class="col-md-3 mb-3">
+            <div class="p-3 rounded shadow-sm" style="background-color: #4e73df;">
+                <h6 class="mb-1">Toplam Ürün</h6>
+                <p class="fs-5 fw-semibold">@ViewBag.UrunSayisi</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="p-3 rounded shadow-sm" style="background-color: #1cc88a;">
+                <h6 class="mb-1">Toplam Stok Miktarı</h6>
+                <p class="fs-5 fw-semibold">@ViewBag.ToplamStok</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="p-3 rounded shadow-sm" style="background-color: #36b9cc;">
+                <h6 class="mb-1">Toplam Müşteri</h6>
+                <p class="fs-5 fw-semibold">@ViewBag.KullaniciSayisi</p>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="p-3 rounded shadow-sm" style="background-color: #f6c23e;">
+                <h6 class="mb-1">Düşük Stok</h6>
+                <p class="fs-5 fw-semibold">@ViewBag.DusukStokAdedi</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grafik + Alt Kısımdaki 2 Kutu -->
+    <div class="row mt-4">
+        <!-- Sol: 2 Yeni Kutu -->
+        <div class="col-md-3 d-flex flex-column gap-3">
+            <div class="p-3 rounded shadow-sm text-white" style="background-color: #858796;">
+                <h6 class="mb-1">Toplam Satış</h6>
+                <p class="fs-5 fw-semibold">@ViewBag.ToplamSatis ₺</p>
+            </div>
+            <br />
+            <br />
+            <div class="p-3 rounded shadow-sm text-white" style="background-color: #e74a3b;">
+                <h6 class="mb-1">Bugünkü Satış Tutarı</h6>
+                <p class="fs-5 fw-semibold">@ViewBag.BugunkuSatis ₺</p>
+            </div>
+        </div>
+
+        <!-- Sağ: Grafik -->
+        <div class="col-md-9">
+            <canvas id="satisChart" height="100"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    var urunAdlari = @Html.Raw(urunAdlari);
+    var adetler = @Html.Raw(adetler);
+
+    var ctx = document.getElementById('satisChart').getContext('2d');
+    var satisChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: urunAdlari,
+            datasets: [{
+                label: 'Satış Adedi',
+                data: adetler,
+                backgroundColor: 'rgba(78, 115, 223, 0.6)',
+                borderColor: 'rgba(78, 115, 223, 1)',
+                borderWidth: 1,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: "#444"
+                    }
+                },
+                x: {
+                    ticks: {
+                        color: "#444"
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#333',
+                        font: {
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
