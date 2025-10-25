@@ -66,11 +66,11 @@ Bu depo, e-ticaret projemin hem **web tabanlı yönetici panelini** hem de **mob
 
 **EN:**  
 The database is designed with **SQL Server** and accessed via **Entity Framework Core**.  
-A script file named `database_script.sql` is located under the `Database` folder in the AdminPanel project.  
+A script file named `script.sql` is located under the `Database` folder in the AdminPanel project.  
 
 **TR:**  
 Veritabanı **SQL Server** kullanılarak tasarlanmış ve **Entity Framework Core** aracılığıyla erişilmektedir.  
-`AdminPanel` projesindeki `Database` klasöründe `database_script.sql` adlı veritabanı script dosyası bulunmaktadır.  
+`AdminPanel` projesindeki `Database` klasöründe `script.sql` adlı veritabanı script dosyası bulunmaktadır.  
 
 ---
 
