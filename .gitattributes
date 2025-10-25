@@ -1,6 +1,5 @@
 
-*.cshtml linguist-language=C#
-*.razor linguist-language=C#
+
 *.cs linguist-detectable=true
 
 AdminPanelEticaret/wwwroot/** linguist-vendored
