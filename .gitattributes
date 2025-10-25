@@ -1,11 +1,13 @@
-# C# ve Razor dosyalarını doğru tanımla
+
 *.cshtml linguist-language=C#
 *.razor linguist-language=C#
 *.cs linguist-detectable=true
 
-# Aşağıdaki klasörleri sayma (bunlar hazır kütüphaneler)
 AdminPanelEticaret/wwwroot/** linguist-vendored
 AdminPanelEticaret/node_modules/** linguist-vendored
 AdminPanelEticaret/lib/** linguist-vendored
 AdminPanelEticaret/scripts/** linguist-vendored
 AdminPanelEticaret/content/** linguist-vendored
+
+*.pug linguist-vendored 
+*.scss linguist-vendored
