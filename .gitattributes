@@ -1,40 +1,26 @@
-# ------------------------------------------------------------------
-# GENEL AYARLAR (Tüm Projeler İçin)
-# ------------------------------------------------------------------
-# Satır sonu karakterlerini otomatik ayarla (Windows/Mac uyumu için)
-* text=auto
-
-# C# dosyalarını ana dil olarak algıla
-*.cs linguist-detectable=true
-
-# ------------------------------------------------------------------
-# 1. ADMIN PANEL (ASP.NET Core MVC)
-# Not: Klasör adın 'AdminPanel' değilse aşağıdakileri ona göre değiştir.
-# ------------------------------------------------------------------
-AdminPanel/wwwroot/** linguist-vendored
-AdminPanel/node_modules/** linguist-vendored
-AdminPanel/lib/** linguist-vendored
-AdminPanel/scripts/** linguist-vendored
-AdminPanel/content/** linguist-vendored
-AdminPanel/assets/** linguist-vendored
-
-*.pug linguist-vendored 
-*.scss linguist-vendored
-*.css linguist-vendored
-*.js linguist-vendored
-
-*.dart linguist-detectable=true
-
-*.g.dart linguist-generated
-*.freezed.dart linguist-generated
-*.config.dart linguist-generated
+# ==========================================
+# 1. YAZMADIĞIN DİLLERİ GİZLE (Flutter Altyapısı)
+# ==========================================
+# Flutter'ın Windows için ürettiği C++ ve CMake dosyalarını yoksay
+Mobile/windows/** linguist-vendored
+Mobile/linux/** linguist-vendored
+*.cmake linguist-vendored
+CMakeLists.txt linguist-vendored
+*.cpp linguist-vendored
+*.cc linguist-vendored
+*.h linguist-vendored
 
 Mobile/ios/** linguist-vendored
-Mobile/android/** linguist-vendored
-Mobile/web/** linguist-vendored
-Mobile/linux/** linguist-vendored
 Mobile/macos/** linguist-vendored
-Mobile/windows/** linguist-vendored
+*.swift linguist-vendored
 
-Backend/wwwroot/** linguist-vendored
-Backend/Migrations/** linguist-generated
+Mobile/android/** linguist-vendored
+
+*.cs linguist-detectable=true
+*.dart linguist-detectable=true
+*.cshtml linguist-detectable=true
+
+AdminPanel/wwwroot/lib/** linguist-vendored
+AdminPanel/node_modules/** linguist-vendored
+
+* text=auto
