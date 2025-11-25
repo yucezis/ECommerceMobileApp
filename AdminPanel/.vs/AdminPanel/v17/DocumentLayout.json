@@ -1,0 +1,151 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\C#_Projects\\AdminPanel\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\c#_projects\\adminpanel\\adminpanel\\controllers\\uruncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\controllers\\uruncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\c#_projects\\adminpanel\\adminpanel\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\c#_projects\\adminpanel\\adminpanel\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\c#_projects\\adminpanel\\adminpanel\\models\\adminviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\models\\adminviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\c#_projects\\adminpanel\\adminpanel\\controllers\\istatistikcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\controllers\\istatistikcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\c#_projects\\adminpanel\\adminpanel\\controllers\\kategoricontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\controllers\\kategoricontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\c#_projects\\adminpanel\\adminpanel\\controllers\\satislarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\controllers\\satislarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 704,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Program.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Program.cs",
+              "ToolTip": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Program.cs",
+              "RelativeToolTip": "AdminPanel\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T18:24:26.021Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AdminViewModel.cs",
+              "DocumentMoniker": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Models\\AdminViewModel.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Models\\AdminViewModel.cs",
+              "ToolTip": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Models\\AdminViewModel.cs",
+              "RelativeToolTip": "AdminPanel\\Models\\AdminViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T18:20:17.943Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UrunController.cs",
+              "DocumentMoniker": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Controllers\\UrunController.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Controllers\\UrunController.cs",
+              "ToolTip": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Controllers\\UrunController.cs",
+              "RelativeToolTip": "AdminPanel\\Controllers\\UrunController.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAAAHwAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T17:45:40.082Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SatislarController.cs",
+              "DocumentMoniker": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Controllers\\SatislarController.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Controllers\\SatislarController.cs",
+              "ToolTip": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Controllers\\SatislarController.cs",
+              "RelativeToolTip": "AdminPanel\\Controllers\\SatislarController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T17:45:38.563Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "KategoriController.cs",
+              "DocumentMoniker": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Controllers\\KategoriController.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Controllers\\KategoriController.cs",
+              "ToolTip": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Controllers\\KategoriController.cs",
+              "RelativeToolTip": "AdminPanel\\Controllers\\KategoriController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T17:45:38.904Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IstatistikController.cs",
+              "DocumentMoniker": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Controllers\\IstatistikController.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Controllers\\IstatistikController.cs",
+              "ToolTip": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Controllers\\IstatistikController.cs",
+              "RelativeToolTip": "AdminPanel\\Controllers\\IstatistikController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T17:45:37.869Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Controllers\\AdminController.cs",
+              "ToolTip": "C:\\C#_Projects\\AdminPanel\\AdminPanel\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "AdminPanel\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAqwCgAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T17:45:36.504Z"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 145,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
