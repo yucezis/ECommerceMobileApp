@@ -1,0 +1,65 @@
+﻿@model List<AdminPanel.Models.SatislarViewModel>
+
+
+@{
+    ViewData["Title"] = "Satış Geçmişi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                <i class="bi bi-receipt me-2"></i>
+                @ViewBag.MusteriAdSoyad - Satış Geçmişi
+            </h4>
+            <p class="mb-0 small">@ViewBag.MusteriMail</p>
+        </div>
+
+        <div class="card-body">
+            
+            @if (Model == null || Model.Count == 0)
+            {
+                <div class="alert alert-warning text-center mt-3">
+                    Bu müşteriye ait satış bulunamadı veya sistemsel bir hata oluştu.
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover text-center align-middle">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Satış ID</th>
+                                <th>Ürün</th>
+                                <th>Adet</th>
+                                <th>Fiyat</th>
+                                <th>Tarih</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model)
+                            {
+                                <tr>
+                                    <td>@s.SatislarId</td>
+                                    
+                                    <td>@(s.Urun?.UrunAdi ?? "Satış Geçmişi Yok")</td>
+                                    <td>@s.Adet</td>
+                                    <td>@s.Fiyat ₺</td>
+                                    <td>@s.Tarih.ToShortDateString()</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+
+        <div class="card-footer text-end">
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Geri Dön
+            </a>
+        </div>
+    </div>
+</div>
+

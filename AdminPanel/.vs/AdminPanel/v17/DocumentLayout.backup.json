@@ -1,0 +1,207 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\bitirme_projesi\\AdminPanel\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\views\\musteri\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\views\\musteri\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\views\\urun\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\views\\urun\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\controllers\\uruncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\controllers\\uruncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\controllers\\satislarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\controllers\\satislarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\controllers\\istatistikcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\controllers\\istatistikcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\controllers\\kategoricontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\controllers\\kategoricontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\models\\adminviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\models\\adminviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 811,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Musteri\\Index.cshtml",
+              "RelativeDocumentMoniker": "AdminPanel\\Views\\Musteri\\Index.cshtml",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Musteri\\Index.cshtml",
+              "RelativeToolTip": "AdminPanel\\Views\\Musteri\\Index.cshtml",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAAwAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-26T11:49:28.355Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UrunController.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\UrunController.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Controllers\\UrunController.cs",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\UrunController.cs",
+              "RelativeToolTip": "AdminPanel\\Controllers\\UrunController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T17:45:40.082Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SatislarController.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\SatislarController.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Controllers\\SatislarController.cs",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\SatislarController.cs",
+              "RelativeToolTip": "AdminPanel\\Controllers\\SatislarController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T17:45:38.563Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "KategoriController.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\KategoriController.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Controllers\\KategoriController.cs",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\KategoriController.cs",
+              "RelativeToolTip": "AdminPanel\\Controllers\\KategoriController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T17:45:38.904Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IstatistikController.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\IstatistikController.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Controllers\\IstatistikController.cs",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\IstatistikController.cs",
+              "RelativeToolTip": "AdminPanel\\Controllers\\IstatistikController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T17:45:37.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Controllers\\AdminController.cs",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "AdminPanel\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAhwB0AAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T17:45:36.504Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Helpers.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Helpers.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Helpers.cs",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Helpers.cs*",
+              "RelativeToolTip": "AdminPanel\\Helpers.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T11:51:28.05Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Urun\\Index.cshtml",
+              "RelativeDocumentMoniker": "AdminPanel\\Views\\Urun\\Index.cshtml",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Urun\\Index.cshtml",
+              "RelativeToolTip": "AdminPanel\\Views\\Urun\\Index.cshtml",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAcwG8AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-26T11:14:22.318Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Program.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Program.cs",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Program.cs",
+              "RelativeToolTip": "AdminPanel\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T18:24:26.021Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AdminViewModel.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Models\\AdminViewModel.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Models\\AdminViewModel.cs",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Models\\AdminViewModel.cs",
+              "RelativeToolTip": "AdminPanel\\Models\\AdminViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T18:20:17.943Z"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 38,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

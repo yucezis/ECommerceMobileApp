@@ -1,0 +1,84 @@
+﻿@using AdminPanel.Helpers
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using AdminPanel.Models
+@model List<MusteriViewModel>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .table thead th {
+        font-weight: 600;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f8ff;
+        transition: background-color 0.2s ease;
+    }
+
+    .card {
+        border-radius: 16px;
+    }
+
+    .btn-outline-primary {
+        border-radius: 20px;
+    }
+
+</style>
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0"><i class="bi bi-people-fill me-2"></i> Müşteriler</h3>
+            @* <button class="btn btn-light btn-sm fw-semibold">
+                <i class="bi bi-person-plus-fill me-1"></i> Yeni Müşteri Ekle
+            </button> *@
+        </div>
+
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle text-center mb-0">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Id</th>
+                            <th>Adı</th>
+                            <th>Soyad</th>
+                            <th>Mail</th>
+                            <th>Numara</th>
+                            <th>Adres</th>
+                            <th>Satış Geçmişi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MusteriId</td>
+                                <td>@item.MusteriAdi</td>
+                                <td>@DataMasker.MaskSurname(item.MusteriSoyadi)</td>
+
+                                <td>@DataMasker.MaskEmail(item.MusteriMail)</td>
+
+                                <td>@DataMasker.MaskPhone(item.MusteriTelNo)</td>
+
+                                <td>@item.MusteriSehir</td>
+                                <td>
+                                    <a href="/Musteri/SatisGecmisi/@item.MusteriId" class="btn btn-outline-primary btn-sm">
+                                        <i class="bi bi-eye"></i> Görüntüle
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+
