@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'urun.dart';
-import 'kategori.dart';
-import 'categories_screen.dart';
+import 'models/urun_model.dart';
+import 'models/kategori_model.dart';
+import 'footer.dart';
+import 'category_product_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,12 +27,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String getBaseUrl() {
-    if (Platform.isAndroid) {
-      return "http://10.180.131.237:5126/api";
-    } else {
-      return "http://localhost:5126/api";
-    }
-  }
+  
+  String ipAdresim = "10.180.131.237"; 
+  String port = "5126"; 
+  return "http://$ipAdresim:$port/api";
+}
 
   Future<List<Urun>> urunleriGetir() async {
     final String adres = "http://10.180.131.237:5126/api/urun";
@@ -221,18 +220,13 @@ class _HomeScreenState extends State<HomeScreen> {
           InkWell(
             onTap: () {
               if (title == "Kategoriler") {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CategoriesScreen(),
-                  ),
-                );
+                Footer.footerKey.currentState?.sayfaDegistir(1);
               }
             },
             child: const Text(
               "Hepsini Gör >",
               style: TextStyle(
-                color: Color.fromARGB(255, 221, 118, 28),
+                color: Color.fromARGB(255, 221, 118, 28), 
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -503,9 +497,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          (urun.urunYazar != null && urun.urunYazar!.isNotEmpty)
-                              ? urun.urunYazar!
-                              : urun.urunMarka,
+                            urun.urunYazar.isNotEmpty 
+                               ? urun.urunYazar 
+                               : urun.urunMarka,
                           style: const TextStyle(
                             fontSize: 13,
                             color: Colors.grey,
@@ -552,12 +546,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildDrawer() {
     return Drawer(
       backgroundColor: Colors.white,
-      // Column yerine ListView kullandık.
-      // Böylece kategoriler açılınca ekran taşarsa aşağı kaydırılabilir.
-      child: ListView(
+      child: ListView( // Column yerine ListView (Taşma olmasın diye)
         padding: EdgeInsets.zero,
         children: [
-          // 1. BÖLÜM: Menü Başlığı (Header - Senin Kodun)
+          // 1. KISIM: Profil Başlığı (Header)
           UserAccountsDrawerHeader(
             decoration: const BoxDecoration(
               color: Color.fromARGB(255, 48, 42, 57),
@@ -577,64 +569,48 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
+          // 2. KISIM: Kategoriler (Dropdown / Açılır Menü)
           ExpansionTile(
-            leading: const Icon(
-              Icons.topic,
-              color: Color.fromARGB(255, 48, 42, 57),
-            ),
+            leading: const Icon(Icons.category, color: Color.fromARGB(255, 48, 42, 57)),
             title: const Text(
               "Kategoriler",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-
-            shape: const Border(),
             childrenPadding: EdgeInsets.zero,
-
             children: [
               FutureBuilder<List<Kategori>>(
                 future: _kategorilerFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(),
-                    );
+                    return const Padding(padding: EdgeInsets.all(8.0), child: CircularProgressIndicator());
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text("Kategori bulunamadı"),
-                    );
+                    return const Padding(padding: EdgeInsets.all(8.0), child: Text("Kategori yok"));
                   }
 
                   final kategoriler = snapshot.data!;
 
+                  // Kategorileri Listele
                   return Column(
                     children: kategoriler.map((kategori) {
                       return ListTile(
-                        contentPadding: const EdgeInsets.only(
-                          left: 30,
-                          right: 10,
-                        ),
-                        leading: const Icon(
-                          Icons.menu_book,
-                          size: 20,
-                          color: Colors.grey,
-                        ),
-                        title: Text(
-                          kategori.kategoriAdi,
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                        trailing: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 12,
-                          color: Colors.grey,
-                        ),
+                        contentPadding: const EdgeInsets.only(left: 30, right: 10), // Biraz içeriden başlasın
+                        leading: const Icon(Icons.menu_book, size: 20, color: Colors.grey),
+                        title: Text(kategori.kategoriAdi, style: const TextStyle(fontSize: 15)),
+                        trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
                         onTap: () {
+                          // 1. Çekmeceyi Kapat
                           Navigator.pop(context);
+
+                          // 2. Seçilen Kategorinin Ürünlerine Git
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CategoryProductsScreen(
+                                kategoriId: kategori.kategoriID,
+                                kategoriAdi: kategori.kategoriAdi,
+                              ),
+                            ),
+                          );
                         },
                       );
                     }).toList(),
@@ -644,37 +620,39 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
 
+          const Divider(), // Araya çizgi atalım
+
+          // 3. KISIM: Senin Gönderdiğin Diğer Menüler
           ListTile(
-            leading: const Icon(
-              Icons.settings,
-              color: Color.fromARGB(255, 48, 42, 57),
-            ),
+            leading: const Icon(Icons.settings, color: Color.fromARGB(255, 48, 42, 57)),
             title: const Text("Ayarlar", style: TextStyle(fontSize: 16)),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context); // Çekmeceyi kapat
+              // Ayarlar sayfasına gitme kodu buraya...
+            },
           ),
           ListTile(
-            leading: const Icon(
-              Icons.favorite,
-              color: Color.fromARGB(255, 48, 42, 57),
-            ),
+            leading: const Icon(Icons.favorite, color: Color.fromARGB(255, 48, 42, 57)),
             title: const Text("Favoriler", style: TextStyle(fontSize: 16)),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+              // Favoriler sayfasına gitme kodu buraya...
+            },
           ),
           ListTile(
-            leading: const Icon(
-              Icons.logout,
-              color: Color.fromARGB(255, 48, 42, 57),
-            ),
-            title: const Text("Çıkış Yap", style: TextStyle(fontSize: 16)),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.accessibility,
-              color: Color.fromARGB(255, 48, 42, 57),
-            ),
+            leading: const Icon(Icons.accessibility, color: Color.fromARGB(255, 48, 42, 57)),
             title: const Text("Hakkımızda", style: TextStyle(fontSize: 16)),
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout, color: Colors.redAccent), // Çıkış kırmızı olsun
+            title: const Text("Çıkış Yap", style: TextStyle(fontSize: 16, color: Colors.redAccent)),
+            onTap: () {
+              Navigator.pop(context);
+              // Çıkış işlemleri...
+            },
           ),
         ],
       ),

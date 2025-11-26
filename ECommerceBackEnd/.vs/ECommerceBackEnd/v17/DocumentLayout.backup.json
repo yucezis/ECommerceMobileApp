@@ -3,24 +3,32 @@
   "WorkspaceRootPath": "C:\\bitirme_projesi\\ECommerceBackEnd\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\controllers\\uruncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\controllers\\uruncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\controllers\\mustericontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\controllers\\mustericontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\models\\musteri.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\models\\musteri.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\controllers\\kategoricontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\controllers\\kategoricontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\controllers\\istatistikcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\controllers\\istatistikcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\controllers\\uruncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\controllers\\uruncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\models\\kategori.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -35,10 +43,6 @@
       "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\controllers\\satislarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\models\\musteri.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\models\\musteri.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
@@ -49,10 +53,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\controllers\\adminlogincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\controllers\\adminlogincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\controllers\\istatistikcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\controllers\\istatistikcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\models\\dashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -74,7 +74,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 704,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -83,43 +83,18 @@
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "Urun.cs",
-              "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Urun.cs",
-              "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Urun.cs",
-              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Urun.cs",
-              "RelativeToolTip": "ECommerceBackEnd\\Models\\Urun.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAYwC0AAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T18:16:45.034Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "SatislarController.cs",
-              "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\SatislarController.cs",
-              "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\SatislarController.cs",
-              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\SatislarController.cs",
-              "RelativeToolTip": "ECommerceBackEnd\\Controllers\\SatislarController.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAYwCMAAABbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T17:41:21.382Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "UrunController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\UrunController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\UrunController.cs",
               "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\UrunController.cs",
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\UrunController.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAswDoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAgwDoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T17:36:08.645Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-19T17:36:08.645Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "Kategori.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Kategori.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Kategori.cs",
@@ -143,7 +118,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Properties\\launchSettings.json",
@@ -151,51 +126,98 @@
               "RelativeToolTip": "ECommerceBackEnd\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-11-20T18:51:15.818Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T18:51:15.818Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "MusteriController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\MusteriController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\MusteriController.cs",
-              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\MusteriController.cs",
-              "RelativeToolTip": "ECommerceBackEnd\\Controllers\\MusteriController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAuAAAAAAAAAA==",
+              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\MusteriController.cs*",
+              "RelativeToolTip": "ECommerceBackEnd\\Controllers\\MusteriController.cs*",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAuwDwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T09:01:27.904Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "KategoriController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\KategoriController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\KategoriController.cs",
               "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\KategoriController.cs",
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\KategoriController.cs",
-              "ViewState": "AgIAADYAAAAAAAAAAAAowEIAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAC0AAAAAAAAAAAA+wEIAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-19T17:13:10.565Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Program.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Program.cs",
               "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Program.cs",
               "RelativeToolTip": "ECommerceBackEnd\\Program.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAswCMAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T14:04:28.425Z",
+              "WhenOpened": "2025-11-11T14:04:28.425Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Musteri.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Musteri.cs",
+              "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Musteri.cs",
+              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Musteri.cs",
+              "RelativeToolTip": "ECommerceBackEnd\\Models\\Musteri.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAIwCIAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T17:15:38.548Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IstatistikController.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\IstatistikController.cs",
+              "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\IstatistikController.cs",
+              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\IstatistikController.cs",
+              "RelativeToolTip": "ECommerceBackEnd\\Controllers\\IstatistikController.cs",
+              "ViewState": "AgIAAC4AAAAAQ9Md7DchwAwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T17:05:13.781Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 9,
+              "Title": "SatislarController.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\SatislarController.cs",
+              "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\SatislarController.cs",
+              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\SatislarController.cs",
+              "RelativeToolTip": "ECommerceBackEnd\\Controllers\\SatislarController.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAYwCMAAABbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T17:41:21.382Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Urun.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Urun.cs",
+              "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Urun.cs",
+              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Urun.cs",
+              "RelativeToolTip": "ECommerceBackEnd\\Models\\Urun.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAYwC0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T18:16:45.034Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\appsettings.json",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\appsettings.json",
@@ -207,31 +229,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Musteri.cs",
-              "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Musteri.cs",
-              "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Musteri.cs",
-              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Musteri.cs",
-              "RelativeToolTip": "ECommerceBackEnd\\Models\\Musteri.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T17:15:38.548Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "IstatistikController.cs",
-              "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\IstatistikController.cs",
-              "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\IstatistikController.cs",
-              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\IstatistikController.cs",
-              "RelativeToolTip": "ECommerceBackEnd\\Controllers\\IstatistikController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T17:05:13.781Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\AuthController.cs",
@@ -243,7 +241,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "AdminLoginController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\AdminLoginController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\AdminLoginController.cs",

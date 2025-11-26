@@ -38,4 +38,24 @@ public class MusterisController : ControllerBase
 
         return Ok(satislar);
     }
+
+    [HttpPost("Login")]
+    public IActionResult Login([FromBody] LoginModel model)
+    {
+        var musteri = _context.musteris
+            .FirstOrDefault(x => x.MusteriMail == model.Mail && x.MusteriSifre == model.Sifre);
+
+        if (musteri != null)
+        {
+            return Ok(musteri);
+        }
+
+        return NotFound("Kullanıcı adı veya şifre hatalı.");
+    }
+
+    public class LoginModel
+    {
+        public string Mail { get; set; }
+        public string Sifre { get; set; }
+    }
 }

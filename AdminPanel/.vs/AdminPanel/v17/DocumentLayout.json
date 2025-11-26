@@ -69,6 +69,10 @@
           "SelectedChildIndex": 7,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "MusteriController.cs",
@@ -78,12 +82,7 @@
               "RelativeToolTip": "AdminPanel\\Controllers\\MusteriController.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAzwCUAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T11:58:02.152Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+              "WhenOpened": "2025-11-26T11:58:02.152Z"
             },
             {
               "$type": "Document",
@@ -95,8 +94,7 @@
               "RelativeToolTip": "AdminPanel\\Controllers\\KategoriController.cs",
               "ViewState": "AgIAAEcAAAAAAAAAAAAswFUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T17:45:38.904Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T17:45:38.904Z"
             },
             {
               "$type": "Document",
@@ -108,8 +106,7 @@
               "RelativeToolTip": "AdminPanel\\Controllers\\AdminController.cs",
               "ViewState": "AgIAACMAAAAAAAAAAAAtwBIAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T17:45:36.504Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T17:45:36.504Z"
             },
             {
               "$type": "Document",
@@ -121,8 +118,7 @@
               "RelativeToolTip": "AdminPanel\\Controllers\\SatislarController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T17:45:38.563Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T17:45:38.563Z"
             },
             {
               "$type": "Document",
@@ -134,8 +130,7 @@
               "RelativeToolTip": "AdminPanel\\Controllers\\UrunController.cs",
               "ViewState": "AgIAAHEAAAAAAAAAAAAswHUAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T17:45:40.082Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T17:45:40.082Z"
             },
             {
               "$type": "Document",
@@ -147,8 +142,7 @@
               "RelativeToolTip": "AdminPanel\\Views\\Musteri\\Index.cshtml",
               "ViewState": "AgIAADsAAAAAAAAAAAAcwAwAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T11:49:28.355Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T11:49:28.355Z"
             },
             {
               "$type": "Document",
@@ -158,7 +152,7 @@
               "RelativeDocumentMoniker": "AdminPanel\\Views\\Urun\\Index.cshtml",
               "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Urun\\Index.cshtml",
               "RelativeToolTip": "AdminPanel\\Views\\Urun\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAG8AAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAG8AAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-26T11:14:22.318Z",
               "EditorCaption": ""
@@ -173,8 +167,7 @@
               "RelativeToolTip": "AdminPanel\\Models\\UrunViewModel.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAAwwBsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T11:56:43.788Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T11:56:43.788Z"
             },
             {
               "$type": "Document",
@@ -186,8 +179,7 @@
               "RelativeToolTip": "AdminPanel\\Models\\SatislarViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T11:56:39.665Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T11:56:39.665Z"
             },
             {
               "$type": "Document",
@@ -199,8 +191,7 @@
               "RelativeToolTip": "AdminPanel\\Models\\DashboardViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T11:56:30.379Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T11:56:30.379Z"
             },
             {
               "$type": "Document",
@@ -212,8 +203,7 @@
               "RelativeToolTip": "AdminPanel\\Controllers\\IstatistikController.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAAQwCYAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T17:45:37.869Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T17:45:37.869Z"
             },
             {
               "$type": "Document",
@@ -225,8 +215,7 @@
               "RelativeToolTip": "AdminPanel\\Helpers.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAzwAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T11:51:28.05Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T11:51:28.05Z"
             },
             {
               "$type": "Document",
@@ -238,8 +227,7 @@
               "RelativeToolTip": "AdminPanel\\Models\\AdminViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T18:20:17.943Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T18:20:17.943Z"
             },
             {
               "$type": "Document",
@@ -251,8 +239,7 @@
               "RelativeToolTip": "AdminPanel\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T18:24:26.021Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T18:24:26.021Z"
             }
           ]
         },

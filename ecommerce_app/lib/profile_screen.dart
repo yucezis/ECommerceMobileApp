@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert'; 
 import 'package:http/http.dart' as http; 
 import 'models/musteri_model.dart'; 
+import 'package:shared_preferences/shared_preferences.dart';
+import 'login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -109,7 +111,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           icon: Icons.logout,
                           title: "Çıkış Yap",
                           color: Colors.redAccent,
-                          onTap: () {},
+                          onTap: () async {
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.clear(); 
+                          Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => const LoginScreen()),
+                          (route) => false,
+                           );
+                          },
                         ),
                       ],
                     ),

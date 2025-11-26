@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
-import 'footer.dart';void main() {
-  runApp(const MyApp());
+import 'package:shared_preferences/shared_preferences.dart';
+import 'footer.dart';
+import 'login_screen.dart'; 
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  final prefs = await SharedPreferences.getInstance();
+  final int? musteriId = prefs.getInt('musteriId');
+  
+  final bool girisYapmisMi = musteriId != null;
+
+  runApp(MyApp(baslangicEkrani: girisYapmisMi ? const Footer() : const LoginScreen()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Widget baslangicEkrani; 
+
+  const MyApp({super.key, required this.baslangicEkrani});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Books',
+      title: 'BookNest',
       theme: ThemeData(
         primaryColor: const Color(0xFF6200EE),
         useMaterial3: true,
       ),
-      
-      home: const Footer(), 
+      home: baslangicEkrani, 
     );
   }
 }

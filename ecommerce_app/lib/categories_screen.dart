@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'kategori.dart'; 
+import 'models/kategori_model.dart'; 
+import 'footer.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -42,14 +42,14 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     _kategorilerFuture = kategorileriGetir();
   }
 
-  // --- API BAĞLANTISI ---
   String getBaseUrl() {
-    if (Platform.isAndroid) {
-      return "http://10.0.2.2:5126/api"; // Port numaran: 5126
-    } else {
-      return "http://10.180.131.237:5126/api";
-    }
-  }
+  
+  String ipAdresim = "10.180.131.237"; 
+  
+  String port = "5126"; 
+
+  return "http://$ipAdresim:$port/api";
+}
 
   Future<List<Kategori>> kategorileriGetir() async {
     final response = await http.get(Uri.parse("${getBaseUrl()}/Kategori"));
@@ -67,10 +67,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          // 1. MOR BAŞLIK VE ARAMA ALANI
           _buildHeader(context),
 
-          // 2. KATEGORİLER IZGARASI (GRID)
           Expanded(
             child: FutureBuilder<List<Kategori>>(
               future: _kategorilerFuture,
@@ -88,57 +86,49 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 return GridView.builder(
                   padding: const EdgeInsets.all(20),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // Yan yana 2 tane
+                    crossAxisCount: 2, 
                     crossAxisSpacing: 15,
                     mainAxisSpacing: 15,
-                    childAspectRatio: 1.1, // Kartın en/boy oranı
+                    childAspectRatio: 1.1, 
                   ),
                   itemCount: kategoriler.length,
                   itemBuilder: (context, index) {
-                    final kategori = kategoriler[index];
-                    // Renk ve İkon seçimi (Sırayla)
-                    final color = _cardColors[index % _cardColors.length];
-                    final icon = _icons[index % _icons.length];
+  final kategori = kategoriler[index];
+  final color = _cardColors[index % _cardColors.length];
+  final icon = _icons[index % _icons.length];
 
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: color,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // İkon (Veritabanında olmadığı için listeden seçiyoruz)
-                          Icon(icon, size: 40, color: Colors.black54), // İstersen renkli yapabilirsin
-                          const SizedBox(height: 10),
-                          
-                          // Kategori Adı
-                          Text(
-                            kategori.kategoriAdi,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          
-                          // Kitap Sayısı (API'de olmadığı için temsili gösteriyoruz)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "${(index + 1) * 124} books", // Temsili sayı
-                                style: const TextStyle(fontSize: 12, color: Colors.black54),
-                              ),
-                              const SizedBox(width: 5),
-                              const Icon(Icons.arrow_forward_ios, size: 10, color: Colors.black45)
-                            ],
-                          )
-                        ],
-                      ),
-                    );
-                  },
+  return InkWell(
+    onTap: () {
+    Footer.footerKey.currentState?.kategoriyeGit(
+      kategori.kategoriID, 
+      kategori.kategoriAdi
+    );
+  },
+    child: Container(
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 40, color: Colors.black54),
+          const SizedBox(height: 10),
+          Text(
+            kategori.kategoriAdi,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          
+        ],
+      ),
+    ),
+  );
+},
                 );
               },
             ),
@@ -148,26 +138,25 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 
-  // ÖZEL HEADER TASARIMI
   Widget _buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 50, left: 20, right: 20, bottom: 20),
       decoration: const BoxDecoration(
-        color: Color(0xFF6200EE), // Mor Renk
+        color: Color(0xFF6200EE), 
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(0), // Tasarımda düz görünüyor ama istersen 30 yapabilirsin
+          bottomLeft: Radius.circular(0), 
           bottomRight: Radius.circular(0),
         ),
       ),
       child: Column(
         children: [
-          // Geri Butonu ve Başlık
+          
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
                 icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () => Navigator.pop(context), // Geri dön
+                onPressed: () => Navigator.pop(context),
               ),
               const Text(
                 "Kategoriler",
@@ -194,7 +183,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             ],
           ),
           const SizedBox(height: 20),
-          // Arama Çubuğu
+          
           TextField(
             decoration: InputDecoration(
               hintText: "Kategori Ara...",
@@ -203,7 +192,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               fillColor: Colors.white,
               contentPadding: const EdgeInsets.symmetric(vertical: 0),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10), // Köşeli tasarım
+                borderRadius: BorderRadius.circular(10), 
                 borderSide: BorderSide.none,
               ),
             ),

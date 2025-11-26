@@ -2,13 +2,15 @@ class Urun {
   final int urunId;
   final String urunAdi;
   final String urunMarka;
-  final String urunYazar; 
+  final String urunYazar;
   final String urunGorsel;
   final double urunSatisFiyati;
-  final double? indirimliFiyat; 
+  final double? indirimliFiyat;
   final String aciklama;
   final int urunStok;
   final String kategoriAdi;
+  
+  final int kategoriID; 
 
   Urun({
     required this.urunId,
@@ -21,6 +23,8 @@ class Urun {
     required this.aciklama,
     required this.urunStok,
     required this.kategoriAdi,
+    
+    required this.kategoriID, 
   });
 
   factory Urun.fromJson(Map<String, dynamic> json) {
@@ -30,14 +34,15 @@ class Urun {
       urunMarka: json['urunMarka'] ?? '',
       urunYazar: json['UrunYazar'] ?? json['urunYazar'] ?? '',
       urunGorsel: json['urunGorsel'] ?? '',
-      
       urunSatisFiyati: (json['urunSatisFiyati'] ?? 0).toDouble(),
-      indirimliFiyat: json['indirimliFiyat'] != null 
-          ? (json['indirimliFiyat']).toDouble() 
+      indirimliFiyat: json['indirimliFiyat'] != null
+          ? (json['indirimliFiyat']).toDouble()
           : null,
       aciklama: json['aciklama'] ?? '',
       urunStok: json['urunStok'] ?? 0,
       kategoriAdi: json['kategoriAdi'] ?? '',
+      
+      kategoriID: json['kategoriID'] ?? json['KategoriID'] ?? 0, 
     );
   }
 }
