@@ -1,4 +1,4 @@
-# Books E-Commerce | .NET Web API + MVC Admin + Flutter App
+# Books E-Commerce | .NET Web API & MVC Admin & Flutter App
 
 This project is a comprehensive Full Stack E-Commerce solution developed using modern software architectures and principles. The system consists of three main layers: a central Web API for data management, an ASP.NET Core MVC Admin Panel for administrative operations, and a Flutter Mobile Application for the end-user experience.
 
@@ -46,7 +46,7 @@ The management panel and backend infrastructure are largely complete, while the 
 ## Tech Stack
 
 ### Backend (API)
-- .NET 7 / 8
+- .NET 9
 - Entity Framework Core (Code First)
 - LINQ
 - Swagger UI
@@ -72,7 +72,7 @@ The management panel and backend infrastructure are largely complete, while the 
 
 | Mobile - Home Page | Mobile - Profile Screen |
 | :---: | :---: |
-| <img src="path/to/your/image3.png" width="200"> | <img src="path/to/your/image4.png" width="200"> |
+| <img src="https://r.resimlink.com/oS3bjyMzgt.jpg" width="200"> | <img src="https://r.resimlink.com/sDWUT.jpg" width="200"> |
 
 ---
 
