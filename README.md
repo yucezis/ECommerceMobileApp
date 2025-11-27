@@ -37,10 +37,10 @@ The management panel and backend infrastructure are largely complete, while the 
 - [x] **API Integration:** Fetching product and category data from the live database.
 - [x] **Sorting Algorithm:** Dynamic listing of "Best Sellers" based on sales quantity.
 - [x] **Profile Page:** Displaying user information via API.
+- [x] **Authentication:** User registration (Register) and login (Login) processes.
 - [ ] **Cart Operations:** Functions to add and remove products from the cart.
 - [ ] **Purchasing Process:** Payment screen interface and order creation service.
-- [ ] **Authentication:** User registration (Register) and login (Login) processes.
-
+      
 ---
 
 ## Tech Stack
