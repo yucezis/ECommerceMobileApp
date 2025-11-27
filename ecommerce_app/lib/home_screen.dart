@@ -6,6 +6,14 @@ import 'models/kategori_model.dart';
 import 'footer.dart';
 import 'category_product_screen.dart';
 
+// --- RENK PALETİ ---
+const Color kBookPaper = Color(0xFFFEFAE0); 
+const Color kDarkGreen = Color(0xFF283618); 
+const Color kOliveGreen = Color(0xFF606C38); 
+const Color kDarkCoffee = Color(0xFF211508); 
+const Color kCreamAccent = Color(0xFFFAEDCD);
+const Color kpink = Color.fromARGB(255, 188, 71, 73); 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -27,15 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   String getBaseUrl() {
-  
-  String ipAdresim = "10.180.131.237"; 
-  String port = "5126"; 
-  return "http://$ipAdresim:$port/api";
-}
+    String ipAdresim = "10.180.131.237";
+    String port = "5126";
+    return "http://$ipAdresim:$port/api";
+  }
 
   Future<List<Urun>> urunleriGetir() async {
-    final String adres = "http://10.180.131.237:5126/api/urun";
-
+    final String adres = "${getBaseUrl()}/urun";
     final response = await http.get(Uri.parse(adres));
 
     if (response.statusCode == 200) {
@@ -47,8 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<List<Kategori>> kategorileriGetir() async {
-    final String adres = "http://10.180.131.237:5126/api/Kategori";
-
+    final String adres = "${getBaseUrl()}/Kategori";
     final response = await http.get(Uri.parse(adres));
 
     if (response.statusCode == 200) {
@@ -57,45 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       throw Exception("Kategoriler yüklenemedi: ${response.statusCode}");
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFFAF3E0),
-      key: _scaffoldKey,
-      drawer: _buildDrawer(),
-
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(),
-              const SizedBox(height: 20),
-              _buildSpecialOfferBanner(),
-              const SizedBox(height: 25),
-              _buildSectionTitle("Kategoriler"),
-              const SizedBox(height: 15),
-              _buildCategoriesList(),
-              const SizedBox(height: 25),
-
-              _buildSectionTitle("Öne Çıkan Kitaplar"),
-              const SizedBox(height: 15),
-              _buildFeaturedBooksList(),
-
-              const SizedBox(height: 25),
-
-              _buildSectionTitle("Çok Satanlar"),
-              const SizedBox(height: 15),
-              _buildBestsellersList(),
-
-              const SizedBox(height: 30),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   Future<List<Urun>> cokSatanlariGetir() async {
@@ -111,17 +77,63 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      backgroundColor: kBookPaper, // Ana arka plan
+      drawer: _buildDrawer(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(),
+              const SizedBox(height: 25),
+              
+              _buildSpecialOfferBanner(),
+              const SizedBox(height: 30),
+              
+              _buildSectionTitle("Kategoriler"),
+              const SizedBox(height: 15),
+              _buildCategoriesList(),
+              const SizedBox(height: 30),
+
+              _buildSectionTitle("Öne Çıkan Kitaplar"),
+              const SizedBox(height: 15),
+              _buildFeaturedBooksList(),
+              const SizedBox(height: 30),
+
+              _buildSectionTitle("Çok Satanlar"),
+              const SizedBox(height: 15),
+              _buildBestsellersList(),
+
+              const SizedBox(height: 40),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   // --- WIDGETLAR ----------------------------------------------
 
   Widget _buildHeader() {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 30),
       decoration: const BoxDecoration(
-        color: Color.fromARGB(255,64, 38, 42),
+        color: kDarkGreen, // Header rengi
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(30),
           bottomRight: Radius.circular(30),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 10,
+            offset: Offset(0, 5),
+          )
+        ]
       ),
       child: Column(
         children: [
@@ -129,31 +141,52 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                icon: const Icon(Icons.menu, color: Colors.white),
-                onPressed: () {
-                  _scaffoldKey.currentState?.openDrawer();
-                },
+                icon: const Icon(Icons.menu_rounded, color: kBookPaper, size: 28),
+                onPressed: () => _scaffoldKey.currentState?.openDrawer(),
               ),
-              const Text(
-                "Books",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
+              const Row(
+                children: [
+                  Icon(Icons.auto_stories, color: kBookPaper),
+                  SizedBox(width: 8),
+                  Text(
+                    "Books",
+                    style: TextStyle(
+                      color: kBookPaper,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: kOliveGreen.withOpacity(0.5),
+                  shape: BoxShape.circle
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.notifications_outlined, color: kBookPaper),
+                  onPressed: (){},
                 ),
               ),
-              const Icon(Icons.notifications_none, color: Colors.white),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 25),
           TextField(
+            style: const TextStyle(color: kDarkGreen),
             decoration: InputDecoration(
-              hintText: "Kitap Arayın...",
-              prefixIcon: const Icon(Icons.search, color: Colors.grey),
+              hintText: "Kitap, yazar veya kategori ara...",
+              hintStyle: TextStyle(color: kDarkGreen.withOpacity(0.5)),
+              prefixIcon: const Icon(Icons.search, color: kOliveGreen),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: kBookPaper, 
+              contentPadding: const EdgeInsets.symmetric(vertical: 15),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
                 borderSide: BorderSide.none,
               ),
             ),
@@ -168,8 +201,20 @@ class _HomeScreenState extends State<HomeScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF8E1),
+        color: kOliveGreen, 
         borderRadius: BorderRadius.circular(20),
+        image: const DecorationImage(
+          image: NetworkImage("https://www.transparenttextures.com/patterns/cubes.png"),
+          fit: BoxFit.cover,
+          opacity: 0.1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: kOliveGreen.withOpacity(0.4),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
+          ),
+        ],
       ),
       child: Row(
         children: [
@@ -177,30 +222,42 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Özel Fiyatlar",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: kCreamAccent,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text(
+                    "%50 İNDİRİM",
+                    style: TextStyle(color: kDarkCoffee, fontWeight: FontWeight.bold, fontSize: 12),
+                  ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 10),
+                
                 const Text(
-                  "Birçok kitapta indirim!",
-                  style: TextStyle(color: Colors.grey),
+                  "Birçok Kitapta\nBüyük Fırsat",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 const SizedBox(height: 15),
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF7D00),
+                    backgroundColor: kBookPaper,
+                    foregroundColor: kDarkGreen,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    elevation: 0,
                   ),
-                  child: const Text(
-                    "Alışverişe Başla",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  child: const Text("İncele", style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.local_offer, size: 60, color: Colors.orange),
+          // Süsleme İkonu
+          Transform.rotate(
+            angle: -0.2,
+            child: const Icon(Icons.menu_book, size: 90, color: Colors.white24),
+          ),
         ],
       ),
     );
@@ -214,21 +271,30 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontSize: 20, 
+              fontWeight: FontWeight.bold, 
+              color: kDarkCoffee
+            ),
           ),
-
           InkWell(
             onTap: () {
               if (title == "Kategoriler") {
                 Footer.footerKey.currentState?.sayfaDegistir(1);
               }
             },
-            child: const Text(
-              "Hepsini Gör >",
-              style: TextStyle(
-                color: Color.fromARGB(255, 221, 118, 28), 
-                fontWeight: FontWeight.bold,
-              ),
+            child: const Row(
+              children: [
+                 Text(
+                  "Tümü",
+                  style: TextStyle(
+                    color: kOliveGreen,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                  ),
+                ),
+                Icon(Icons.arrow_right_alt, color: kOliveGreen, size: 20)
+              ],
             ),
           ),
         ],
@@ -238,12 +304,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildCategoriesList() {
     return SizedBox(
-      height: 100,
+      height: 45, // Daha modern, "hap" şeklinde tasarım
       child: FutureBuilder<List<Kategori>>(
         future: _kategorilerFuture,
         builder: (context, snapshot) {
-          if (!snapshot.hasData || snapshot.data!.isEmpty)
-            return const SizedBox();
+          if (!snapshot.hasData || snapshot.data!.isEmpty) return const SizedBox();
           final kategoriler = snapshot.data!;
           return ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -252,33 +317,20 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context, index) {
               final kategori = kategoriler[index];
               return Container(
-                width: 80,
-                margin: const EdgeInsets.only(right: 15),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: const Icon(
-                        Icons.menu_book,
-                        color: Color.fromARGB(255, 52, 43, 59),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      kategori.kategoriAdi,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
+                margin: const EdgeInsets.only(right: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(color: kOliveGreen.withOpacity(0.3)),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  kategori.kategoriAdi,
+                  style: const TextStyle(
+                    color: kDarkGreen,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               );
             },
@@ -290,14 +342,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildFeaturedBooksList() {
     return SizedBox(
-      height: 280,
+      height: 290,
       child: FutureBuilder<List<Urun>>(
         future: _urunlerFuture,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting)
-            return const Center(child: CircularProgressIndicator());
-          if (!snapshot.hasData || snapshot.data!.isEmpty)
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator(color: kOliveGreen));
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text("Hiç ürün yok"));
+          }
           final urunler = snapshot.data!;
           return ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -306,51 +360,40 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context, index) {
               final urun = urunler[index];
               return Container(
-                width: 160,
-                margin: const EdgeInsets.only(right: 15),
+                width: 150,
+                margin: const EdgeInsets.only(right: 15, bottom: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.1),
-                      spreadRadius: 1,
-                      blurRadius: 5,
+                      color: kDarkCoffee.withOpacity(0.1),
+                      spreadRadius: 2,
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Resim Alanı
                     Expanded(
                       child: ClipRRect(
-                        borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(15),
-                        ),
+                        borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
                         child: urun.urunGorsel.isNotEmpty
                             ? Image.network(
                                 urun.urunGorsel,
                                 width: double.infinity,
                                 fit: BoxFit.cover,
-                                errorBuilder: (c, o, s) => const Center(
-                                  child: Icon(
-                                    Icons.book,
-                                    size: 50,
-                                    color: Colors.grey,
-                                  ),
-                                ),
+                                errorBuilder: (c, o, s) => Container(color: kCreamAccent, child: const Center(child: Icon(Icons.book, color: kOliveGreen))),
                               )
-                            : const Center(
-                                child: Icon(
-                                  Icons.book,
-                                  size: 50,
-                                  color: Colors.grey,
-                                ),
-                              ),
+                            : Container(color: kCreamAccent, child: const Center(child: Icon(Icons.book, color: kOliveGreen))),
                       ),
                     ),
+                    // Bilgi Alanı
                     Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(12),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -358,27 +401,24 @@ class _HomeScreenState extends State<HomeScreen> {
                             urun.urunAdi,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: kDarkCoffee),
                           ),
+                          const SizedBox(height: 4),
                           Text(
                             urun.urunMarka,
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 12,
-                            ),
+                            style: const TextStyle(color: Colors.grey, fontSize: 11),
                           ),
-                          const SizedBox(height: 5),
-                          Text(
-                            "${urun.urunSatisFiyati} ₺",
-                            style: const TextStyle(
-                              color: Color(0xFF6200EE),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${urun.urunSatisFiyati} ₺",
+                                style: const TextStyle(color: kDarkGreen, fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                              const Icon(Icons.add_circle, color: kOliveGreen, size: 24)
+                            ],
+                          )
                         ],
                       ),
                     ),
@@ -397,7 +437,7 @@ class _HomeScreenState extends State<HomeScreen> {
       future: cokSatanlariGetir(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: kOliveGreen));
         }
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Center(child: Text("Henüz satış yok."));
@@ -420,14 +460,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
-                    spreadRadius: 1,
-                    blurRadius: 5,
+                    color: kDarkCoffee.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),
               child: Row(
                 children: [
+                  // Sol Resim ve Sıra Numarası
                   Stack(
                     children: [
                       ClipRRect(
@@ -435,53 +476,31 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: urun.urunGorsel.isNotEmpty
                             ? Image.network(
                                 urun.urunGorsel,
-                                width: 80,
-                                height: 100,
+                                width: 70,
+                                height: 90,
                                 fit: BoxFit.cover,
-                                errorBuilder: (c, o, s) => Container(
-                                  width: 80,
-                                  height: 100,
-                                  color: Colors.grey[200],
-                                  child: const Icon(Icons.book),
-                                ),
+                                errorBuilder: (c, o, s) => Container(width: 70, height: 90, color: kCreamAccent, child: const Icon(Icons.book, color: kOliveGreen)),
                               )
-                            : Container(
-                                width: 80,
-                                height: 100,
-                                color: Colors.grey[200],
-                                child: const Icon(Icons.book),
-                              ),
+                            : Container(width: 70, height: 90, color: kCreamAccent, child: const Icon(Icons.book, color: kOliveGreen)),
                       ),
-                      // Sıralama Rozeti
                       Positioned(
                         top: 0,
                         left: 0,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                           decoration: const BoxDecoration(
-                            color: Colors.orange,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                            ),
+                            color: kpink,
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomRight: Radius.circular(8)),
                           ),
                           child: Text(
-                            "#${index + 1}",
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
+                            "${index + 1}",
+                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
                           ),
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(width: 15),
-                  // Bilgi Alanı
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -490,43 +509,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           urun.urunAdi,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: kDarkCoffee),
                         ),
                         const SizedBox(height: 5),
                         Text(
-                            urun.urunYazar.isNotEmpty 
-                               ? urun.urunYazar 
-                               : urun.urunMarka,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey,
-                          ),
+                          urun.urunYazar.isNotEmpty ? urun.urunYazar : urun.urunMarka,
+                          style: const TextStyle(fontSize: 13, color: Colors.grey),
                         ),
                         const SizedBox(height: 8),
                         Row(
                           children: [
                             Text(
                               "${urun.urunSatisFiyati} ₺",
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF6200EE),
-                              ),
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkGreen),
                             ),
-                            // İndirim varsa eski fiyatı çizili gösterelim
-                            if (urun.indirimliFiyat != null &&
-                                urun.indirimliFiyat! > 0) ...[
+                            if (urun.indirimliFiyat != null && urun.indirimliFiyat! > 0) ...[
                               const SizedBox(width: 8),
                               Text(
                                 "${urun.indirimliFiyat} ₺",
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  decoration: TextDecoration.lineThrough,
-                                  color: Colors.grey,
-                                ),
+                                style: const TextStyle(fontSize: 12, decoration: TextDecoration.lineThrough, color: Colors.grey),
                               ),
                             ],
                           ],
@@ -534,6 +535,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
+                  const Icon(Icons.chevron_right, color: kOliveGreen),
                 ],
               ),
             );
@@ -545,114 +547,67 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildDrawer() {
     return Drawer(
-      backgroundColor: Colors.white,
-      child: ListView( // Column yerine ListView (Taşma olmasın diye)
-        padding: EdgeInsets.zero,
+      backgroundColor: kBookPaper,
+      child: Column(
         children: [
-          // 1. KISIM: Profil Başlığı (Header)
           UserAccountsDrawerHeader(
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 48, 42, 57),
-            ),
-            accountName: const Text(
-              "Hoşgeldiniz",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
+            decoration: const BoxDecoration(color: kDarkGreen),
+            accountName: const Text("Hoşgeldiniz", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             accountEmail: const Text("Kitap dünyasına dalın!"),
             currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: const Icon(
-                Icons.person,
-                size: 40,
-                color: Color.fromARGB(255, 48, 42, 57),
-              ),
+              backgroundColor: kBookPaper,
+              child: const Icon(Icons.person, size: 40, color: kDarkGreen),
             ),
           ),
-
-          // 2. KISIM: Kategoriler (Dropdown / Açılır Menü)
-          ExpansionTile(
-            leading: const Icon(Icons.category, color: Color.fromARGB(255, 48, 42, 57)),
-            title: const Text(
-              "Kategoriler",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                ExpansionTile(
+                  iconColor: kDarkGreen,
+                  collapsedIconColor: kOliveGreen,
+                  leading: const Icon(Icons.category, color: kOliveGreen),
+                  title: const Text("Kategoriler", style: TextStyle(fontWeight: FontWeight.bold, color: kDarkCoffee)),
+                  children: [
+                    FutureBuilder<List<Kategori>>(
+                      future: _kategorilerFuture,
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData || snapshot.data!.isEmpty) return const SizedBox();
+                        return Column(
+                          children: snapshot.data!.map((kategori) {
+                            return ListTile(
+                              contentPadding: const EdgeInsets.only(left: 40),
+                              leading: const Icon(Icons.circle, size: 8, color: kOliveGreen),
+                              title: Text(kategori.kategoriAdi, style: const TextStyle(fontSize: 14)),
+                              onTap: () {
+                                Navigator.pop(context);
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryProductsScreen(kategoriId: kategori.kategoriID, kategoriAdi: kategori.kategoriAdi)));
+                              },
+                            );
+                          }).toList(),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                ListTile(
+                  leading: const Icon(Icons.settings, color: kOliveGreen),
+                  title: const Text("Ayarlar", style: TextStyle(color: kDarkCoffee)),
+                  onTap: () => Navigator.pop(context),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.favorite, color: kOliveGreen),
+                  title: const Text("Favoriler", style: TextStyle(color: kDarkCoffee)),
+                  onTap: () => Navigator.pop(context),
+                ),
+                const Divider(color: Colors.grey),
+                ListTile(
+                  leading: const Icon(Icons.logout, color: Colors.redAccent),
+                  title: const Text("Çıkış Yap", style: TextStyle(color: Colors.redAccent)),
+                  onTap: () => Navigator.pop(context),
+                ),
+              ],
             ),
-            childrenPadding: EdgeInsets.zero,
-            children: [
-              FutureBuilder<List<Kategori>>(
-                future: _kategorilerFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Padding(padding: EdgeInsets.all(8.0), child: CircularProgressIndicator());
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Padding(padding: EdgeInsets.all(8.0), child: Text("Kategori yok"));
-                  }
-
-                  final kategoriler = snapshot.data!;
-
-                  // Kategorileri Listele
-                  return Column(
-                    children: kategoriler.map((kategori) {
-                      return ListTile(
-                        contentPadding: const EdgeInsets.only(left: 30, right: 10), // Biraz içeriden başlasın
-                        leading: const Icon(Icons.menu_book, size: 20, color: Colors.grey),
-                        title: Text(kategori.kategoriAdi, style: const TextStyle(fontSize: 15)),
-                        trailing: const Icon(Icons.arrow_forward_ios, size: 12, color: Colors.grey),
-                        onTap: () {
-                          // 1. Çekmeceyi Kapat
-                          Navigator.pop(context);
-
-                          // 2. Seçilen Kategorinin Ürünlerine Git
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => CategoryProductsScreen(
-                                kategoriId: kategori.kategoriID,
-                                kategoriAdi: kategori.kategoriAdi,
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    }).toList(),
-                  );
-                },
-              ),
-            ],
-          ),
-
-          const Divider(), // Araya çizgi atalım
-
-          // 3. KISIM: Senin Gönderdiğin Diğer Menüler
-          ListTile(
-            leading: const Icon(Icons.settings, color: Color.fromARGB(255, 48, 42, 57)),
-            title: const Text("Ayarlar", style: TextStyle(fontSize: 16)),
-            onTap: () {
-              Navigator.pop(context); // Çekmeceyi kapat
-              // Ayarlar sayfasına gitme kodu buraya...
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.favorite, color: Color.fromARGB(255, 48, 42, 57)),
-            title: const Text("Favoriler", style: TextStyle(fontSize: 16)),
-            onTap: () {
-              Navigator.pop(context);
-              // Favoriler sayfasına gitme kodu buraya...
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.accessibility, color: Color.fromARGB(255, 48, 42, 57)),
-            title: const Text("Hakkımızda", style: TextStyle(fontSize: 16)),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.logout, color: Colors.redAccent), // Çıkış kırmızı olsun
-            title: const Text("Çıkış Yap", style: TextStyle(fontSize: 16, color: Colors.redAccent)),
-            onTap: () {
-              Navigator.pop(context);
-              // Çıkış işlemleri...
-            },
           ),
         ],
       ),

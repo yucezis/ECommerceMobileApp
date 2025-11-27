@@ -11,7 +11,12 @@ void main() async {
   
   final bool girisYapmisMi = musteriId != null;
 
-  runApp(MyApp(baslangicEkrani: girisYapmisMi ? const Footer() : const LoginScreen()));
+  runApp(MyApp(
+    // 👇 DEĞİŞİKLİK BURADA: 
+    // const Footer() yerine Footer(key: Footer.footerKey) yazmalısın.
+    // const kelimesini silmeyi unutma!
+    baslangicEkrani: girisYapmisMi ? Footer(key: Footer.footerKey) : const LoginScreen()
+  ));
 }
 
 class MyApp extends StatelessWidget {
