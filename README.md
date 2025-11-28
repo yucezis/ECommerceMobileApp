@@ -72,7 +72,7 @@ The management panel and backend infrastructure are largely complete, while the 
 
 | Mobile - Home Page | Mobile - Profile Screen |
 | :---: | :---: |
-| <img src="https://r.resimlink.com/oS3bjyMzgt.jpg" width="200"> | <img src="https://r.resimlink.com/sDWUT.jpg" width="200"> |
+| <img src="https://r.resimlink.com/TJE1lIszk.jpg" width="200"> | <img src="https://r.resimlink.com/JUL-oO.jpg" width="200"> |
 
 ---
 
