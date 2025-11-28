@@ -30,8 +30,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _musteriGetir() async {
+    final prefs = await SharedPreferences.getInstance();
+    
+    final int? kayitliId = prefs.getInt('musteriId');
+
+    if (kayitliId == null) {
+    debugPrint("Hata: Kullanıcı ID'si bulunamadı. Giriş yapılmamış olabilir.");
+    setState(() => _isLoading = false);
+    return;
+    }
+
     final String ipAdresim = "10.180.131.237";
-    final url = Uri.parse("http://$ipAdresim:5126/api/Musteris/1");
+    final url = Uri.parse("http://$ipAdresim:5126/api/Musteris/$kayitliId");
 
     try {
       final response = await http.get(url);
@@ -58,14 +68,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBookPaper,
-      // AppBar'ı kaldırdık, özel header yaptık.
       body: _isLoading
           ? const Center(child: CircularProgressIndicator(color: kDarkGreen))
           : SingleChildScrollView(
               child: Column(
                 children: [
                   _buildProfileHeader(),
-                  const SizedBox(height: 60), // Yüzen kart için boşluk
+                  const SizedBox(height: 60),
                   
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -160,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         // 1. Arka Plan Kutusu
         Container(
           width: double.infinity,
-          height: 280,
+          height: 330, 
           decoration: const BoxDecoration(
             color: kDarkGreen,
             borderRadius: BorderRadius.only(
@@ -178,7 +187,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: SafeArea(
             child: Column(
               children: [
-                // Basit AppBar benzeri yapı
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   child: Row(
@@ -200,16 +208,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 // Profil Resmi ve İsim
-                const SizedBox(height: 10),
+                const SizedBox(height: 5), // Biraz boşlukları da dengeledik
                 Container(
-                  padding: const EdgeInsets.all(4), // Beyaz çerçeve efekti
+                  padding: const EdgeInsets.all(4), 
                   decoration: const BoxDecoration(
                     color: kBookPaper, 
                     shape: BoxShape.circle,
                   ),
                   child: const CircleAvatar(
                     radius: 45,
-                    backgroundImage: NetworkImage("https://cdn-icons-png.flaticon.com/512/3135/3135715.png"),
+                    backgroundImage: NetworkImage("https://r.resimlink.com/YP4EnpRIiaJ.jpeg"),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -235,9 +243,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
 
-        // 2. Yüzen İstatistik Kartı (Floating Stats Card)
+        // 2. Yüzen İstatistik Kartı
         Positioned(
-          bottom: -40, // Header'ın dışına taşır
+          bottom: -40, 
           left: 20,
           right: 20,
           child: Container(

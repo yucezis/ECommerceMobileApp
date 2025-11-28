@@ -117,16 +117,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       icon: Icons.arrow_back_ios_new,
                       onTap: () => Footer.footerKey.currentState?.urundenCik(),
                     ),
-                    const Text(
-                      "Detaylar",
-                      style: TextStyle(
-                        fontFamily: 'Serif', 
-                        fontSize: 16,
-                        letterSpacing: 1.2,
-                        fontWeight: FontWeight.w600,
-                        color: kDarkGreen,
-                      ),
-                    ),
                     _buildCircularButton(
                       icon: isFavorite ? Icons.favorite : Icons.favorite_border,
                       color: isFavorite ? const Color(0xFFBC4749) : kDarkGreen,
@@ -137,8 +127,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
           ),
-
-          Align(
+           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
               height: MediaQuery.of(context).size.height * 0.58,

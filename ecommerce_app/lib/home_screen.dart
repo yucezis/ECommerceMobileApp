@@ -4,15 +4,15 @@ import 'package:http/http.dart' as http;
 import 'models/urun_model.dart';
 import 'models/kategori_model.dart';
 import 'footer.dart';
-import 'category_product_screen.dart';
+import 'product_list_screen.dart';
 
 // --- RENK PALETİ ---
-const Color kBookPaper = Color(0xFFFEFAE0); 
-const Color kDarkGreen = Color(0xFF283618); 
-const Color kOliveGreen = Color(0xFF606C38); 
-const Color kDarkCoffee = Color(0xFF211508); 
+const Color kBookPaper = Color(0xFFFEFAE0);
+const Color kDarkGreen = Color(0xFF283618);
+const Color kOliveGreen = Color(0xFF606C38);
+const Color kDarkCoffee = Color(0xFF211508);
 const Color kCreamAccent = Color(0xFFFAEDCD);
-const Color kpink = Color.fromARGB(255, 188, 71, 73); 
+const Color kpink = Color.fromARGB(255, 188, 71, 73);
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -90,10 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               _buildHeader(),
               const SizedBox(height: 25),
-              
+
               _buildSpecialOfferBanner(),
               const SizedBox(height: 30),
-              
+
               _buildSectionTitle("Kategoriler"),
               const SizedBox(height: 15),
               _buildCategoriesList(),
@@ -132,8 +132,8 @@ class _HomeScreenState extends State<HomeScreen> {
             color: Colors.black26,
             blurRadius: 10,
             offset: Offset(0, 5),
-          )
-        ]
+          ),
+        ],
       ),
       child: Column(
         children: [
@@ -141,7 +141,11 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                icon: const Icon(Icons.menu_rounded, color: kBookPaper, size: 28),
+                icon: const Icon(
+                  Icons.menu_rounded,
+                  color: kBookPaper,
+                  size: 28,
+                ),
                 onPressed: () => _scaffoldKey.currentState?.openDrawer(),
               ),
               const Row(
@@ -162,11 +166,11 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 decoration: BoxDecoration(
                   color: kOliveGreen.withOpacity(0.5),
-                  shape: BoxShape.circle
+                  shape: BoxShape.circle,
                 ),
                 child: IconButton(
-                  icon: const Icon(Icons.notifications_outlined, color: kBookPaper),
-                  onPressed: (){},
+                  icon: const Icon(Icons.favorite_outline, color: kBookPaper),
+                  onPressed: () {},
                 ),
               ),
             ],
@@ -179,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
               hintStyle: TextStyle(color: kDarkGreen.withOpacity(0.5)),
               prefixIcon: const Icon(Icons.search, color: kOliveGreen),
               filled: true,
-              fillColor: kBookPaper, 
+              fillColor: kBookPaper,
               contentPadding: const EdgeInsets.symmetric(vertical: 15),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -201,10 +205,12 @@ class _HomeScreenState extends State<HomeScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: kOliveGreen, 
+        color: kOliveGreen,
         borderRadius: BorderRadius.circular(20),
         image: const DecorationImage(
-          image: NetworkImage("https://www.transparenttextures.com/patterns/cubes.png"),
+          image: NetworkImage(
+            "https://www.transparenttextures.com/patterns/cubes.png",
+          ),
           fit: BoxFit.cover,
           opacity: 0.1,
         ),
@@ -223,32 +229,55 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
                   decoration: BoxDecoration(
                     color: kCreamAccent,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Text(
                     "%50 İNDİRİM",
-                    style: TextStyle(color: kDarkCoffee, fontWeight: FontWeight.bold, fontSize: 12),
+                    style: TextStyle(
+                      color: kDarkCoffee,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
-                
+
                 const Text(
                   "Birçok Kitapta\nBüyük Fırsat",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(height: 15),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Footer.footerKey.currentState?.listeAc(
+                      const ProductListScreen(
+                        title: "Büyük Fırsatlar",
+                        listType: ProductListType.discount,
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kBookPaper,
                     foregroundColor: kDarkGreen,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     elevation: 0,
                   ),
-                  child: const Text("İncele", style: TextStyle(fontWeight: FontWeight.bold)),
+                  child: const Text(
+                    "İncele",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ],
             ),
@@ -272,20 +301,27 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             title,
             style: const TextStyle(
-              fontSize: 20, 
-              fontWeight: FontWeight.bold, 
-              color: kDarkCoffee
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: kDarkCoffee,
             ),
           ),
           InkWell(
             onTap: () {
               if (title == "Kategoriler") {
                 Footer.footerKey.currentState?.sayfaDegistir(1);
+              } else if (title == "Çok Satanlar") {
+                Footer.footerKey.currentState?.listeAc(
+                  const ProductListScreen(
+                    title: "Çok Satanlar",
+                    listType: ProductListType.bestSeller,
+                  ),
+                );
               }
             },
             child: const Row(
               children: [
-                 Text(
+                Text(
                   "Tümü",
                   style: TextStyle(
                     color: kOliveGreen,
@@ -293,7 +329,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: 14,
                   ),
                 ),
-                Icon(Icons.arrow_right_alt, color: kOliveGreen, size: 20)
+                Icon(Icons.arrow_right_alt, color: kOliveGreen, size: 20),
               ],
             ),
           ),
@@ -308,7 +344,8 @@ class _HomeScreenState extends State<HomeScreen> {
       child: FutureBuilder<List<Kategori>>(
         future: _kategorilerFuture,
         builder: (context, snapshot) {
-          if (!snapshot.hasData || snapshot.data!.isEmpty) return const SizedBox();
+          if (!snapshot.hasData || snapshot.data!.isEmpty)
+            return const SizedBox();
           final kategoriler = snapshot.data!;
           return ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -316,20 +353,31 @@ class _HomeScreenState extends State<HomeScreen> {
             itemCount: kategoriler.length,
             itemBuilder: (context, index) {
               final kategori = kategoriler[index];
-              return Container(
-                margin: const EdgeInsets.only(right: 10),
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                  border: Border.all(color: kOliveGreen.withOpacity(0.3)),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  kategori.kategoriAdi,
-                  style: const TextStyle(
-                    color: kDarkGreen,
-                    fontWeight: FontWeight.w600,
+              return GestureDetector(
+                onTap: () {
+                  Footer.footerKey.currentState?.listeAc(
+                    ProductListScreen(
+                      title: kategori.kategoriAdi,
+                      listType: ProductListType.category,
+                      kategoriId: kategori.kategoriID,
+                    ),
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(25),
+                    border: Border.all(color: kOliveGreen.withOpacity(0.3)),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    kategori.kategoriAdi,
+                    style: const TextStyle(
+                      color: kDarkGreen,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               );
@@ -347,7 +395,9 @@ class _HomeScreenState extends State<HomeScreen> {
         future: _urunlerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator(color: kOliveGreen));
+            return const Center(
+              child: CircularProgressIndicator(color: kOliveGreen),
+            );
           }
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text("Hiç ürün yok"));
@@ -359,70 +409,105 @@ class _HomeScreenState extends State<HomeScreen> {
             itemCount: urunler.length,
             itemBuilder: (context, index) {
               final urun = urunler[index];
-              return Container(
-                width: 150,
-                margin: const EdgeInsets.only(right: 15, bottom: 10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: kDarkCoffee.withOpacity(0.1),
-                      spreadRadius: 2,
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Resim Alanı
-                    Expanded(
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                        child: urun.urunGorsel.isNotEmpty
-                            ? Image.network(
-                                urun.urunGorsel,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                errorBuilder: (c, o, s) => Container(color: kCreamAccent, child: const Center(child: Icon(Icons.book, color: kOliveGreen))),
-                              )
-                            : Container(color: kCreamAccent, child: const Center(child: Icon(Icons.book, color: kOliveGreen))),
+              return GestureDetector(
+                onTap: () {
+                  Footer.footerKey.currentState?.uruneGit(urun);
+                },
+                child: Container(
+                  width: 150,
+                  margin: const EdgeInsets.only(right: 15, bottom: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: kDarkCoffee.withOpacity(0.1),
+                        spreadRadius: 2,
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
                       ),
-                    ),
-                    // Bilgi Alanı
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            urun.urunAdi,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: kDarkCoffee),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Resim Alanı
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(15),
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            urun.urunMarka,
-                            style: const TextStyle(color: Colors.grey, fontSize: 11),
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "${urun.urunSatisFiyati} ₺",
-                                style: const TextStyle(color: kDarkGreen, fontWeight: FontWeight.bold, fontSize: 16),
+                          child: urun.urunGorsel.isNotEmpty
+                              ? Image.network(
+                                  urun.urunGorsel,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (c, o, s) => Container(
+                                    color: kCreamAccent,
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.book,
+                                        color: kOliveGreen,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  color: kCreamAccent,
+                                  child: const Center(
+                                    child: Icon(Icons.book, color: kOliveGreen),
+                                  ),
+                                ),
+                        ),
+                      ),
+                      // Bilgi Alanı
+                      Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              urun.urunAdi,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: kDarkCoffee,
                               ),
-                              const Icon(Icons.add_circle, color: kOliveGreen, size: 24)
-                            ],
-                          )
-                        ],
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              urun.urunMarka,
+                              style: const TextStyle(
+                                color: Colors.grey,
+                                fontSize: 11,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${urun.urunSatisFiyati} ₺",
+                                  style: const TextStyle(
+                                    color: kDarkGreen,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.add_circle,
+                                  color: kOliveGreen,
+                                  size: 24,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
@@ -432,12 +517,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  //-----------ÇOK SATANLAR---
   Widget _buildBestsellersList() {
     return FutureBuilder<List<Urun>>(
       future: cokSatanlariGetir(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator(color: kOliveGreen));
+          return const Center(
+            child: CircularProgressIndicator(color: kOliveGreen),
+          );
         }
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Center(child: Text("Henüz satış yok."));
@@ -452,91 +540,143 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: urunler.length,
           itemBuilder: (context, index) {
             final urun = urunler[index];
-            return Container(
-              margin: const EdgeInsets.only(bottom: 15),
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: kDarkCoffee.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  // Sol Resim ve Sıra Numarası
-                  Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: urun.urunGorsel.isNotEmpty
-                            ? Image.network(
-                                urun.urunGorsel,
-                                width: 70,
-                                height: 90,
-                                fit: BoxFit.cover,
-                                errorBuilder: (c, o, s) => Container(width: 70, height: 90, color: kCreamAccent, child: const Icon(Icons.book, color: kOliveGreen)),
-                              )
-                            : Container(width: 70, height: 90, color: kCreamAccent, child: const Icon(Icons.book, color: kOliveGreen)),
-                      ),
-                      Positioned(
-                        top: 0,
-                        left: 0,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                          decoration: const BoxDecoration(
-                            color: kpink,
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomRight: Radius.circular(8)),
-                          ),
-                          child: Text(
-                            "${index + 1}",
-                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            return GestureDetector(
+              onTap: () {
+                // Footer üzerinden detay sayfasına git
+                Footer.footerKey.currentState?.uruneGit(urun);
+              },
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 15),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: kDarkCoffee.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    // Sol Resim ve Sıra Numarası
+                    Stack(
                       children: [
-                        Text(
-                          urun.urunAdi,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: kDarkCoffee),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: urun.urunGorsel.isNotEmpty
+                              ? Image.network(
+                                  urun.urunGorsel,
+                                  width: 70,
+                                  height: 90,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (c, o, s) => Container(
+                                    width: 70,
+                                    height: 90,
+                                    color: kCreamAccent,
+                                    child: const Icon(
+                                      Icons.book,
+                                      color: kOliveGreen,
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  width: 70,
+                                  height: 90,
+                                  color: kCreamAccent,
+                                  child: const Icon(
+                                    Icons.book,
+                                    color: kOliveGreen,
+                                  ),
+                                ),
                         ),
-                        const SizedBox(height: 5),
-                        Text(
-                          urun.urunYazar.isNotEmpty ? urun.urunYazar : urun.urunMarka,
-                          style: const TextStyle(fontSize: 13, color: Colors.grey),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Text(
-                              "${urun.urunSatisFiyati} ₺",
-                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkGreen),
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 6,
+                              vertical: 2,
                             ),
-                            if (urun.indirimliFiyat != null && urun.indirimliFiyat! > 0) ...[
-                              const SizedBox(width: 8),
-                              Text(
-                                "${urun.indirimliFiyat} ₺",
-                                style: const TextStyle(fontSize: 12, decoration: TextDecoration.lineThrough, color: Colors.grey),
+                            decoration: const BoxDecoration(
+                              color: Color(
+                                0xFFBC4749,
+                              ), // kpink yerine sabit renk (veya senin değişkenin)
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(8),
                               ),
-                            ],
-                          ],
+                            ),
+                            child: Text(
+                              "${index + 1}",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  const Icon(Icons.chevron_right, color: kOliveGreen),
-                ],
+                    const SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            urun.urunAdi,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: kDarkCoffee,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            urun.urunYazar.isNotEmpty
+                                ? urun.urunYazar
+                                : urun.urunMarka,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Text(
+                                "${urun.urunSatisFiyati} ₺",
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: kDarkGreen,
+                                ),
+                              ),
+                              if (urun.indirimliFiyat != null &&
+                                  urun.indirimliFiyat! > 0) ...[
+                                const SizedBox(width: 8),
+                                Text(
+                                  "${urun.indirimliFiyat} ₺",
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    decoration: TextDecoration.lineThrough,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Icon(Icons.chevron_right, color: kOliveGreen),
+                  ],
+                ),
               ),
             );
           },
@@ -552,7 +692,10 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           UserAccountsDrawerHeader(
             decoration: const BoxDecoration(color: kDarkGreen),
-            accountName: const Text("Hoşgeldiniz", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            accountName: const Text(
+              "Hoşgeldiniz",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
             accountEmail: const Text("Kitap dünyasına dalın!"),
             currentAccountPicture: CircleAvatar(
               backgroundColor: kBookPaper,
@@ -567,21 +710,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   iconColor: kDarkGreen,
                   collapsedIconColor: kOliveGreen,
                   leading: const Icon(Icons.category, color: kOliveGreen),
-                  title: const Text("Kategoriler", style: TextStyle(fontWeight: FontWeight.bold, color: kDarkCoffee)),
+                  title: const Text(
+                    "Kategoriler",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: kDarkCoffee,
+                    ),
+                  ),
                   children: [
                     FutureBuilder<List<Kategori>>(
                       future: _kategorilerFuture,
                       builder: (context, snapshot) {
-                        if (!snapshot.hasData || snapshot.data!.isEmpty) return const SizedBox();
+                        if (!snapshot.hasData || snapshot.data!.isEmpty)
+                          return const SizedBox();
                         return Column(
                           children: snapshot.data!.map((kategori) {
                             return ListTile(
                               contentPadding: const EdgeInsets.only(left: 40),
-                              leading: const Icon(Icons.circle, size: 8, color: kOliveGreen),
-                              title: Text(kategori.kategoriAdi, style: const TextStyle(fontSize: 14)),
+                              leading: const Icon(
+                                Icons.circle,
+                                size: 8,
+                                color: kOliveGreen,
+                              ),
+                              title: Text(
+                                kategori.kategoriAdi,
+                                style: const TextStyle(fontSize: 14),
+                              ),
                               onTap: () {
                                 Navigator.pop(context);
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryProductsScreen(kategoriId: kategori.kategoriID, kategoriAdi: kategori.kategoriAdi)));
+                                Navigator.pop(context);
+                                Footer.footerKey.currentState?.kategoriyeGit(
+                                  kategori.kategoriID,
+                                  kategori.kategoriAdi,
+                                );
                               },
                             );
                           }).toList(),
@@ -592,18 +753,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.settings, color: kOliveGreen),
-                  title: const Text("Ayarlar", style: TextStyle(color: kDarkCoffee)),
+                  title: const Text(
+                    "Ayarlar",
+                    style: TextStyle(color: kDarkCoffee),
+                  ),
                   onTap: () => Navigator.pop(context),
                 ),
                 ListTile(
                   leading: const Icon(Icons.favorite, color: kOliveGreen),
-                  title: const Text("Favoriler", style: TextStyle(color: kDarkCoffee)),
+                  title: const Text(
+                    "Favoriler",
+                    style: TextStyle(color: kDarkCoffee),
+                  ),
                   onTap: () => Navigator.pop(context),
                 ),
                 const Divider(color: Colors.grey),
                 ListTile(
                   leading: const Icon(Icons.logout, color: Colors.redAccent),
-                  title: const Text("Çıkış Yap", style: TextStyle(color: Colors.redAccent)),
+                  title: const Text(
+                    "Çıkış Yap",
+                    style: TextStyle(color: Colors.redAccent),
+                  ),
                   onTap: () => Navigator.pop(context),
                 ),
               ],

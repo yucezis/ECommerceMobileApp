@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'models/kategori_model.dart';
 import 'footer.dart';
+import 'product_list_screen.dart';
 
 // --- RENK PALETİ ---
 const Color kBookPaper = Color(0xFFFEFAE0); 
@@ -109,21 +110,14 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          debugPrint("TIKLANDI: ${kategori.kategoriAdi} (ID: ${kategori.kategoriID})");
-          
-          if (Footer.footerKey.currentState != null) {
-            // Footer'a git ve kategori değiştir
-            Footer.footerKey.currentState?.kategoriyeGit(
-              kategori.kategoriID,
-              kategori.kategoriAdi,
-            );
-          } else {
-            debugPrint("HATA: Footer Key bulunamadı! main.dart dosyasını kontrol et.");
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Menü hatası: main.dart dosyasında key eksik!"))
-            );
-          }
-        },
+  Footer.footerKey.currentState?.listeAc(
+    ProductListScreen(
+      title: kategori.kategoriAdi,
+      listType: ProductListType.category,
+      kategoriId: kategori.kategoriID,
+    )
+  );
+},
         borderRadius: BorderRadius.circular(20),
         child: Container(
           decoration: BoxDecoration(
@@ -212,7 +206,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 children: [
                   IconButton(
                     onPressed: () {}, 
-                    icon: const Icon(Icons.shopping_bag_outlined, color: kBookPaper, size: 28),
+                    icon: const Icon(Icons.favorite_outline, color: kBookPaper, size: 28),
                   ),
                   Positioned(
                     right: 8,

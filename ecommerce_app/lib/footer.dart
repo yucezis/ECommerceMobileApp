@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'profile_screen.dart';
 import 'categories_screen.dart';
-import 'category_product_screen.dart';
 import 'product_detail_screen.dart';
 import 'models/urun_model.dart';
+import 'product_list_screen.dart'; // ARTIK SADECE BU VAR
 
 // --- RENK PALETİ ---
-const Color kBookPaper = Color(0xFFFEFAE0);
-const Color kDarkGreen = Color(0xFF283618);
-const Color kOliveGreen = Color(0xFF606C38);
+const Color kBookPaper = Color(0xFFFEFAE0); 
+const Color kDarkGreen = Color(0xFF283618); 
+const Color kOliveGreen = Color(0xFF606C38); 
 const Color kCreamAccent = Color(0xFFFAEDCD);
 
 class Footer extends StatefulWidget {
@@ -23,30 +23,28 @@ class Footer extends StatefulWidget {
 
 class FooterState extends State<Footer> {
   int _selectedIndex = 0;
-  int? _aktifKategoriId;
-  String? _aktifKategoriAdi;
-  Urun? _seciliUrun;
+
+  Widget? _aktifListeSayfasi; 
+  Urun? _seciliUrun; 
 
   void sayfaDegistir(int index) {
     setState(() {
       _selectedIndex = index;
-      _aktifKategoriId = null;
+      _aktifListeSayfasi = null;
       _seciliUrun = null;
     });
   }
 
-  void kategoriyeGit(int id, String adi) {
+  void listeAc(Widget sayfa) {
     setState(() {
-      _selectedIndex = 1;
-      _aktifKategoriId = id;
-      _aktifKategoriAdi = adi;
-      _seciliUrun = null;
+      _aktifListeSayfasi = sayfa;
+      _seciliUrun = null; 
     });
   }
 
-  void kategoridenCik() {
+  void listedenCik() {
     setState(() {
-      _aktifKategoriId = null;
+      _aktifListeSayfasi = null;
     });
   }
 
@@ -62,64 +60,77 @@ class FooterState extends State<Footer> {
     });
   }
 
+  void kategoriyeGit(int id, String adi) {
+    listeAc(ProductListScreen(
+      title: adi,
+      listType: ProductListType.category,
+      kategoriId: id,
+    ));
+  }
+  void kategoridenCik() => listedenCik();
+  void indirimleriGoster() {
+    listeAc(const ProductListScreen(
+      title: "Büyük Fırsatlar",
+      listType: ProductListType.discount,
+    ));
+  }
+  void indirimdenCik() => listedenCik();
+
+
   @override
   Widget build(BuildContext context) {
     Widget aktifSayfa;
 
-    // Sayfa Yönlendirme Mantığı
     if (_seciliUrun != null) {
       aktifSayfa = ProductDetailScreen(urun: _seciliUrun!);
-    } else if (_selectedIndex == 0) {
+    }
+    
+    else if (_aktifListeSayfasi != null) {
+      aktifSayfa = _aktifListeSayfasi!;
+    }
+    else if (_selectedIndex == 0) {
       aktifSayfa = const HomeScreen();
-    } else if (_selectedIndex == 1) {
-      if (_aktifKategoriId != null) {
-        aktifSayfa = CategoryProductsScreen(
-          kategoriId: _aktifKategoriId!,
-          kategoriAdi: _aktifKategoriAdi!,
-        );
-      } else {
-        aktifSayfa = const CategoriesScreen();
-      }
-    } else if (_selectedIndex == 2) {
-      aktifSayfa = const Center(child: Text("Sepet Sayfası")); // Sepet ekranın buraya gelecek
-    } else {
+    } 
+    else if (_selectedIndex == 1) {
+      aktifSayfa = const CategoriesScreen();
+    } 
+    else if (_selectedIndex == 2) {
+      aktifSayfa = const Center(child: Text("Sepet Sayfası Henüz Yok"));
+    } 
+    else {
       aktifSayfa = const ProfileScreen();
     }
 
-    // Ürün detay sayfasındaysak navigasyon barı gizle (Çünkü ürün detayda kendi barı var)
     bool navBarGizle = _seciliUrun != null;
 
     return Scaffold(
-      backgroundColor: kBookPaper, // Genel arka plan
-      // Klavye açıldığında butonların yukarı kaymasını engellemek için:
+      backgroundColor: kBookPaper, 
       resizeToAvoidBottomInset: false, 
       
-      // Body Stack ile sarılırsa nav bar sayfanın üstünde yüzebilir (floating effect)
       body: Stack(
-        children: [
-          // Aktif Sayfa İçeriği
-          aktifSayfa,
+  children: [
+    // Padding'i kaldırdık. Artık sayfa en alta kadar uzanacak.
+    aktifSayfa,
 
-          // Özel Navigasyon Barı (Alt Kısım)
-          if (!navBarGizle)
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: _buildCustomNavigationBar(),
-            ),
-        ],
+    if (!navBarGizle)
+      Positioned(
+        left: 0,
+        right: 0,
+        bottom: 0,
+        child: _buildCustomNavigationBar(),
       ),
+  ],
+),
     );
   }
 
   Widget _buildCustomNavigationBar() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(20, 0, 20, 25), // Kenarlardan boşluk bırakarak "Floating" hissi ver
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 25), 
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
       decoration: BoxDecoration(
-        color: kDarkGreen, // Koyu Yeşil Arka Plan
-        borderRadius: BorderRadius.circular(30), // Tam yuvarlak köşeler
+        color: kDarkGreen, 
+        borderRadius: BorderRadius.circular(30), 
         boxShadow: [
           BoxShadow(
             color: kDarkGreen.withOpacity(0.4),
@@ -165,7 +176,6 @@ class FooterState extends State<Footer> {
   }
 }
 
-// --- ÖZEL NAVİGASYON BUTONU ---
 class _NavBarItem extends StatelessWidget {
   final IconData icon;
   final IconData activeIcon;
@@ -194,7 +204,6 @@ class _NavBarItem extends StatelessWidget {
           vertical: 8,
         ),
         decoration: BoxDecoration(
-          // Seçiliyse açık renk, değilse şeffaf
           color: isSelected ? Colors.white.withOpacity(0.15) : Colors.transparent, 
           borderRadius: BorderRadius.circular(20),
         ),
@@ -202,22 +211,21 @@ class _NavBarItem extends StatelessWidget {
           children: [
             Icon(
               isSelected ? activeIcon : icon,
-              color: isSelected ? kCreamAccent : kOliveGreen.withOpacity(0.7), // Pasif ikonlar daha soluk
+              color: isSelected ? kCreamAccent : kOliveGreen.withOpacity(0.7),
               size: 24,
             ),
             
-            // Seçili olduğunda metni göster (Animasyonlu genişleme)
             AnimatedSize(
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeInOut,
               child: SizedBox(
-                width: isSelected ? null : 0, // Seçili değilse genişlik 0
+                width: isSelected ? null : 0, 
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: Text(
                     isSelected ? label : "",
                     style: const TextStyle(
-                      color: kCreamAccent, // Krem rengi yazı
+                      color: kCreamAccent, 
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                     ),

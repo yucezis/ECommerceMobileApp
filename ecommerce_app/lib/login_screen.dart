@@ -59,11 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
               backgroundColor: brown,
             ),
           );
-
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const Footer()),
-          );
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Footer(key: Footer.footerKey)));
         }
       } else {
         if (mounted) {
