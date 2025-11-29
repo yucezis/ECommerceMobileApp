@@ -45,4 +45,22 @@ class Urun {
       kategoriID: json['kategoriID'] ?? json['KategoriID'] ?? 0, 
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'urunId': urunId,
+      'urunAdi': urunAdi,
+      'urunMarka': urunMarka,
+      'urunYazar': urunYazar,
+      'urunGorsel': urunGorsel,
+      'urunSatisFiyati': urunSatisFiyati,
+      'indirimliFiyat': indirimliFiyat,
+      'aciklama': aciklama,
+      'urunStok': urunStok,
+      'kategoriAdi': kategoriAdi,
+      'kategoriID': kategoriID,
+      'adet': 1, 
+    };
+  }
+
 }

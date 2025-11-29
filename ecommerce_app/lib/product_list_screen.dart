@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'models/urun_model.dart';
 import 'footer.dart';
+import 'models/cart_service.dart';
+import 'favorite_button.dart';
 
 // --- TASARIM SİSTEMİ RENKLERİ ---
 const Color kBookPaper = Color(0xFFFEFAE0);
@@ -146,7 +148,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
       title: Text(title, style: TextStyle(
         color: isSelected ? kOliveGreen : kDarkCoffee, 
         fontWeight: isSelected ? FontWeight.bold : FontWeight.normal
-      )),
+      )
+      ),
       trailing: isSelected ? const Icon(Icons.check, color: kOliveGreen) : null,
       onTap: () { _sirala(title); Navigator.pop(context); },
     );
@@ -235,10 +238,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20), // Daha yumuşak köşeler
+          borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: kDarkGreen.withOpacity(0.08), // Yeşilimsi yumuşak gölge
+              color: kDarkGreen.withOpacity(0.08),
               spreadRadius: 2,
               blurRadius: 10,
               offset: const Offset(0, 4),
@@ -248,7 +251,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Resim Alanı
             Expanded(
               flex: 4,
               child: Stack(
@@ -270,24 +272,20 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     ),
                   ),
                   Positioned(
-                    top: 8, right: 8,
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9), 
-                        shape: BoxShape.circle, 
-                        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 5)]
-                      ),
-                      child: const Icon(Icons.favorite_border, color: Colors.grey, size: 18),
-                    ),
-                  ),
+  top: 8,
+  right: 8,
+  child: FavoriteButton(
+    urun: urun, // Mevcut ürün nesnesini buraya veriyoruz
+    size: 20,   // İkon boyutu
+  ),
+),
                   if (indirimVar)
                     Positioned(
                       top: 8, left: 8,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: kRedBadge, // Özel koyu kırmızı
+                          color: kRedBadge, 
                           borderRadius: BorderRadius.circular(8)
                         ),
                         child: const Text("FIRSAT", style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
@@ -297,7 +295,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
               ),
             ),
             
-            // Bilgi Alanı
             Expanded(
               flex: 3,
               child: Padding(
@@ -331,9 +328,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                           if (indirimVar) ...[
                             Text("${urun.urunSatisFiyati} ₺", style: const TextStyle(decoration: TextDecoration.lineThrough, color: Colors.grey, fontSize: 11)),
-                            Text("${urun.indirimliFiyat} ₺", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: kDarkGreen)),
+                            Text("${urun.indirimliFiyat} ₺", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: kRedBadge)),
                           ] else ...[
-                            Text("${urun.urunSatisFiyati} ₺", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: kDarkGreen)),
+                            Text("${urun.urunSatisFiyati} ₺", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: kDarkCoffee)),
                           ]
                         ]),
                         InkWell(
@@ -347,11 +344,36 @@ class _ProductListScreenState extends State<ProductListScreen> {
                               )
                             );
                           },
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(color: kOliveGreen, borderRadius: BorderRadius.circular(12)),
-                            child: const Icon(Icons.add_shopping_cart_rounded, color: Colors.white, size: 18),
-                          ),
+                          child: InkWell(
+  // Tıklama kenarlıkları Container ile aynı olsun diye
+  borderRadius: BorderRadius.circular(12), 
+  onTap: () async {
+    // 1. Sepet Servisini Çağır ve Ürünü Ekle
+    await SepetServisi.sepeteEkle(urun);
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("${urun.urunAdi} sepete eklendi!"),
+          backgroundColor: kDarkCoffee, // Senin renk paletin
+          duration: const Duration(milliseconds: 800),
+        ),
+      );
+    }
+  },
+  child: Container(
+    padding: const EdgeInsets.all(8),
+    decoration: BoxDecoration(
+      color: kOliveGreen, 
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: const Icon(
+      Icons.add_shopping_cart_rounded, 
+      color: Colors.white, 
+      size: 18,
+    ),
+  ),
+),
                         ),
                       ],
                     ),

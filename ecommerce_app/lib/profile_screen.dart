@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'models/musteri_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_screen.dart';
+import 'favorite_screen.dart';
 
 // --- RENK PALETİ ---
 const Color kBookPaper = Color(0xFFFEFAE0); // Arka plan (Krem)
@@ -99,8 +100,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         _buildMenuItem(
                           icon: Icons.favorite_border,
                           title: "Favorilerim",
-                          subtitle: "Beğendiğin kitaplar burada",
-                          onTap: () {},
+                        onTap: () {
+                        Navigator.push(
+                          context, 
+                        MaterialPageRoute(builder: (context) => const FavoritesScreen())
+                        );
+                        },
                         ),
                         _buildMenuItem(
                           icon: Icons.location_on_outlined,

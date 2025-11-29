@@ -4,7 +4,8 @@ import 'profile_screen.dart';
 import 'categories_screen.dart';
 import 'product_detail_screen.dart';
 import 'models/urun_model.dart';
-import 'product_list_screen.dart'; // ARTIK SADECE BU VAR
+import 'product_list_screen.dart'; 
+import 'cart_screen.dart';
 
 // --- RENK PALETİ ---
 const Color kBookPaper = Color(0xFFFEFAE0); 
@@ -95,8 +96,8 @@ class FooterState extends State<Footer> {
       aktifSayfa = const CategoriesScreen();
     } 
     else if (_selectedIndex == 2) {
-      aktifSayfa = const Center(child: Text("Sepet Sayfası Henüz Yok"));
-    } 
+      aktifSayfa = const CartScreen(); // <-- BURAYI DEĞİŞTİRDİK
+    }
     else {
       aktifSayfa = const ProfileScreen();
     }

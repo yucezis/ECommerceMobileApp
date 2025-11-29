@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'models/urun_model.dart'; 
 import 'footer.dart';
+import 'models/cart_service.dart';
+import 'favorite_button.dart';
 
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kBackgroundAccent = Color(0xFFFAEDCD);
@@ -72,7 +74,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 blurRadius: 25,
                                 spreadRadius: -5,
                               ),
-                              // Hafif ortam ışığı
                               BoxShadow(
                                 color: kDarkCoffee.withOpacity(0.1),
                                 offset: const Offset(-4, -4),
@@ -98,35 +99,34 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ),
               ),
-              const Expanded(flex: 5, child: SizedBox()), // Alt kısım için boşluk
+              const Expanded(flex: 5, child: SizedBox()), 
             ],
           ),
 
-          // 2. HEADER BUTONLARI (Glassmorphism efekti eklendi)
           Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildCircularButton(
-                      icon: Icons.arrow_back_ios_new,
-                      onTap: () => Footer.footerKey.currentState?.urundenCik(),
-                    ),
-                    _buildCircularButton(
-                      icon: isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? const Color(0xFFBC4749) : kDarkGreen,
-                      onTap: () => setState(() => isFavorite = !isFavorite),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+  top: 0,
+  left: 0,
+  right: 0,
+  child: SafeArea(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _buildCircularButton(
+            icon: Icons.arrow_back_ios_new,
+            onTap: () => Footer.footerKey.currentState?.urundenCik(),
           ),
+
+          FavoriteButton(
+            urun: widget.urun, 
+            size: 24,          
+          ),
+        ],
+      ),
+    ),
+  ),
+),
            Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -287,50 +287,62 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   
                   const SizedBox(width: 20),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {},
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            "Sepete Ekle",
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.8),
-                              fontSize: 12,
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                               if (indirimVar)
-                                Text(
-                                  "${urun.urunSatisFiyati}₺",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white.withOpacity(0.5),
-                                    decoration: TextDecoration.lineThrough,
-                                    decorationColor: Colors.white.withOpacity(0.5),
-                                  ),
-                                ),
-                              const SizedBox(width: 8),
-                              Text(
-                                "${(urun.indirimliFiyat ?? urun.urunSatisFiyati) * adet} ₺",
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  const Icon(Icons.shopping_bag_outlined, color: Colors.white),
+Expanded(
+  child: InkWell(
+  borderRadius: BorderRadius.circular(12), 
+  onTap: () async {
+    await SepetServisi.sepeteEkle(urun);
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("${urun.urunAdi} sepete eklendi!"),
+          backgroundColor: kDarkCoffee, 
+          duration: const Duration(milliseconds: 800),
+        ),
+      );
+    }
+  },
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          "Sepete Ekle",
+          style: TextStyle(
+            color: Colors.white.withOpacity(0.8),
+            fontSize: 12,
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            if (indirimVar)
+              Text(
+                "${urun.urunSatisFiyati}₺",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white.withOpacity(0.5),
+                  decoration: TextDecoration.lineThrough,
+                  decorationColor: Colors.white.withOpacity(0.5),
+                ),
+              ),
+            const SizedBox(width: 8),
+            Text(
+              "${urun.indirimliFiyat ?? urun.urunSatisFiyati} ₺", 
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  ),
+),
+const SizedBox(width: 10),
+const Icon(Icons.shopping_bag_outlined, color: Colors.white),
                 ],
               ),
             ),

@@ -5,6 +5,7 @@ import 'models/urun_model.dart';
 import 'models/kategori_model.dart';
 import 'footer.dart';
 import 'product_list_screen.dart';
+import 'favorite_screen.dart';
 
 // --- RENK PALETİ ---
 const Color kBookPaper = Color(0xFFFEFAE0);
@@ -164,15 +165,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               Container(
-                decoration: BoxDecoration(
-                  color: kOliveGreen.withOpacity(0.5),
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                  icon: const Icon(Icons.favorite_outline, color: kBookPaper),
-                  onPressed: () {},
-                ),
-              ),
+  decoration: BoxDecoration(
+    color: kOliveGreen.withOpacity(0.5),
+    shape: BoxShape.circle,
+  ),
+  child: IconButton(
+    icon: const Icon(Icons.favorite_outline, color: kBookPaper),
+    // HATALI OLAN: onTap: () { ... }
+    // DOĞRUSU:
+    onPressed: () { 
+      Navigator.push(
+        context, 
+        MaterialPageRoute(builder: (context) => const FavoritesScreen())
+      );
+    },
+  ),
+),
             ],
           ),
           const SizedBox(height: 25),
@@ -497,9 +505,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 const Icon(
-                                  Icons.add_circle,
-                                  color: kOliveGreen,
-                                  size: 24,
+                                  Icons.favorite_outline,
+                                  color: kpink,
+                                  size: 20,
                                 ),
                               ],
                             ),

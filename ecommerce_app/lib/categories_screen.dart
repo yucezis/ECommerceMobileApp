@@ -188,7 +188,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               IconButton(
                 icon: const Icon(Icons.arrow_back_ios_new, color: kBookPaper, size: 22),
                 onPressed: () {
-                  // Artık Navigator.pop değil, Ana Sayfa sekmesine dön diyoruz
                   Footer.footerKey.currentState?.sayfaDegistir(0);
                 },
               ),
@@ -201,7 +200,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   letterSpacing: 1,
                 ),
               ),
-              // Sepet İkonu
+              
               Stack(
                 children: [
                   IconButton(
