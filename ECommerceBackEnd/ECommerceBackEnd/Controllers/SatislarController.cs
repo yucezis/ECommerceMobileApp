@@ -33,11 +33,10 @@ namespace ECommerceBackEnd.Controllers
                 UrunId = x.UrunId,
                 MusteriId = x.MusteriId,
 
-                // İlişkili verileri manuel olarak dolduruyoruz (Döngü hatası olmasın diye)
                 Urun = new Urun
                 {
-                    UrunAdi = x.Urun.UrunAdi, // Bize sadece adı lazım
-                                              // Diğer gerekli alanlar...
+                    UrunAdi = x.Urun.UrunAdi,
+                                             
                 },
 
                 Musteri = new Musteri

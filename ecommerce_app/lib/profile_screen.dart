@@ -5,13 +5,13 @@ import 'models/musteri_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_screen.dart';
 import 'favorite_screen.dart';
+import 'order_history_screen.dart';
 
-// --- RENK PALETİ ---
-const Color kBookPaper = Color(0xFFFEFAE0); // Arka plan (Krem)
-const Color kDarkGreen = Color(0xFF283618); // Header & Başlık
-const Color kOliveGreen = Color(0xFF606C38); // İkonlar & Vurgular
-const Color kDarkCoffee = Color(0xFF211508); // Metinler
-const Color kCreamAccent = Color(0xFFFAEDCD); // Hafif vurgu
+const Color kBookPaper = Color(0xFFFEFAE0); 
+const Color kDarkGreen = Color(0xFF283618); 
+const Color kOliveGreen = Color(0xFF606C38); 
+const Color kDarkCoffee = Color(0xFF211508); 
+const Color kCreamAccent = Color(0xFFFAEDCD); 
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -95,11 +95,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           icon: Icons.shopping_bag_outlined,
                           title: "Siparişlerim",
                           subtitle: "Geçmiş siparişlerini incele",
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const OrderHistoryScreen()),
+    );
+                          },
                         ),
                         _buildMenuItem(
                           icon: Icons.favorite_border,
                           title: "Favorilerim",
+                          subtitle: "Favorilerini incele",
                         onTap: () {
                         Navigator.push(
                           context, 
