@@ -183,11 +183,11 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     ? const Center(child: CircularProgressIndicator(color: kDarkGreen))
     : _hataMesaji.isNotEmpty
         ? Center(child: Text(_hataMesaji))
-        : _gruplanmisSiparisler.isEmpty // _siparisler DEĞİL
+        : _gruplanmisSiparisler.isEmpty 
             ? _buildBosDurum()
             : ListView.builder(
                 padding: const EdgeInsets.all(16),
-                itemCount: _gruplanmisSiparisler.length, // _siparisler DEĞİL
+                itemCount: _gruplanmisSiparisler.length, 
                 itemBuilder: (context, index) {
                   return _buildSiparisKarti(_gruplanmisSiparisler[index]);
                 },
@@ -196,68 +196,121 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   }
 
   Widget _buildSiparisKarti(SiparisGrubu siparis) {
-    String tarihFormatli = "${siparis.tarih.day}.${siparis.tarih.month}.${siparis.tarih.year} - ${siparis.tarih.hour}:${siparis.tarih.minute.toString().padLeft(2, '0')}";
-    
-    // Siparişin durumunu listedeki ilk üründen alıyoruz (Hepsi aynıdır)
-    int durumId = siparis.urunler.isNotEmpty ? siparis.urunler.first.siparisDurumu : 0;
+  String tarihFormatli = "${siparis.tarih.day}.${siparis.tarih.month}.${siparis.tarih.year} - ${siparis.tarih.hour}:${siparis.tarih.minute.toString().padLeft(2, '0')}";
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 15),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      elevation: 2,
-      child: ExpansionTile(
-        tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        
-        // 👇 BAŞLIK KISMINI DEĞİŞTİRDİK
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Sipariş No: ${siparis.siparisNo}",
-              style: const TextStyle(fontWeight: FontWeight.bold, color: kDarkCoffee, fontSize: 14),
-            ),
-            // Durum Rozetini Buraya Koyuyoruz
-            _buildDurumRozeti(durumId),
-          ],
+  // Siparişin durumunu alıyoruz
+  int durumId = siparis.urunler.isNotEmpty ? siparis.urunler.first.siparisDurumu : 0;
+
+  return Card(
+    margin: const EdgeInsets.only(bottom: 15),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+    elevation: 3, // Biraz daha belirgin gölge
+    child: ExpansionTile(
+      tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      leading: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: kOliveGreen.withOpacity(0.15),
+          shape: BoxShape.circle,
         ),
-        
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 4),
-            Text(tarihFormatli, style: TextStyle(color: Colors.grey[600], fontSize: 12)),
-            const SizedBox(height: 4),
-            Text(
-              "${siparis.toplamTutar} ₺",
-              style: const TextStyle(fontWeight: FontWeight.bold, color: kDarkGreen, fontSize: 16),
-            ),
-          ],
+        child: const Icon(Icons.shopping_bag, color: kOliveGreen, size: 24),
+      ),
+      
+      // KISIM 1: SİPARİŞ NO (EN ÜSTTE)
+      title: Text(
+        "Sipariş No: ${siparis.siparisNo}",
+        style: const TextStyle(
+          fontWeight: FontWeight.bold, 
+          color: kDarkCoffee, 
+          fontSize: 15
         ),
-        leading: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(color: kOliveGreen.withOpacity(0.1), shape: BoxShape.circle),
-          child: const Icon(Icons.shopping_bag, color: kOliveGreen),
-        ),
-        
-        // İÇERİK KISMI (Ürün Listesi - Aynen Kalıyor)
-        children: siparis.urunler.map((urunSatis) {
-          return ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                urunSatis.urun?.urunGorsel ?? "",
-                width: 40, height: 60, fit: BoxFit.cover,
-                errorBuilder: (c, o, s) => const Icon(Icons.book, color: Colors.grey),
+      ),
+
+      // KISIM 2: DURUM VE DİĞER BİLGİLER (ALTTA)
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 8), // Başlıkla araya boşluk
+          
+          // Durum Rozeti (Sola yaslı)
+          _buildDurumRozeti(durumId),
+          
+          const SizedBox(height: 12), // Rozet ile alt bilgi arası boşluk
+          
+          // Tarih ve Fiyat (Yan yana)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Tarih Bilgisi
+              Row(
+                children: [
+                  Icon(Icons.access_time, size: 14, color: Colors.grey[600]),
+                  const SizedBox(width: 4),
+                  Text(
+                    tarihFormatli, 
+                    style: TextStyle(color: Colors.grey[600], fontSize: 13),
+                  ),
+                ],
+              ),
+              
+              // Fiyat Bilgisi
+              Text(
+                "${siparis.toplamTutar.toStringAsFixed(2)} ₺",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w800, 
+                  color: kDarkGreen, 
+                  fontSize: 16
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+
+      // KISIM 3: ÜRÜNLER (AÇILIR MENÜ)
+      children: siparis.urunler.map((urunSatis) {
+        return Container(
+          decoration: BoxDecoration(
+            color: kBookPaper.withOpacity(0.5), // Açılan kısım hafif farklı renk
+            border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.2)))
+          ),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            leading: SizedBox(
+              width: 45,
+              height: 60,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: Image.network(
+                  urunSatis.urun?.urunGorsel ?? "",
+                  fit: BoxFit.cover,
+                  errorBuilder: (c, o, s) => Container(
+                    color: Colors.grey[200],
+                    child: const Icon(Icons.book, size: 20, color: Colors.grey),
+                  ),
+                ),
               ),
             ),
-            title: Text(urunSatis.urun?.urunAdi ?? "Bilinmeyen Ürün", style: const TextStyle(fontWeight: FontWeight.w600)),
-            trailing: Text("${urunSatis.fiyat} ₺", style: const TextStyle(fontWeight: FontWeight.bold)),
-          );
-        }).toList(),
-      ),
-    );
-  }
+            title: Text(
+              urunSatis.urun?.urunAdi ?? "Bilinmeyen Ürün",
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Text(
+              "Adet: ${urunSatis.adet}",
+              style: TextStyle(color: Colors.grey[700], fontSize: 12),
+            ),
+            trailing: Text(
+              "${(urunSatis.fiyat * urunSatis.adet).toStringAsFixed(2)} ₺",
+              style: const TextStyle(fontWeight: FontWeight.bold, color: kDarkCoffee),
+            ),
+          ),
+        );
+      }).toList(),
+    ),
+  );
+}
 
   Widget _buildBosDurum() {
     return Center(
