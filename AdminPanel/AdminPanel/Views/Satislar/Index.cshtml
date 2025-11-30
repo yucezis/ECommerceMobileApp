@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Rendering
 @using AdminPanel.Models
-@model List<SatislarViewModel>
+@model List<SiparisGrupViewModel>
 
 @{
     ViewData["Title"] = "Satışlar";
@@ -8,70 +8,276 @@
 }
 
 <style>
-    .table thead th {
-        font-weight: 600;
+    /* --- GENEL TASARIM --- */
+    body {
+        background-color: #f5f6fa;
     }
 
-    .table-hover tbody tr:hover {
-        background-color: #fff8e1;
-        transition: background-color 0.2s ease;
+    .premium-card {
+        border-radius: 18px;
+        border: none;
+        background: #ffffff;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.06);
     }
 
-    .card {
-        border-radius: 16px;
+    .premium-header {
+        background: linear-gradient(135deg, #4e73df, #6f9dfd);
+        border-radius: 18px;
     }
 
-    .btn-outline-primary {
-        border-radius: 20px;
+        .premium-header h3 {
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+    /* --- AKORDİYON DÜZELTMELERİ (YAMUKLUK FİX) --- */
+    .accordion-item {
+        border: none;
+        margin-bottom: 1rem;
+        background: transparent;
+        border-radius: 12px !important;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .accordion-button {
+        background-color: #ffffff;
+        padding: 1.25rem;
+        border-radius: 12px !important;
+        box-shadow: none !important; /* Mavi focus çizgisini kaldırır */
+    }
+
+        /* Varsayılan Bootstrap okunu kaldırıyoruz ki içerik kaymasın */
+        .accordion-button::after {
+            display: none !important;
+        }
+
+        /* Akordiyon açıldığında alt köşe yuvarlaklığını koru/kaldır ayarı */
+        .accordion-button:not(.collapsed) {
+            background-color: #fff;
+            color: inherit;
+            border-bottom-right-radius: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            border-bottom: 1px solid #eee;
+        }
+
+    .order-id-badge {
+        background-color: #e8f0ff;
+        color: #1a3eb1;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-family: 'Segoe UI', monospace;
+        font-size: 0.9rem;
+        font-weight: 700;
+        white-space: nowrap;
     }
 
     .badge {
-        font-size: 0.9rem;
-        padding: 0.5em 0.8em;
+        padding: 0.6em 1em;
+        font-weight: 500;
+        border-radius: 8px;
+    }
+
+    /* --- TABLO --- */
+    .accordion-body {
+        background-color: #fff;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+
+    .table thead {
+        background: #f8f9fc;
+    }
+
+    .table td {
+        vertical-align: middle;
+    }
+
+    /* --- MODAL --- */
+    .modal-content {
+        border-radius: 18px;
+        border: none;
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, #4e73df, #6f9dfd);
     }
 </style>
 
-<div class="container mt-5">
-    <div class="card shadow-lg border-0 rounded-3">
-        <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
-            <h3 class="mb-0"><i class="bi bi-receipt-cutoff me-2"></i> Satış Hareketleri</h3>
-            @* <button class="btn btn-light btn-sm fw-semibold">
-                <i class="bi bi-plus-circle-fill me-1"></i> Yeni Satış Ekle
-            </button> *@
-        </div>
+<div class="container-fluid mt-4">
 
-        <div class="card-body p-4">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle text-center mb-0">
-                    <thead class="table-warning">
-                        <tr>
-                            <th>Ürün</th>
-                            <th>Yayınevi</th>
-                            <th>Müşteri</th>
-                            <th>Adet</th>
-                            <th>Fiyat</th>
-                            <th>Toplam Tutar</th>
-                            <th>Tarih</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var s in Model)
-                        {
-                            <tr>
-                                <td>@(s.Urun != null ? s.Urun.UrunAdi : "—")</td>
-                                <td>@(s.Urun != null ? s.Urun.UrunMarka : "—")</td>
-                                <td>@(s.Musteri != null ? s.Musteri.MusteriAdi + " " + s.Musteri.MusteriSoyadi : "—")</td>
-                                <td><span class="badge bg-secondary">@s.Adet</span></td>
-                                <td>@s.Fiyat ₺</td>
-                                <td class="fw-semibold text-success">@s.ToplamTutar ₺</td>
-                                <td>@s.Tarih.ToString("dd.MM.yyyy")</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+    <div class="premium-card premium-header mb-4 p-4 text-white shadow-sm">
+        <h3 class="mb-0"><i class="bi bi-cart-check me-2"></i> Sipariş Yönetimi</h3>
+    </div>
+
+    @if (TempData["Basarili"] != null)
+    {
+        <div class="alert alert-success shadow-sm alert-dismissible fade show">
+            @TempData["Basarili"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
+    }
+    @if (TempData["Hata"] != null)
+    {
+        <div class="alert alert-danger shadow-sm alert-dismissible fade show">
+            @TempData["Hata"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="accordion" id="siparisListesi">
+        @if (Model != null && Model.Count > 0)
+        {
+            @foreach (var siparis in Model)
+            {
+                var uniqueId = Guid.NewGuid().ToString("N");
+
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed d-block" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapse-@uniqueId">
+
+                            <div class="row align-items-center g-3">
+
+                                <div class="col-md-6 col-12">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="order-id-badge">
+                                            #@siparis.SiparisNo
+                                        </div>
+                                        <div class="d-flex flex-column text-start">
+                                            <span class="fw-bold text-dark fs-5">@siparis.MusteriAdSoyad</span>
+                                            <small class="text-muted">
+                                                <i class="bi bi-calendar-event me-1"></i>
+                                                @siparis.Tarih.ToString("dd.MM.yyyy HH:mm")
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <div class="d-flex align-items-center justify-content-md-end justify-content-between gap-3 flex-wrap">
+
+                                        <span class="fs-4 fw-bold text-success text-nowrap">
+                                            @siparis.ToplamTutar.ToString("C")
+                                        </span>
+
+                                        @switch (siparis.Durum)
+                                        {
+                                            case SiparisDurum.SiparisAlindi:
+                                                <span class="badge bg-secondary">Sipariş Alındı</span>
+                                                break;
+                                            case SiparisDurum.Hazirlaniyor:
+                                                <span class="badge bg-warning text-dark">Hazırlanıyor</span>
+                                                break;
+                                            case SiparisDurum.KargoyaVerildi:
+                                                <span class="badge bg-info text-dark">Kargoda</span>
+                                                break;
+                                            case SiparisDurum.TeslimEdildi:
+                                                <span class="badge bg-success">Teslim Edildi</span>
+                                                break;
+                                            case SiparisDurum.IptalEdildi:
+                                                <span class="badge bg-danger">İptal</span>
+                                                break;
+                                            default:
+                                                <span class="badge bg-secondary">Bilinmiyor</span>
+                                                break;
+                                        }
+
+                                        <div class="btn btn-light border btn-sm rounded-3 px-3 py-2 text-dark"
+                                             style="z-index: 2; position: relative;"
+                                             onclick="event.stopPropagation();"
+                                             data-bs-toggle="modal"
+                                             data-bs-target="#modal-@uniqueId">
+                                            <i class="bi bi-gear-fill me-1"></i> Yönet
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </h2>
+
+                    <div id="collapse-@uniqueId" class="accordion-collapse collapse" data-bs-parent="#siparisListesi">
+                        <div class="accordion-body pt-0">
+                            <hr class="mt-0 mb-3 text-muted" style="opacity: 0.1;">
+
+                            <table class="table table-hover table-borderless align-middle mb-0">
+                                <thead class="text-secondary small text-uppercase">
+                                    <tr>
+                                        <th>Ürün</th>
+                                        <th>Marka</th>
+                                        <th class="text-center">Adet</th>
+                                        <th class="text-end">Birim Fiyat</th>
+                                        <th class="text-end">Toplam</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var urun in siparis.Urunler)
+                                    {
+                                        <tr>
+                                            <td class="fw-semibold text-dark">
+                                                <i class="bi bi-box-seam text-primary me-2"></i>
+                                                @(urun.Urun?.UrunAdi ?? "Silinmiş Ürün")
+                                            </td>
+                                            <td class="text-muted small">@urun.Urun?.UrunMarka</td>
+                                            <td class="text-center">
+                                                <span class="badge bg-light text-dark border">@urun.Adet</span>
+                                            </td>
+                                            <td class="text-end text-muted">@urun.Fiyat.ToString("C")</td>
+                                            <td class="text-end fw-bold text-dark">@((urun.Fiyat * urun.Adet).ToString("C"))</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="modal-@uniqueId" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header text-white">
+                                <h5 class="modal-title">Sipariş Durumu</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body p-4">
+                                <div class="text-center mb-4">
+                                    <h6 class="text-muted text-uppercase small ls-1">Sipariş No</h6>
+                                    <span class="fs-3 fw-bold text-dark">#@siparis.SiparisNo</span>
+                                </div>
+
+                                <div class="d-grid gap-2">
+                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.Hazirlaniyor })"
+                                       class="btn btn-outline-warning p-2">
+                                        <i class="bi bi-box-seam me-2"></i> Hazırlanıyor
+                                    </a>
+                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.KargoyaVerildi })"
+                                       class="btn btn-outline-info p-2">
+                                        <i class="bi bi-truck me-2"></i> Kargoya Verildi
+                                    </a>
+                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.TeslimEdildi })"
+                                       class="btn btn-outline-success p-2">
+                                        <i class="bi bi-check-circle me-2"></i> Teslim Edildi
+                                    </a>
+                                    <hr>
+                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.IptalEdildi })"
+                                       class="btn btn-outline-danger p-2">
+                                        <i class="bi bi-x-circle me-2"></i> İptal Et
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-light text-center shadow-sm p-5">
+                <i class="bi bi-inbox fs-1 text-muted mb-3 d-block"></i>
+                <span class="text-muted">Henüz hiç sipariş bulunmamaktadır.</span>
+            </div>
+        }
     </div>
 </div>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

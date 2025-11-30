@@ -20,5 +20,16 @@ namespace ECommerceBackEnd.Models
         public Musteri Musteri { get; set; }
 
         public string SiparisNo { get; set; }
+
+        public SiparisDurum SiparisDurumu { get; set; } = SiparisDurum.SiparisAlindi;
+    }
+
+    public enum SiparisDurum
+    {
+        SiparisAlindi = 0,
+        Hazirlaniyor = 1,
+        KargoyaVerildi = 2,
+        TeslimEdildi = 3,
+        IptalEdildi = 4
     }
 }

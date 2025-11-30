@@ -127,6 +127,22 @@
   },
   {
     "ContainingType": "MusterisController",
+    "Method": "Post",
+    "RelativePath": "api/Musteris",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "p",
+        "Type": "ECommerceBackEnd.Models.Musteri",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MusterisController",
     "Method": "GetMusteri",
     "RelativePath": "api/Musteris/{id}",
     "HttpMethod": "GET",
@@ -174,6 +190,43 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MusterisController",
+    "Method": "SepetOnayla",
+    "RelativePath": "api/Musteris/SepetOnayla",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "MusterisController\u002BSepetOnayModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MusterisController",
+    "Method": "SiparisDurumGuncelle",
+    "RelativePath": "api/Musteris/SiparisDurumGuncelle",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "siparisNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "yeniDurumId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ECommerceBackEnd.Controllers.SatislarController",
     "Method": "Get",
     "RelativePath": "api/Satislar",
@@ -181,6 +234,43 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.SatislarController",
+    "Method": "DurumGuncelle",
+    "RelativePath": "api/Satislar/DurumGuncelle",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "siparisNo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "yeniDurumId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.SatislarController",
+    "Method": "SiparisVer",
+    "RelativePath": "api/Satislar/SiparisVer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "sepetUrunleri",
+        "Type": "System.Collections.Generic.List\u00601[[ECommerceBackEnd.Models.Satislar, ECommerceBackEnd, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
