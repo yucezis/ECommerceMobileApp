@@ -12,14 +12,13 @@ namespace ECommerceBackEnd.Models
         public decimal Fiyat { get; set; }
         public decimal ToplamTutar { get; set; }
 
-
         public int UrunId { get; set; }
-        public Urun Urun { get; set; }
+        public Urun? Urun { get; set; }
 
         public int MusteriId { get; set; }
-        public Musteri Musteri { get; set; }
+        public Musteri? Musteri { get; set; }
 
-        public string SiparisNo { get; set; }
+        public string? SiparisNo { get; set; }
 
         public SiparisDurum SiparisDurumu { get; set; } = SiparisDurum.SiparisAlindi;
     }

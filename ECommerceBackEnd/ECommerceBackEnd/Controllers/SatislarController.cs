@@ -18,14 +18,13 @@ namespace ECommerceBackEnd.Controllers
             _context = context;
         }
 
-        // GET: api/Satislar
         [HttpGet]
         public IActionResult Get()
         {
             var satislar = _context.satislars
                 .Include(x => x.Urun)
                 .Include(x => x.Musteri)
-                .OrderByDescending(x => x.Tarih) // En yeniler üstte
+                .OrderByDescending(x => x.Tarih) 
                 .ToList();
 
             var modelListesi = satislar.Select(x => new Satislar
@@ -38,15 +37,15 @@ namespace ECommerceBackEnd.Controllers
                 UrunId = x.UrunId,
                 MusteriId = x.MusteriId,
 
-                // --- BURASI EKSİKTİ, EKLENDİ ---
-                SiparisNo = x.SiparisNo,      // Artık API bunu gönderecek!
+                
+                SiparisNo = x.SiparisNo,      
                 SiparisDurumu = x.SiparisDurumu,
-                // -------------------------------
+               
 
                 Urun = x.Urun == null ? null : new Urun
                 {
                     UrunAdi = x.Urun.UrunAdi,
-                    UrunMarka = x.Urun.UrunMarka, // Varsa marka da görünsün
+                    UrunMarka = x.Urun.UrunMarka,
                     UrunGorsel = x.Urun.UrunGorsel
                 },
 
@@ -60,27 +59,23 @@ namespace ECommerceBackEnd.Controllers
             return Ok(modelListesi);
         }
 
-        // POST: api/Satislar/SiparisVer
-        // KALICI ÇÖZÜM BU METODDUR
         [HttpPost("SiparisVer")]
-        public IActionResult SiparisVer([FromBody] List<Satislar> sepetUrunleri)
+        public IActionResult SiparisVer([FromBody] SiparisIstegiDto istek)
         {
-            if (sepetUrunleri == null || sepetUrunleri.Count == 0)
+            // 1. BASİT ÖDEME DOĞRULAMASI (MOCK)
+            if (string.IsNullOrEmpty(istek.KartNumarasi) || istek.KartNumarasi.Length < 16)
             {
-                return BadRequest("Sepet boş, sipariş oluşturulamadı.");
+                return BadRequest("Kart numarası geçersiz.");
             }
 
-            // 1. ADIM: Benzersiz bir Sipariş Numarası üret (Örn: SP-A1B2C3D4)
+            
             string yeniSiparisNo = "SP-" + Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
-
             DateTime islemTarihi = DateTime.Now;
 
             try
             {
-                // 2. ADIM: Gelen listedeki her ürüne AYNI sipariş numarasını ver
-                foreach (var item in sepetUrunleri)
+                foreach (var item in istek.SepetUrunleri)
                 {
-                    // Yeni bir satış nesnesi oluşturuyoruz ki ID çakışması olmasın
                     var yeniSatis = new Satislar
                     {
                         UrunId = item.UrunId,
@@ -88,27 +83,23 @@ namespace ECommerceBackEnd.Controllers
                         Adet = item.Adet,
                         Fiyat = item.Fiyat,
                         ToplamTutar = item.Adet * item.Fiyat,
-
-                        // En Önemli Kısım:
                         SiparisNo = yeniSiparisNo,
                         Tarih = islemTarihi,
-                        SiparisDurumu = 0 // 0: Sipariş Alındı (Enum kullanıyorsan onu yaz)
+                        SiparisDurumu = 0
+                        // Önemli: CVV veya Kart No buraya kaydedilmez!
                     };
-
                     _context.satislars.Add(yeniSatis);
                 }
 
                 _context.SaveChanges();
-
-                return Ok(new { mesaj = "Sipariş başarıyla oluşturuldu.", siparisNo = yeniSiparisNo });
+                return Ok(new { mesaj = "Ödeme alındı ve sipariş oluşturuldu.", siparisNo = yeniSiparisNo });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "Sipariş oluşturulurken hata: " + ex.Message);
+                return StatusCode(500, "Hata: " + ex.Message);
             }
         }
 
-        // Sipariş Durumu Güncelleme Metodu (Admin Paneli İçin Lazım)
         [HttpPut("DurumGuncelle")]
         public IActionResult DurumGuncelle(string siparisNo, int yeniDurumId)
         {

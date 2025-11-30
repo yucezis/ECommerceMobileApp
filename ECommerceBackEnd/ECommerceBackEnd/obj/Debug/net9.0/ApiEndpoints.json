@@ -16,6 +16,54 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ECommerceBackEnd.Controllers.AdreslerController",
+    "Method": "Ekle",
+    "RelativePath": "api/Adresler/Ekle",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "yeniAdres",
+        "Type": "ECommerceBackEnd.Models.Adres",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.AdreslerController",
+    "Method": "Listele",
+    "RelativePath": "api/Adresler/Listele/{musteriId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "musteriId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.AdreslerController",
+    "Method": "Sil",
+    "RelativePath": "api/Adresler/Sil/{adresId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "adresId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ECommerceBackEnd.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",
@@ -266,8 +314,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "sepetUrunleri",
-        "Type": "System.Collections.Generic.List\u00601[[ECommerceBackEnd.Models.Satislar, ECommerceBackEnd, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Name": "istek",
+        "Type": "SiparisIstegiDto",
         "IsRequired": true
       }
     ],

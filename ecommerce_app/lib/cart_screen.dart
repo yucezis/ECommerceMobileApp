@@ -6,6 +6,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/cart_service.dart'; 
+import 'payment_screen.dart';
+import 'address_selection_screen.dart';
 
 // --- RENK PALETİ ---
 const Color kBookPaper = Color(0xFFFEFAE0);
@@ -22,7 +24,6 @@ class CartScreen extends StatefulWidget {
   State<CartScreen> createState() => _CartScreenState();
 }
 
-// 👇 TÜM KODLAR BU SINIFIN İÇİNDE OLMALI 👇
 class _CartScreenState extends State<CartScreen> {
   List<Urun> _sepetUrunleri = [];
   bool _isLoading = true;
@@ -68,7 +69,6 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
-  // 👇 _satinAl FONKSİYONU BURADA (SINIFIN İÇİNDE) OLMALI 👇
   Future<void> _satinAl() async {
     setState(() => _isLoading = true);
 
@@ -313,7 +313,13 @@ class _CartScreenState extends State<CartScreen> {
       decoration: BoxDecoration(
         color: kBookPaper,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(35)),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 30, offset: const Offset(0, -10))],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 30,
+            offset: const Offset(0, -10)
+          )
+        ],
       ),
       child: SafeArea(
         child: Column(
@@ -331,15 +337,36 @@ class _CartScreenState extends State<CartScreen> {
               width: double.infinity,
               height: 55,
               child: ElevatedButton(
-                // 👇 DÜZELTİLMİŞ BUTON KISMI
-                onPressed: _sepetUrunleri.isEmpty ? null : () => _satinAl(),
+                onPressed: _sepetUrunleri.isEmpty
+    ? null
+    : () async {
+        final result = await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddressSelectionScreen(
+              toplamTutar: _toplamTutar,
+              sepetUrunleri: _sepetUrunleri,
+            ),
+          ),
+        );
+
+        if (result == true) {
+          setState(() {
+            _sepetUrunleri.clear();
+            _toplamTutar = 0;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Sipariş başarıyla tamamlandı!"), backgroundColor: Colors.green),
+          );
+        }
+      },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: kDarkGreen,
                   foregroundColor: kBookPaper,
                   elevation: 8,
                   shadowColor: kDarkGreen.withOpacity(0.4),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  disabledBackgroundColor: Colors.grey.shade300, // Boşken gri olsun
+                  disabledBackgroundColor: Colors.grey.shade300, 
                 ),
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -355,5 +382,5 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
     );
-  }
+}
 }

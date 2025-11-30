@@ -4,6 +4,7 @@ using ECommerceBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerceBackEnd.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20251130170022_AdresTablosuEklendi")]
+    partial class AdresTablosuEklendi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,44 +98,6 @@ namespace ECommerceBackEnd.Migrations
                     b.HasKey("KategoriID");
 
                     b.ToTable("kategoris");
-                });
-
-            modelBuilder.Entity("ECommerceBackEnd.Models.KayitliKart", b =>
-                {
-                    b.Property<int>("KartId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KartId"));
-
-                    b.Property<string>("KartIsmi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KartNumarasi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KartSahibi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MusteriId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SonKullanmaAy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SonKullanmaYil")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("KartId");
-
-                    b.HasIndex("MusteriId");
-
-                    b.ToTable("KayitliKartlar");
                 });
 
             modelBuilder.Entity("ECommerceBackEnd.Models.Musteri", b =>
@@ -275,17 +240,6 @@ namespace ECommerceBackEnd.Migrations
                 });
 
             modelBuilder.Entity("ECommerceBackEnd.Models.Adres", b =>
-                {
-                    b.HasOne("ECommerceBackEnd.Models.Musteri", "Musteri")
-                        .WithMany()
-                        .HasForeignKey("MusteriId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Musteri");
-                });
-
-            modelBuilder.Entity("ECommerceBackEnd.Models.KayitliKart", b =>
                 {
                     b.HasOne("ECommerceBackEnd.Models.Musteri", "Musteri")
                         .WithMany()

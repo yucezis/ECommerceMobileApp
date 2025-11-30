@@ -4,7 +4,6 @@ import 'urun_model.dart';
 
 class SepetServisi {
   
-  // Sepete Ürün Ekle
   static Future<void> sepeteEkle(Urun urun) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> sepetListesi = prefs.getStringList('sepet') ?? [];
@@ -24,7 +23,8 @@ class SepetServisi {
     }
   }
 
-  static Future<List<Urun>> sepetiGetir() async {
+  static Future<List<Urun>> sepetiGetir() async 
+  {
     final prefs = await SharedPreferences.getInstance();
     List<String> sepetListesi = prefs.getStringList('sepet') ?? [];
 
@@ -33,7 +33,6 @@ class SepetServisi {
         .toList();
   }
 
-  // Sepetten Ürün Sil
   static Future<void> sepettenSil(int urunId) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> sepetListesi = prefs.getStringList('sepet') ?? [];
@@ -46,7 +45,6 @@ class SepetServisi {
     await prefs.setStringList('sepet', sepetListesi);
   }
 
-  // Sepeti Temizle (Satın alımdan sonra)
   static Future<void> sepetiBosalt() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('sepet');

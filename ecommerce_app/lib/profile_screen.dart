@@ -116,7 +116,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         _buildMenuItem(
                           icon: Icons.location_on_outlined,
                           title: "Adreslerim",
-                          subtitle: _musteri?.musteriSehir ?? "Adres eklenmedi",
                           onTap: () {},
                         ),
                         _buildMenuItem(
