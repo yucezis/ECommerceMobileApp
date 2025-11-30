@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/satislar_model.dart';
-import 'models/adres_model.dart'; // Adres modelinin import edildiğinden emin ol
+//import 'models/adres_model.dart'; 
 
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kDarkGreen = Color(0xFF283618);

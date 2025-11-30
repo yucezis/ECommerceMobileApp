@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'models/urun_model.dart';
 import 'models/card_model.dart';
 import 'models/cart_service.dart';
+import 'sms_verification_screen.dart';
 
 const Color kDarkGreen = Color(0xFF283618);
 const Color kOliveGreen = Color(0xFF606C38);
@@ -88,7 +89,6 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
     String ay = tarihParcalari[0];
     String yil = "20${tarihParcalari[1]}"; 
 
-    // 2. Kullanıcının girdiği ismi kullan, boşsa "Kartım" yap
     String kaydedilecekIsim = cardName.trim().isEmpty ? "Kartım" : cardName.trim();
 
     KayitliKart yeniKart = KayitliKart(
@@ -116,7 +116,19 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
     if (!formKey.currentState!.validate()) {
       return;
     }
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SmsVerificationScreen(
+          onVerified: () async {
+            await _gerceklesecekOdemeIslemi();
+          },
+        ),
+      ),
+    );
+  }
 
+  Future<void> _gerceklesecekOdemeIslemi() async {
     setState(() => _isLoading = true);
 
     try {
@@ -128,6 +140,7 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
       final int? musteriId = prefs.getInt('musteriId');
       if (musteriId == null) throw Exception("Oturum hatası");
 
+      // 2. Ürün Listesini Hazırla
       List<Map<String, dynamic>> urunListesi = widget.sepetUrunleri.map((urun) {
         return {
           "urunId": urun.urunId,
@@ -147,6 +160,7 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
       };
 
       var url = Uri.parse("${getBaseUrl()}/Satislar/SiparisVer");
+      
       var response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
@@ -159,6 +173,7 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
       } else {
         throw Exception("Sipariş hatası: ${response.body}");
       }
+      
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Hata: $e"), backgroundColor: Colors.red));
