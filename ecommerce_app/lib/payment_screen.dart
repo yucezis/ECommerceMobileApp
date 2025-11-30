@@ -7,7 +7,6 @@ import 'models/urun_model.dart';
 import 'models/card_model.dart';
 import 'models/cart_service.dart';
 
-
 const Color kDarkGreen = Color(0xFF283618);
 const Color kOliveGreen = Color(0xFF606C38);
 const Color kBookPaper = Color(0xFFFEFAE0);
@@ -15,11 +14,13 @@ const Color kBookPaper = Color(0xFFFEFAE0);
 class PaymentScreen extends StatefulWidget {
   final double toplamTutar;
   final List<Urun> sepetUrunleri;
+  final int secilenAdresId;
 
   const PaymentScreen({
     super.key,
     required this.toplamTutar,
     required this.sepetUrunleri,
+    required this.secilenAdresId,
   });
 
   @override
@@ -31,6 +32,10 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
   String expiryDate = '';
   String cardHolderName = '';
   String cvvCode = '';
+  
+  // 1. Kart İsmi Değişkeni
+  String cardName = ''; 
+  
   bool isCvvFocused = false;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   
@@ -72,19 +77,22 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
     }
   }
 
-  // --- API: KART KAYDET ---
   Future<void> _kartKaydet() async {
     final prefs = await SharedPreferences.getInstance();
     final int? musteriId = prefs.getInt('musteriId');
     if (musteriId == null) return;
 
-    // Tarihi parçala (MM/YY formatından)
     List<String> tarihParcalari = expiryDate.split('/');
+    if (tarihParcalari.length < 2) return;
+    
     String ay = tarihParcalari[0];
-    String yil = "20${tarihParcalari[1]}"; // 24 -> 2024 yapıyoruz
+    String yil = "20${tarihParcalari[1]}"; 
+
+    // 2. Kullanıcının girdiği ismi kullan, boşsa "Kartım" yap
+    String kaydedilecekIsim = cardName.trim().isEmpty ? "Kartım" : cardName.trim();
 
     KayitliKart yeniKart = KayitliKart(
-      kartIsmi: "Kartım", // İstersen kullanıcıya girdirebilirsin
+      kartIsmi: kaydedilecekIsim, 
       kartSahibi: cardHolderName,
       kartNumarasi: cardNumber.replaceAll(' ', ''),
       sonKullanmaAy: ay,
@@ -98,13 +106,12 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(yeniKart.toJson()),
       );
-      print("Kart başarıyla kaydedildi.");
+      print("Kart başarıyla kaydedildi: $kaydedilecekIsim");
     } catch (e) {
       print("Kart kaydetme hatası: $e");
     }
   }
 
-  // --- ÖDEME VE SİPARİŞ ---
   Future<void> _odemeYapVeSiparisVer() async {
     if (!formKey.currentState!.validate()) {
       return;
@@ -113,12 +120,10 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
     setState(() => _isLoading = true);
 
     try {
-      // 1. Eğer kullanıcı "Kartı Kaydet" dediyse önce onu kaydet
       if (_kartKaydedilsinMi) {
         await _kartKaydet();
       }
 
-      // 2. Sipariş API İsteği Hazırla
       final prefs = await SharedPreferences.getInstance();
       final int? musteriId = prefs.getInt('musteriId');
       if (musteriId == null) throw Exception("Oturum hatası");
@@ -137,7 +142,8 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
         "kartSahibi": cardHolderName,
         "kartNumarasi": cardNumber.replaceAll(' ', ''),
         "sonKullanmaTarihi": expiryDate,
-        "cvv": cvvCode
+        "cvv": cvvCode,
+        "teslimatAdresiId": widget.secilenAdresId
       };
 
       var url = Uri.parse("${getBaseUrl()}/Satislar/SiparisVer");
@@ -182,58 +188,46 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
     );
   }
 
-  // Kayıtlı Kart Seçildiğinde Formu Doldur
   void _kartSec(KayitliKart kart) {
     setState(() {
       cardNumber = kart.kartNumarasi;
       cardHolderName = kart.kartSahibi;
-      // Backendde Yıl 2024 diye tutuluyor, UI MM/YY istiyor. Dönüştürüyoruz:
       expiryDate = "${kart.sonKullanmaAy}/${kart.sonKullanmaYil.substring(2)}";
-      cvvCode = ""; // Güvenlik için CVV boş gelir
-      _kartKaydedilsinMi = false; // Zaten kayıtlı
-      
-      // İlk sekmeye (Ödeme Formuna) geri dön
+      cvvCode = ""; 
+      _kartKaydedilsinMi = false; 
       _tabController.animateTo(0);
-      
-      // CVV'ye odaklansın diye bir uyarı verebiliriz
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Kart bilgileri dolduruldu. Lütfen CVV giriniz.")));
     });
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: Colors.white,
-    appBar: AppBar(
-      title: const Text("Ödeme Yap"),
-      backgroundColor: kDarkGreen,
-      
-      // 1. BAŞLIK VE GERİ BUTONU RENGİ
-      foregroundColor: kBookPaper, 
-      
-      bottom: TabBar(
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text("Ödeme Yap"),
+        backgroundColor: kDarkGreen,
+        foregroundColor: kBookPaper, 
+        bottom: TabBar(
+          controller: _tabController,
+          indicatorColor: kBookPaper,
+          labelColor: kBookPaper, 
+          unselectedLabelColor: kBookPaper.withOpacity(0.5), 
+          tabs: const [
+            Tab(text: "KART BİLGİLERİ", icon: Icon(Icons.credit_card)),
+            Tab(text: "KAYITLI KARTLARIM", icon: Icon(Icons.wallet)),
+          ],
+        ),
+      ),
+      body: TabBarView(
         controller: _tabController,
-        indicatorColor: kBookPaper,
-        
-        labelColor: kBookPaper, 
-        unselectedLabelColor: kBookPaper.withOpacity(0.5), 
-        
-        tabs: const [
-          Tab(text: "KART BİLGİLERİ", icon: Icon(Icons.credit_card)),
-          Tab(text: "KAYITLI KARTLARIM", icon: Icon(Icons.wallet)),
+        children: [
+          _buildOdemeFormu(),
+          _buildKayitliKartlarListesi(),
         ],
       ),
-    ),
-    body: TabBarView(
-      controller: _tabController,
-      children: [
-        _buildOdemeFormu(),
-        
-        _buildKayitliKartlarListesi(),
-      ],
-    ),
-  );
-}
+    );
+  }
 
   Widget _buildOdemeFormu() {
     return SingleChildScrollView(
@@ -277,21 +271,48 @@ Widget build(BuildContext context) {
           // Kartı Kaydet Checkbox
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: CheckboxListTile(
-              title: const Text("Kartımı sonraki alışverişler için kaydet"),
-              value: _kartKaydedilsinMi,
-              activeColor: kOliveGreen,
-              onChanged: (val) {
-                setState(() {
-                  _kartKaydedilsinMi = val ?? false;
-                });
-              },
+            child: Column(
+              children: [
+                CheckboxListTile(
+                  title: const Text("Kartımı sonraki alışverişler için kaydet"),
+                  value: _kartKaydedilsinMi,
+                  activeColor: kOliveGreen,
+                  contentPadding: EdgeInsets.zero,
+                  controlAffinity: ListTileControlAffinity.leading, // Checkbox solda olsun
+                  onChanged: (val) {
+                    setState(() {
+                      _kartKaydedilsinMi = val ?? false;
+                    });
+                  },
+                ),
+                
+                // 3. YENİ EKLENEN KISIM: KART İSMİ ALANI
+                // Sadece checkbox işaretliyse görünsün
+                if (_kartKaydedilsinMi)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: "Kart İsmi (Örn: Maaş Kartım)",
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                        prefixIcon: const Icon(Icons.label, color: kOliveGreen),
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                      ),
+                      onChanged: (val) {
+                        setState(() {
+                          cardName = val;
+                        });
+                      },
+                    ),
+                  ),
+              ],
             ),
           ),
           
           const SizedBox(height: 10),
           
-          // Toplam Tutar ve Buton
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -336,6 +357,15 @@ Widget build(BuildContext context) {
       itemCount: _kayitliKartlar.length,
       itemBuilder: (context, index) {
         final kart = _kayitliKartlar[index];
+
+        // GÜVENLİK KONTROLÜ: Kart numarası 4 haneden kısaysa hata vermesin
+        String maskeliNumara = "**** **** **** ";
+        if (kart.kartNumarasi.length >= 4) {
+          maskeliNumara += kart.kartNumarasi.substring(kart.kartNumarasi.length - 4);
+        } else {
+          maskeliNumara += "####";
+        }
+
         return Card(
           elevation: 4,
           margin: const EdgeInsets.only(bottom: 15),
@@ -352,13 +382,14 @@ Widget build(BuildContext context) {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(kart.kartIsmi, style: const TextStyle(color: Colors.white70, fontSize: 14)),
+                      // Eğer modelde kartIsmi yoksa hata verir, o yüzden modeli güncellemelisin
+                      Text(kart.kartIsmi, style: const TextStyle(color: Colors.white70, fontSize: 16, fontWeight: FontWeight.w600)),
                       const Icon(Icons.credit_card, color: Colors.white),
                     ],
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "**** **** **** ${kart.kartNumarasi.substring(kart.kartNumarasi.length - 4)}",
+                    maskeliNumara, // Güvenli numara
                     style: const TextStyle(color: Colors.white, fontSize: 22, letterSpacing: 2, fontFamily: 'Courier'),
                   ),
                   const SizedBox(height: 20),
@@ -366,7 +397,9 @@ Widget build(BuildContext context) {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(kart.kartSahibi.toUpperCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                      Text("${kart.sonKullanmaAy}/${kart.sonKullanmaYil.substring(2)}", style: const TextStyle(color: Colors.white)),
+                      // Yılın son 2 hanesini alırken de güvenlik kontrolü
+                      Text("${kart.sonKullanmaAy}/${kart.sonKullanmaYil.length >= 2 ? kart.sonKullanmaYil.substring(2) : kart.sonKullanmaYil}", 
+                           style: const TextStyle(color: Colors.white)),
                     ],
                   ),
                   const Divider(color: Colors.white24, height: 30),

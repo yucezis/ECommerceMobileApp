@@ -20,6 +20,9 @@ namespace ECommerceBackEnd.Models
 
         public string? SiparisNo { get; set; }
 
+        public int? TeslimatAdresiId { get; set; }
+        public Adres? TeslimatAdresi { get; set; }
+
         public SiparisDurum SiparisDurumu { get; set; } = SiparisDurum.SiparisAlindi;
     }
 

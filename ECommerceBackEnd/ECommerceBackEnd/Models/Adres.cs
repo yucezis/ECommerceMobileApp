@@ -6,7 +6,6 @@ namespace ECommerceBackEnd.Models
     {
         [Key]
         public int AdresId { get; set; }
-
         public string Baslik { get; set; } 
         public string Sehir { get; set; }
         public string Ilce { get; set; }

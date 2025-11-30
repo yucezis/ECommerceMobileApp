@@ -217,31 +217,27 @@ class _AddressSelectionScreenState extends State<AddressSelectionScreen> {
                       ),
                       const SizedBox(height: 10),
                       
-                      // Ödemeye Geç Butonu
                       ElevatedButton(
-                        onPressed: _selectedAdresId == null
-                            ? null // Adres seçilmediyse pasif
-                            : () async {
-                                // Seçilen adresi bul
-                                // final secilenAdres = _adresler.firstWhere((element) => element.adresId == _selectedAdresId);
-                                
-                                // Ödeme Ekranına Git
-                                final result = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PaymentScreen(
-                                      toplamTutar: widget.toplamTutar,
-                                      sepetUrunleri: widget.sepetUrunleri,
-                                      // İlerde buraya 'secilenAdres'i de gönderebilirsin
-                                    ),
-                                  ),
-                                );
-                                
-                                // Eğer ödeme başarılıysa geriye dön (true)
-                                if (result == true) {
-                                  Navigator.pop(context, true);
-                                }
-                              },
+  onPressed: _selectedAdresId == null
+      ? null // Adres seçilmediyse buton pasif
+      : () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PaymentScreen(
+                toplamTutar: widget.toplamTutar,
+                sepetUrunleri: widget.sepetUrunleri,
+                
+                // --- ARTIK ID'Yİ GÖNDERİYORUZ ---
+                secilenAdresId: _selectedAdresId!, 
+              ),
+            ),
+          );
+
+          if (result == true) {
+            Navigator.pop(context, true);
+          }
+        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: kDarkGreen,
                           foregroundColor: Colors.white,

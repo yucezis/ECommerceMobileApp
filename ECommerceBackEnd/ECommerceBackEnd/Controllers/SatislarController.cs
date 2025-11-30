@@ -24,6 +24,7 @@ namespace ECommerceBackEnd.Controllers
             var satislar = _context.satislars
                 .Include(x => x.Urun)
                 .Include(x => x.Musteri)
+                .Include(x => x.TeslimatAdresi)
                 .OrderByDescending(x => x.Tarih) 
                 .ToList();
 
@@ -62,7 +63,6 @@ namespace ECommerceBackEnd.Controllers
         [HttpPost("SiparisVer")]
         public IActionResult SiparisVer([FromBody] SiparisIstegiDto istek)
         {
-            // 1. BASİT ÖDEME DOĞRULAMASI (MOCK)
             if (string.IsNullOrEmpty(istek.KartNumarasi) || istek.KartNumarasi.Length < 16)
             {
                 return BadRequest("Kart numarası geçersiz.");
@@ -85,8 +85,8 @@ namespace ECommerceBackEnd.Controllers
                         ToplamTutar = item.Adet * item.Fiyat,
                         SiparisNo = yeniSiparisNo,
                         Tarih = islemTarihi,
+                        TeslimatAdresiId = istek.TeslimatAdresiId,
                         SiparisDurumu = 0
-                        // Önemli: CVV veya Kart No buraya kaydedilmez!
                     };
                     _context.satislars.Add(yeniSatis);
                 }

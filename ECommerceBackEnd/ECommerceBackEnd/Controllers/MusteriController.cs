@@ -33,6 +33,8 @@ public class MusterisController : ControllerBase
     {
         var satislar = _context.satislars
             .Include(s => s.Urun)
+            .Include(x => x.TeslimatAdresi) 
+            .OrderByDescending(x => x.Tarih)
             .Where(s => s.MusteriId == id)
             .ToList();
 

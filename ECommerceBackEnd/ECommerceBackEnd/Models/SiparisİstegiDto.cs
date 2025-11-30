@@ -7,4 +7,5 @@ public class SiparisIstegiDto
     public string KartNumarasi { get; set; }       
     public string SonKullanmaTarihi { get; set; }    
     public string Cvv { get; set; }
+    public int TeslimatAdresiId { get; set; }
 }
