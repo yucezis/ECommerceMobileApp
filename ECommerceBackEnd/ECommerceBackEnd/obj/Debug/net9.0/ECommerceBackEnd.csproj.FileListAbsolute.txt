@@ -212,6 +212,7 @@ C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\bin\Debug\net9.0\Microsoft.
 C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\bin\Debug\net9.0\Microsoft.SqlServer.Server.dll
 C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\bin\Debug\net9.0\Microsoft.Win32.SystemEvents.dll
 C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\bin\Debug\net9.0\Mono.TextTemplating.dll
+C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\bin\Debug\net9.0\Newtonsoft.Json.dll
 C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\bin\Debug\net9.0\System.ClientModel.dll
 C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\bin\Debug\net9.0\System.CodeDom.dll
 C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\bin\Debug\net9.0\System.Composition.AttributedModel.dll

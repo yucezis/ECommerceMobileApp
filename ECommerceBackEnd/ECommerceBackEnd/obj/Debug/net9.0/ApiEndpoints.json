@@ -80,6 +80,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ECommerceBackEnd.Controllers.ChatController",
+    "Method": "Sor",
+    "RelativePath": "api/Chat/Sor",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "ECommerceBackEnd.Controllers.ChatController\u002BChatModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ECommerceBackEnd.Controllers.IstatistikController",
     "Method": "GetDashboardData",
     "RelativePath": "api/Istatistik/get-dashboard-data",

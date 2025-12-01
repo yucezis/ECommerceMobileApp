@@ -9,6 +9,7 @@ import 'order_history_screen.dart';
 import 'my_addresses_screen.dart';
 import 'my_cards_screen.dart';
 import 'settings_screen.dart';
+import 'help_support_screen.dart';
 
 const Color kBookPaper = Color(0xFFFEFAE0); 
 const Color kDarkGreen = Color(0xFF283618); 
@@ -154,11 +155,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         const SizedBox(height: 15),
                         
                         _buildMenuItem(
-                          icon: Icons.help_outline,
-                          title: "Yardım ve Destek",
-                          subtitle: "SSS ve İletişim",
-                          onTap: () {},
-                        ),
+  icon: Icons.help_outline,
+  title: "Yardım ve Destek",
+  subtitle: "SSS ve İletişim",
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HelpSupportScreen(),
+      ),
+    );
+  },
+),
                         _buildMenuItem(
                           icon: Icons.logout,
                           title: "Çıkış Yap",
