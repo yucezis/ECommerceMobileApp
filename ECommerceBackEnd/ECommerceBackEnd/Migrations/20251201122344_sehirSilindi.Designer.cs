@@ -4,6 +4,7 @@ using ECommerceBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerceBackEnd.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20251201122344_sehirSilindi")]
+    partial class sehirSilindi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,9 +149,6 @@ namespace ECommerceBackEnd.Migrations
                     b.Property<bool>("Durum")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("EmailOnayli")
-                        .HasColumnType("bit");
-
                     b.Property<string>("MusteriAdi")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -173,9 +173,6 @@ namespace ECommerceBackEnd.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("VARCHAR");
-
-                    b.Property<string>("OnayKodu")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MusteriId");
 

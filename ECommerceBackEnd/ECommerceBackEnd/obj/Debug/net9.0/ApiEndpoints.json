@@ -212,7 +212,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "MusterisController",
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
     "Method": "GetMusteriler",
     "RelativePath": "api/Musteris",
     "HttpMethod": "GET",
@@ -222,7 +222,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "MusterisController",
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
     "Method": "Post",
     "RelativePath": "api/Musteris",
     "HttpMethod": "POST",
@@ -238,7 +238,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "MusterisController",
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
     "Method": "GetMusteri",
     "RelativePath": "api/Musteris/{id}",
     "HttpMethod": "GET",
@@ -254,7 +254,55 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "MusterisController",
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
+    "Method": "Dogrula",
+    "RelativePath": "api/Musteris/Dogrula",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "ECommerceBackEnd.Controllers.MusterisController\u002BDogrulamaModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
+    "Method": "GuncelleOnayli",
+    "RelativePath": "api/Musteris/GuncelleOnayli",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "ECommerceBackEnd.Controllers.MusterisController\u002BGuncellemeModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
+    "Method": "KodGonder",
+    "RelativePath": "api/Musteris/KodGonder/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
     "Method": "Login",
     "RelativePath": "api/Musteris/Login",
     "HttpMethod": "POST",
@@ -263,14 +311,14 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "MusterisController\u002BLoginModel",
+        "Type": "ECommerceBackEnd.Controllers.MusterisController\u002BLoginModel",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "MusterisController",
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
     "Method": "GetSatisGecmisi",
     "RelativePath": "api/Musteris/SatisGecmisi/{id}",
     "HttpMethod": "GET",
@@ -286,7 +334,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "MusterisController",
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
     "Method": "SepetOnayla",
     "RelativePath": "api/Musteris/SepetOnayla",
     "HttpMethod": "POST",
@@ -295,14 +343,14 @@
     "Parameters": [
       {
         "Name": "model",
-        "Type": "MusterisController\u002BSepetOnayModel",
+        "Type": "ECommerceBackEnd.Controllers.MusterisController\u002BSepetOnayModel",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "MusterisController",
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
     "Method": "SiparisDurumGuncelle",
     "RelativePath": "api/Musteris/SiparisDurumGuncelle",
     "HttpMethod": "PUT",

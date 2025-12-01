@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ECommerceBackEnd.Models
 {
@@ -19,11 +20,7 @@ namespace ECommerceBackEnd.Models
         [Required(ErrorMessage = "Bu alanı boş bırakamazsınız!")]
         public string MusteriSoyadi { get; set; }
 
-        [Column(TypeName = "VARCHAR")]
-        [StringLength(15)]
-        [Required(ErrorMessage = "Bu alanı boş bırakamazsınız!")]
-        public string MusteriSehir { get; set; }
-
+        
         [Column(TypeName = "VARCHAR")]
         [StringLength(10)]
         [Required(ErrorMessage = "Bu alanı boş bırakamazsınız!")]
@@ -40,6 +37,11 @@ namespace ECommerceBackEnd.Models
         public string MusteriSifre { get; set; }
 
         public bool Durum { get; set; }
-        public ICollection<Satislar> satislars { get; set; }
+
+        public bool EmailOnayli { get; set; } = false;
+        public string? OnayKodu { get; set; } 
+
+        [JsonIgnore]
+        public ICollection<Satislar>? satislars { get; set; }
     }
 }

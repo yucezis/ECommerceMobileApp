@@ -8,6 +8,7 @@ import 'favorite_screen.dart';
 import 'order_history_screen.dart';
 import 'my_addresses_screen.dart';
 import 'my_cards_screen.dart';
+import 'settings_screen.dart';
 
 const Color kBookPaper = Color(0xFFFEFAE0); 
 const Color kDarkGreen = Color(0xFF283618); 
@@ -227,9 +228,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         style: TextStyle(color: kBookPaper, fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.settings, color: kBookPaper),
-                      ),
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SettingsScreen(),
+      ),
+    );
+  },
+  icon: const Icon(Icons.settings, color: kBookPaper),
+),
                     ],
                   ),
                 ),

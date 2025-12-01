@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 //import 'payment_screen.dart';
 import 'address_selection_screen.dart';
 
-// --- RENK PALETİ ---
+
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kBackgroundAccent = Color(0xFFFAEDCD);
 const Color kDarkGreen = Color(0xFF283618);
@@ -200,7 +200,7 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                     _buildAltToplam(),
-                    const SizedBox(height: 100), // Footer boşluğu
+                    const SizedBox(height: 100), 
                   ],
                 ),
     );

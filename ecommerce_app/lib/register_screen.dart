@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'email_verify_screen.dart';
 
 // --- RENK PALETİ ---
 const Color kBookPaper = Color(0xFFFEFAE0); // Arka plan (Krem)
@@ -36,7 +37,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future<void> _kayitOl() async {
-    if (!_formKey.currentState!.validate()) return;
+    FocusScope.of(context).unfocus(); 
+  
+    await Future.delayed(const Duration(milliseconds: 200));
 
     setState(() => _isLoading = true);
 
@@ -60,16 +63,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       if (!mounted) return;
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text("Kayıt Başarılı! Kitap dünyasına hoş geldiniz."),
-            backgroundColor: kOliveGreen,
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
-        Navigator.pop(context);
-      } else {
+
+if (response.statusCode == 200) {
+    var data = jsonDecode(response.body);
+    int yeniMusteriId = data['musteriId'];
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EmailVerifyScreen(musteriId: yeniMusteriId)),
+    );
+} else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Hata: ${response.body}"),
@@ -96,9 +99,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kBookPaper, // Krem rengi arka plan
+      backgroundColor: kBookPaper, 
       appBar: AppBar(
-        backgroundColor: Colors.transparent, // Şeffaf AppBar
+        backgroundColor: Colors.transparent, 
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, color: kDarkGreen),
@@ -113,7 +116,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // --- BAŞLIK ALANI ---
                 Center(
                   child: Column(
                     children: [
@@ -139,7 +141,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 35),
 
-                // --- FORM ALANI ---
                 Row(
                   children: [
                     Expanded(
@@ -219,7 +220,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 40),
 
-                // --- KAYIT OL BUTONU ---
                 SizedBox(
                   width: double.infinity,
                   height: 55,
@@ -251,7 +251,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  // Modern Tasarımlı Input Helper
   Widget _buildModernField({
     required TextEditingController controller,
     required String label,
@@ -276,7 +275,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.6), // Hafif şeffaf beyaz dolgu
+            color: Colors.white.withOpacity(0.6),
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
@@ -309,7 +308,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   : null,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none, // Çerçeveyi kaldırdık, sadece dolgu
+                borderSide: BorderSide.none, 
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),

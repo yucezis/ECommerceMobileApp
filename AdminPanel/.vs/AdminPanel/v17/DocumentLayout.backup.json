@@ -46,8 +46,7 @@
               "RelativeToolTip": "AdminPanel\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T11:39:00.24Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T11:39:00.24Z"
             },
             {
               "$type": "Document",
@@ -59,8 +58,7 @@
               "RelativeToolTip": "AdminPanel\\Models\\SiparisGrupView.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T11:17:57.865Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T11:17:57.865Z"
             },
             {
               "$type": "Document",
@@ -68,8 +66,8 @@
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Satislar\\Index.cshtml",
               "RelativeDocumentMoniker": "AdminPanel\\Views\\Satislar\\Index.cshtml",
-              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Satislar\\Index.cshtml*",
-              "RelativeToolTip": "AdminPanel\\Views\\Satislar\\Index.cshtml*",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Satislar\\Index.cshtml",
+              "RelativeToolTip": "AdminPanel\\Views\\Satislar\\Index.cshtml",
               "ViewState": "AgIAAPgAAAAAAAAAAAAswBoBAABkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-30T11:08:29.482Z",
@@ -85,8 +83,7 @@
               "RelativeToolTip": "AdminPanel\\Controllers\\SatislarController.cs",
               "ViewState": "AgIAADMAAAAAAAAAAAAswEAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T11:08:05.11Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T11:08:05.11Z"
             },
             {
               "$type": "Document",
@@ -98,8 +95,7 @@
               "RelativeToolTip": "AdminPanel\\Models\\SatislarViewModel.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAA9wA4AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T11:56:39.665Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T11:56:39.665Z"
             }
           ]
         },

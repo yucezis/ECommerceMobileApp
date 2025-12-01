@@ -127,14 +127,14 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
     KayitliKart yeniKart = KayitliKart(
       kartIsmi: kaydedilecekIsim,
       kartSahibi: cardHolderName,
-      kartNumarasi: cardNumber.replaceAll(' ', ''), // Boşlukları temizle
+      kartNumarasi: cardNumber.replaceAll(' ', ''), 
       sonKullanmaAy: ay,
       sonKullanmaYil: yil,
       musteriId: musteriId,
     );
 
     try {
-      print("Gönderilen JSON: ${jsonEncode(yeniKart.toJson())}"); // LOG 1
+      print("Gönderilen JSON: ${jsonEncode(yeniKart.toJson())}");
 
       final response = await http.post(
         Uri.parse("${getBaseUrl()}/Kartlar/Ekle"),
@@ -142,8 +142,7 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
         body: jsonEncode(yeniKart.toJson()),
       );
 
-      print("API Cevabı: ${response.statusCode} - ${response.body}"); // LOG 2
-
+      print("API Cevabı: ${response.statusCode} - ${response.body}"); 
       if (response.statusCode == 200) {
         Navigator.pop(context); 
         _sifirlaForm(); 
@@ -295,7 +294,6 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
                   itemBuilder: (context, index) {
                     final kart = _kartlar[index];
                     
-                    // Kart No Maskeleme
                     String maskeliNo = "**** **** **** ";
                     if (kart.kartNumarasi.length >= 4) {
                       maskeliNo += kart.kartNumarasi.substring(kart.kartNumarasi.length - 4);
@@ -318,7 +316,6 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
                           onCreditCardWidgetChange: (brand) {},
                         ),
                         
-                        // Altındaki İşlem Barı (Sil Butonu)
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 16),
                           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
