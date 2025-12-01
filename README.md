@@ -50,7 +50,8 @@ The management panel and backend infrastructure are largely complete, while the 
 - [x] **OTP / SMS Verification Simulation:** Simulating code verification for secure registration.
 - [x] **Wishlist:** Ability to favorite products for quick access. 
 - [ ] **Advanced Search:** Filtering products by price, author, or publisher.
-- [ ] **Profile Page:** Displaying and editing user information via API.
+- [x] **Profile Page:** Displaying and editing user information via API.
+- [x] **AI-Powered Chat:** Integrated **Google Gemini** to provide real-time support and personalized book recommendations within the app.
       
 ---
 
@@ -81,9 +82,9 @@ The management panel and backend infrastructure are largely complete, while the 
 | :---: | :---: |
 | <img src="https://r.resimlink.com/8Rxg6.png" width="400"> | <img src="https://r.resimlink.com/IAExP.png" width="400"> |
 
-| Mobile - Home Page | Mobile - Profile Screen |
-| :---: | :---: |
-| <img src="https://r.resimlink.com/TJE1lIszk.jpg" width="200"> | <img src="https://r.resimlink.com/JUL-oO.jpg" width="200"> |
+| Mobile - Home Page | Mobile - Profile Screen | Mobile - AI Screen |
+| :---: | :---: | :---: |
+| <img src="https://r.resimlink.com/TJE1lIszk.jpg" width="200"> | <img src="https://r.resimlink.com/JUL-oO.jpg" width="200"> | <img src="https://r.resimlink.com/pQHEqgRdJ.png" width="200"> |
 
 ---
 
