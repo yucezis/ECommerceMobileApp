@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'login_screen.dart';
 import 'favorite_screen.dart';
 import 'order_history_screen.dart';
+import 'my_addresses_screen.dart';
+import 'my_cards_screen.dart';
 
 const Color kBookPaper = Color(0xFFFEFAE0); 
 const Color kDarkGreen = Color(0xFF283618); 
@@ -114,18 +116,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         },
                         ),
                         _buildMenuItem(
-                          icon: Icons.location_on_outlined,
-                          title: "Adreslerim",
-                          subtitle: "Kayıtlı adresleriniz ",
-                          onTap: () {},
-                        ),
+  icon: Icons.location_on_outlined,
+  title: "Adreslerim",
+  subtitle: "Kayıtlı adresleriniz",
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MyAddressesScreen(),
+      ),
+    );
+  },
+),
                         _buildMenuItem(
-                          icon: Icons.credit_card,
-                          title: "Ödeme Yöntemleri",
-                          subtitle: "Kayıtlı kartların",
-                          onTap: () {},
-                        ),
-                        
+  icon: Icons.credit_card,
+  title: "Ödeme Yöntemleri",
+  subtitle: "Kayıtlı kartların",
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MyCardsScreen(),
+      ),
+    );
+  },
+),
                         const SizedBox(height: 25),
                         const Text(
                           "Uygulama Ayarları",
@@ -218,8 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ],
                   ),
                 ),
-                // Profil Resmi ve İsim
-                const SizedBox(height: 5), // Biraz boşlukları da dengeledik
+                const SizedBox(height: 5), 
                 Container(
                   padding: const EdgeInsets.all(4), 
                   decoration: const BoxDecoration(

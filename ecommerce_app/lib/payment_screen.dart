@@ -113,19 +113,31 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
   }
 
   Future<void> _odemeYapVeSiparisVer() async {
+    // 1. Form kontrolü
     if (!formKey.currentState!.validate()) {
       return;
     }
-    await Navigator.push(
+
+    // 2. Klavyeyi garanti kapat (Payment ekranındaki klavye)
+    FocusScope.of(context).unfocus();
+
+    // 3. SMS Ekranına Git ve SONUCU BEKLE
+    // result değişkeni, SMS ekranından dönen 'true' değeri olacak
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SmsVerificationScreen(
-          onVerified: () async {
-            await _gerceklesecekOdemeIslemi();
-          },
-        ),
+        builder: (context) => const SmsVerificationScreen(),
       ),
     );
+
+    // 4. Eğer sonuç 'true' ise (Doğrulama başarılıysa) ödeme işlemini yap
+    if (result == true) {
+      // SMS ekranı kapandı, şimdi API isteğini atıyoruz
+      await _gerceklesecekOdemeIslemi();
+    } else {
+      // Kullanıcı SMS ekranında geri tuşuna bastı veya iptal etti
+      print("SMS doğrulaması yapılmadı.");
+    }
   }
 
   Future<void> _gerceklesecekOdemeIslemi() async {
