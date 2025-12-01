@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-// import 'package:url_launcher/url_launcher.dart'; // Paketi eklersen bunu aç
+import 'package:url_launcher/url_launcher.dart';
 import 'chat_screen.dart';
 
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kDarkGreen = Color(0xFF283618);
 const Color kOliveGreen = Color(0xFF606C38);
 const Color kDarkCoffee = Color(0xFF211508);
-const Color kSoftGreen = Color(0xFFE9EDC9); 
-class HelpSupportScreen extends StatefulWidget {
+const Color kSoftGreen = Color(0xFFE9EDC9);
 
+class HelpSupportScreen extends StatefulWidget {
   const HelpSupportScreen({super.key});
 
   @override
@@ -17,7 +17,7 @@ class HelpSupportScreen extends StatefulWidget {
 
 class _HelpSupportScreenState extends State<HelpSupportScreen> {
   final TextEditingController _searchController = TextEditingController();
-  
+
   final List<Map<String, String>> _allFaqList = [
     {
       "question": "Siparişim ne zaman kargoya verilir?",
@@ -50,17 +50,14 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
   @override
   void initState() {
     super.initState();
-    _filteredFaqList = _allFaqList; 
+    _filteredFaqList = _allFaqList;
   }
 
   void _filterSearchResults(String query) {
     if (query.isEmpty) {
-      setState(() {
-        _filteredFaqList = _allFaqList;
-      });
+      setState(() => _filteredFaqList = _allFaqList);
       return;
     }
-
     setState(() {
       _filteredFaqList = _allFaqList
           .where((item) => item["question"]!.toLowerCase().contains(query.toLowerCase()))
@@ -68,18 +65,41 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
     });
   }
 
-  // URL Açma Fonksiyonu (Paket eklenirse burası aktif edilir)
-  /*
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(scheme: 'tel', path: phoneNumber);
-    await launchUrl(launchUri);
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri);
+    } else {
+      _showError("Arama yapılamadı.");
+    }
   }
-  
+
   Future<void> _sendEmail(String email) async {
     final Uri launchUri = Uri(scheme: 'mailto', path: email);
-    await launchUrl(launchUri);
+    if (await canLaunchUrl(launchUri)) {
+      await launchUrl(launchUri);
+    } else {
+      _showError("Mail uygulaması açılamadı.");
+    }
   }
-  */
+
+  Future<void> _openMap() async {
+    const double lat = 38.028792309013184;
+    const double lng = 32.50926463634804;
+    final Uri googleMapsUrl = Uri.parse("https://www.google.com/maps/search/?api=1&query=$lat,$lng");
+
+    try {
+      if (!await launchUrl(googleMapsUrl, mode: LaunchMode.externalApplication)) {
+        await launchUrl(googleMapsUrl, mode: LaunchMode.platformDefault);
+      }
+    } catch (e) {
+      _showError("Harita açılamadı: $e");
+    }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message), backgroundColor: Colors.red));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,98 +112,93 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
         centerTitle: true,
         elevation: 0,
       ),
+      // Chat Butonu
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const ChatScreen()),
-  );
-},
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const ChatScreen()));
+        },
         backgroundColor: kDarkGreen,
         icon: const Icon(Icons.chat_bubble_outline, color: kBookPaper),
         label: const Text("Canlı Destek", style: TextStyle(color: kBookPaper, fontWeight: FontWeight.bold)),
       ),
       
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30, top: 10),
-            decoration: const BoxDecoration(
-              color: kDarkGreen,
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
-            ),
-            child: Column(
-              children: [
-                const Text(
-                  "Size nasıl yardımcı olabiliriz?",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: kBookPaper),
-                ),
-                const SizedBox(height: 20),
-                
-                TextField(
-                  controller: _searchController,
-                  onChanged: _filterSearchResults,
-                  style: const TextStyle(color: kDarkGreen),
-                  decoration: InputDecoration(
-                    hintText: "Sorunuzu arayın (Örn: Kargo, İade)",
-                    hintStyle: TextStyle(color: kDarkGreen.withOpacity(0.6)),
-                    prefixIcon: const Icon(Icons.search, color: kDarkGreen),
-                    filled: true,
-                    fillColor: kBookPaper,
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: BorderSide.none),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      body: SingleChildScrollView( 
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 30, top: 10),
+              decoration: const BoxDecoration(
+                color: kDarkGreen,
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(30)),
+              ),
+              child: Column(
+                children: [
+                  const Text(
+                    "Size nasıl yardımcı olabiliriz?",
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: kBookPaper),
                   ),
-                ),
-              ],
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              children: [
-                _buildContactButton(
-                  icon: Icons.phone_in_talk,
-                  label: "Bizi Arayın",
-                  color: Colors.blue.shade800,
-                  onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Arama ekranına yönlendiriliyor...")));
-                  },
-                ),
-                const SizedBox(width: 15),
-                _buildContactButton(
-                  icon: Icons.mail_outline,
-                  label: "E-Posta",
-                  color: Colors.orange.shade800,
-                  onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Mail uygulaması açılıyor...")));
-                  },
-                ),
-              ],
-            ),
-          ),
-
-          Expanded(
-            child: _filteredFaqList.isEmpty
-                ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.search_off, size: 60, color: Colors.grey.withOpacity(0.5)),
-                        const SizedBox(height: 10),
-                        const Text("Sonuç bulunamadı", style: TextStyle(color: Colors.grey)),
-                      ],
+                  const SizedBox(height: 20),
+                  
+                  TextField(
+                    controller: _searchController,
+                    onChanged: _filterSearchResults,
+                    style: const TextStyle(color: kDarkGreen),
+                    decoration: InputDecoration(
+                      hintText: "Sorunuzu arayın...",
+                      hintStyle: TextStyle(color: kDarkGreen.withOpacity(0.6)),
+                      prefixIcon: const Icon(Icons.search, color: kDarkGreen),
+                      filled: true,
+                      fillColor: kBookPaper,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: BorderSide.none),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                     ),
-                  )
-                : ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    itemCount: _filteredFaqList.length,
-                    itemBuilder: (context, index) {
-                      return _buildFaqItem(_filteredFaqList[index]);
-                    },
                   ),
-          ),
-        ],
+                ],
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildContactButton(
+                    icon: Icons.phone_in_talk,
+                    label: "Ara",
+                    color: Colors.blue.shade800,
+                    onTap: () => _makePhoneCall("123456"),
+                  ),
+                  const SizedBox(width: 10),
+                  _buildContactButton(
+                    icon: Icons.mail_outline,
+                    label: "Mail",
+                    color: Colors.orange.shade800,
+                    onTap: () => _sendEmail("yucezisan@gmail.com"),
+                  ),
+                  const SizedBox(width: 10),
+                  _buildContactButton(
+                    icon: Icons.map_outlined,
+                    label: "Konum",
+                    color: Colors.red.shade800,
+                    onTap: _openMap, 
+                  ),
+                ],
+              ),
+            ),
+
+            ListView.builder(
+              shrinkWrap: true, 
+              physics: const NeverScrollableScrollPhysics(), 
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              itemCount: _filteredFaqList.length,
+              itemBuilder: (context, index) {
+                return _buildFaqItem(_filteredFaqList[index]);
+              },
+            ),
+            
+            const SizedBox(height: 80),
+          ],
+        ),
       ),
     );
   }
@@ -201,7 +216,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
-          backgroundColor: kSoftGreen.withOpacity(0.3), 
+          backgroundColor: kSoftGreen.withOpacity(0.3),
           collapsedBackgroundColor: Colors.white,
           tilePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           childrenPadding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -235,16 +250,16 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
           onTap: onTap,
           borderRadius: BorderRadius.circular(15),
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 20),
+            padding: const EdgeInsets.symmetric(vertical: 15),
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(color: color.withOpacity(0.1), shape: BoxShape.circle),
-                  child: Icon(icon, color: color, size: 28),
+                  child: Icon(icon, color: color, size: 24),
                 ),
-                const SizedBox(height: 10),
-                Text(label, style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 16)),
+                const SizedBox(height: 8),
+                Text(label, style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 14)),
               ],
             ),
           ),

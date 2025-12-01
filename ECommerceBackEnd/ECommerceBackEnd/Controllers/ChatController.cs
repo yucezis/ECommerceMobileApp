@@ -10,7 +10,7 @@ namespace ECommerceBackEnd.Controllers
     [ApiController]
     public class ChatController : ControllerBase
     {
-        private readonly string _apiKey = "AIzaSyADKKIIiWyRg84Yh9no_iFtoO2eTCQxueU";
+        private readonly string _apiKey = "Yapay zeka api key buraya yazılacak";
         private readonly string _baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
         private readonly Context _context;
@@ -35,14 +35,30 @@ namespace ECommerceBackEnd.Controllers
                 {
                     kullaniciBilgisi = $"{musteri.MusteriAdi} {musteri.MusteriSoyadi}";
 
-                    var sonSiparis = _context.satislars
-                        .Where(x => x.MusteriId == model.MusteriId)
+                    var sonSiparisNo = _context.satislars
+                        .Where(x => x.MusteriId == model.MusteriId && x.SiparisNo != null)
                         .OrderByDescending(x => x.Tarih)
+                        .Select(x => x.SiparisNo)
                         .FirstOrDefault();
 
-                    if (sonSiparis != null)
+                    if (sonSiparisNo != null)
                     {
-                        siparisBilgisi = $"Son Sipariş No: {sonSiparis.SiparisNo}, Durumu: {sonSiparis.SiparisDurumu}, Tutar: {sonSiparis.ToplamTutar} TL";
+                        var siparisUrunleri = _context.satislars
+                            .Where(x => x.SiparisNo == sonSiparisNo)
+                            .Include(x => x.Urun) 
+                            .ToList();
+
+                        if (siparisUrunleri.Any())
+                        {
+                            decimal gercekToplam = siparisUrunleri.Sum(x => x.Fiyat * x.Adet);
+                            var durum = siparisUrunleri.First().SiparisDurumu;
+                            var kitapIsimleri = string.Join(", ", siparisUrunleri.Select(x => x.Urun?.UrunAdi ?? "Kitap"));
+
+                            siparisBilgisi = $"Son Sipariş No: {sonSiparisNo}. " +
+                                             $"Durumu: {durum}. " +
+                                             $"İçindeki Kitaplar: {kitapIsimleri}. " +
+                                             $"Toplam Tutar: {gercekToplam} TL.";
+                        }
                     }
                 }
             }
@@ -51,7 +67,7 @@ namespace ECommerceBackEnd.Controllers
                                     $"Şu an konuştuğun müşterinin adı: {kullaniciBilgisi}. " +
                                     $"Bu müşterinin veritabanındaki son sipariş bilgisi şöyle: {siparisBilgisi}. " +
                                     $"Eğer kullanıcı 'Siparişim nerede?', 'Kargom ne oldu?' gibi şeyler sorarsa yukarıdaki bilgiyi kullanarak cevap ver. " +
-                                    $"Onun dışında kitap önerileri yapabilirsin. Şakacı, samimi ve yardımsever ol.";
+                                    $"Onun dışında kitap önerileri yapabilirsin. Kitaplar, edebiyat ve uygulama içi konular harici sorularda bu konular hakkında konuşamadığını söyle. Samimi ve yardımsever ol."; 
 
             using (var client = new HttpClient())
             {

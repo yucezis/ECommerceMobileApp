@@ -10,6 +10,7 @@ import 'my_addresses_screen.dart';
 import 'my_cards_screen.dart';
 import 'settings_screen.dart';
 import 'help_support_screen.dart';
+import 'chat_screen.dart';
 
 const Color kBookPaper = Color(0xFFFEFAE0); 
 const Color kDarkGreen = Color(0xFF283618); 
@@ -143,6 +144,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   },
 ),
+_buildMenuItem(
+  icon: Icons.android,
+  title: "BookBot",
+  subtitle: "Yapay zeka asistanımız",
+  onTap: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const ChatScreen()),
+  );
+  }
+),
+  
                         const SizedBox(height: 25),
                         const Text(
                           "Uygulama Ayarları",
@@ -284,7 +297,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
 
-        // 2. Yüzen İstatistik Kartı
         Positioned(
           bottom: -40, 
           left: 20,

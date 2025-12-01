@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 const Color kDarkGreen = Color(0xFF283618);
 const Color kBookPaper = Color(0xFFFEFAE0);
@@ -37,10 +38,16 @@ class _ChatScreenState extends State<ChatScreen> {
     _scrollToBottom();
 
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final int musteriId = prefs.getInt('musteriId') ?? 0; 
+
       final response = await http.post(
         Uri.parse("${getBaseUrl()}/Chat/Sor"),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"Mesaj": kullaniciMesaji}),
+        body: jsonEncode({
+          "Mesaj": kullaniciMesaji,
+          "MusteriId": musteriId 
+        }),
       );
 
       if (response.statusCode == 200) {
