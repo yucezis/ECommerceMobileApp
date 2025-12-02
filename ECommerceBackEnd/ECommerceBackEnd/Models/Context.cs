@@ -14,6 +14,7 @@ namespace ECommerceBackEnd.Models
         public DbSet<Adres> Adresler { get; set; }
         public DbSet<KayitliKart> KayitliKartlar { get; set; }
         public DbSet<Mesaj> Mesajlar { get; set; }
+        public DbSet<Degerlendirme> degerlendirmes { get; set; }
 
     }
 }

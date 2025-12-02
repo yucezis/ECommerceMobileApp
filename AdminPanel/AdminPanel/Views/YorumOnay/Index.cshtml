@@ -1,0 +1,88 @@
+﻿@model List<AdminPanel.Models.DegerlendirmeViewModel>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid mt-4">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="fas fa-comments me-2"></i>Onay Bekleyen Yorumlar</h5>
+            <span class="badge bg-light text-dark">Toplam: @Model.Count</span>
+        </div>
+
+        <div class="card-body p-0">
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col" style="width: 20%;">Ürün</th>
+                                <th scope="col" style="width: 15%;">Müşteri</th>
+                                <th scope="col" style="width: 10%;">Puan</th>
+                                <th scope="col" style="width: 35%;">Yorum</th>
+                                <th scope="col" class="text-end" style="width: 20%;">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="fw-bold text-primary">@item.UrunAdi</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-sm bg-light rounded-circle me-2 p-1 text-center" style="width:30px; height:30px;">
+                                                <span class="text-secondary fw-bold">@item.MusteriAdi.Substring(0, 1)</span>
+                                            </div>
+                                            @item.MusteriAdi
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @{
+                                            var badgeClass = item.Puan >= 4 ? "bg-success" : (item.Puan >= 3 ? "bg-warning text-dark" : "bg-danger");
+                                        }
+                                        <span class="badge @badgeClass rounded-pill">
+                                            @item.Puan <i class="fas fa-star ms-1" style="font-size:0.7em;"></i>
+                                        </span>
+                                    </td>
+                                    <td class="text-muted small">
+                                        <span class="d-inline-block text-truncate" style="max-width: 300px;" title="@item.Yorum">
+                                            @item.Yorum
+                                        </span>
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="btn-group" role="group">
+                                            <form action="/YorumOnay/Onayla" method="post" style="display:inline;">
+                                                <input type="hidden" name="id" value="@item.DegerlendirmeId" />
+                                                <button type="submit" class="btn btn-outline-success btn-sm" title="Onayla">
+                                                    <i class="fas fa-check"></i> Onayla
+                                                </button>
+                                            </form>
+
+                                            <form action="/YorumOnay/Sil" method="post" style="display:inline;" class="ms-1">
+                                                <input type="hidden" name="id" value="@item.DegerlendirmeId" />
+                                                <button type="submit" class="btn btn-outline-danger btn-sm" title="Reddet" onclick="return confirm('Bu yorumu silmek istediğinize emin misiniz?');">
+                                                    <i class="fas fa-trash"></i> Sil
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center p-5">
+                    <div class="mb-3">
+                        <i class="fas fa-folder-open fa-3x text-muted"></i>
+                    </div>
+                    <h5 class="text-muted">Onay bekleyen yorum bulunmuyor.</h5>
+                    <p class="text-secondary small">Şu an için işlem yapmanız gereken bir değerlendirme yok.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/satislar_model.dart';
-//import 'models/adres_model.dart'; 
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'models/urun_model.dart';
 
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kDarkGreen = Color(0xFF283618);
@@ -74,10 +75,9 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         Map<String, List<Satis>> gruplar = {};
         
         for (var satis in hamListe) {
-          // Eğer sipariş no null ise geçici ID oluştur
           String key = (satis.siparisNo != null && satis.siparisNo!.isNotEmpty)
               ? satis.siparisNo!
-              : "TEMP-${satis.satisId}"; // Modelde satisId olduğundan emin ol
+              : "TEMP-${satis.satisId}"; 
               
           if (!gruplar.containsKey(key)) {
             gruplar[key] = [];
@@ -164,6 +164,110 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     );
   }
 
+  void _degerlendirmePenceresiAc(int urunId, String urunAdi) {
+    double secilenPuan = 5;
+    TextEditingController yorumController = TextEditingController();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+            left: 20, right: 20, top: 20
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("Değerlendir: $urunAdi", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkGreen), textAlign: TextAlign.center),
+              const SizedBox(height: 15),
+              
+              RatingBar.builder(
+                initialRating: 5,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: false,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => const Icon(Icons.star_rounded, color: Colors.amber, size: 36),
+                onRatingUpdate: (rating) {
+                  secilenPuan = rating;
+                },
+              ),
+              
+              const SizedBox(height: 20),
+              
+              TextField(
+                controller: yorumController,
+                decoration: InputDecoration(
+                  hintText: "Düşünceleriniz neler? (İsteğe bağlı)",
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                  filled: true,
+                  fillColor: Colors.grey[100],
+                ),
+                maxLines: 3,
+              ),
+              
+              const SizedBox(height: 10),
+              const Text("Not: Sadece puan verirseniz anında yayınlanır. Yorum yaparsanız onay beklersiniz.", style: TextStyle(fontSize: 12, color: Colors.grey), textAlign: TextAlign.center),
+              const SizedBox(height: 20),
+              
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kDarkGreen, 
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    _yorumuKaydet(urunId, secilenPuan, yorumController.text);
+                  },
+                  child: const Text("GÖNDER", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _yorumuKaydet(int urunId, double puan, String yorum) async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? musteriId = prefs.getInt('musteriId');
+
+    if (musteriId == null) return;
+
+    try {
+      final response = await http.post(
+        Uri.parse("${getBaseUrl()}/Degerlendirmeler/Ekle"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "UrunId": urunId,
+          "MusteriId": musteriId,
+          "Puan": puan.toInt(),
+          "Yorum": yorum 
+        }),
+      );
+
+      if (mounted) {
+        if (response.statusCode == 200) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.body), backgroundColor: kDarkGreen));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Hata: ${response.body}"), backgroundColor: Colors.red));
+        }
+      }
+    } catch (e) {
+      print("Yorum hatası: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -191,7 +295,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     );
   }
 
-  Widget _buildSiparisKarti(SiparisGrubu siparis) {
+ Widget _buildSiparisKarti(SiparisGrubu siparis) {
     String tarihFormatli = "${siparis.tarih.day}.${siparis.tarih.month}.${siparis.tarih.year} - ${siparis.tarih.hour}:${siparis.tarih.minute.toString().padLeft(2, '0')}";
     int durumId = siparis.urunler.isNotEmpty ? siparis.urunler.first.siparisDurumu : 0;
 
@@ -235,7 +339,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         ),
 
         children: [
-          // --- ADRES KUTUSU ---
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(12),
@@ -267,38 +370,65 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
             ),
           ),
           
-          // Ürün Listesi
           ...siparis.urunler.map((urunSatis) {
             return Container(
+              margin: const EdgeInsets.only(bottom: 8), 
               decoration: BoxDecoration(
                 color: kBookPaper.withOpacity(0.5),
                 border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.2)))
               ),
-              child: ListTile(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                leading: SizedBox(
-                  width: 45,
-                  height: 60,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
-                    child: Image.network(
-                      urunSatis.urun?.urunGorsel ?? "",
-                      fit: BoxFit.cover,
-                      errorBuilder: (c, o, s) => Container(
-                        color: Colors.grey[200],
-                        child: const Icon(Icons.book, size: 20, color: Colors.grey),
+              child: Column(
+                children: [
+                  ListTile(
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    leading: SizedBox(
+                      width: 45,
+                      height: 60,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(6),
+                        child: Image.network(
+                          urunSatis.urun?.urunGorsel ?? "",
+                          fit: BoxFit.cover,
+                          errorBuilder: (c, o, s) => Container(
+                            color: Colors.grey[200],
+                            child: const Icon(Icons.book, size: 20, color: Colors.grey),
+                          ),
+                        ),
                       ),
                     ),
+                    title: Text(
+                      urunSatis.urun?.urunAdi ?? "Bilinmeyen Ürün",
+                      style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    subtitle: Text("Adet: ${urunSatis.adet}", style: TextStyle(color: Colors.grey[700], fontSize: 12)),
+                    trailing: Text("${(urunSatis.fiyat * urunSatis.adet).toStringAsFixed(2)} ₺", style: const TextStyle(fontWeight: FontWeight.bold, color: kDarkCoffee)),
                   ),
-                ),
-                title: Text(
-                  urunSatis.urun?.urunAdi ?? "Bilinmeyen Ürün",
-                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                subtitle: Text("Adet: ${urunSatis.adet}", style: TextStyle(color: Colors.grey[700], fontSize: 12)),
-                trailing: Text("${(urunSatis.fiyat * urunSatis.adet).toStringAsFixed(2)} ₺", style: const TextStyle(fontWeight: FontWeight.bold, color: kDarkCoffee)),
+
+                  if (siparis.urunler.first.siparisDurumu == 3) 
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16, bottom: 8),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: SizedBox(
+                          height: 30,
+                          child: OutlinedButton.icon(
+                            onPressed: () {
+                              _degerlendirmePenceresiAc(urunSatis.urun?.urunId ?? 0, urunSatis.urun?.urunAdi ?? "Kitap");
+                            },
+                            icon: const Icon(Icons.star_rate_rounded, size: 16, color: Colors.amber),
+                            label: const Text("Değerlendir", style: TextStyle(fontSize: 12, color: kDarkGreen)),
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(color: kDarkGreen, width: 1),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             );
           }).toList(),

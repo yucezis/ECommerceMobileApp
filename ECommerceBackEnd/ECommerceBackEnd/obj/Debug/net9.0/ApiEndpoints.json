@@ -96,6 +96,80 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ECommerceBackEnd.Controllers.DegerlendirmelerController",
+    "Method": "Ekle",
+    "RelativePath": "api/Degerlendirmeler/Ekle",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "yeniYorum",
+        "Type": "ECommerceBackEnd.Models.Degerlendirme",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.DegerlendirmelerController",
+    "Method": "Getir",
+    "RelativePath": "api/Degerlendirmeler/Getir/{urunId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "urunId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.DegerlendirmelerController",
+    "Method": "GetOnayBekleyenler",
+    "RelativePath": "api/Degerlendirmeler/OnayBekleyenler",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.DegerlendirmelerController",
+    "Method": "Onayla",
+    "RelativePath": "api/Degerlendirmeler/Onayla/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.DegerlendirmelerController",
+    "Method": "Sil",
+    "RelativePath": "api/Degerlendirmeler/Sil/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ECommerceBackEnd.Controllers.IstatistikController",
     "Method": "GetDashboardData",
     "RelativePath": "api/Istatistik/get-dashboard-data",
