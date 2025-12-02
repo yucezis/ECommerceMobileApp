@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'login_screen.dart';
 
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kDarkGreen = Color(0xFF283618);
@@ -18,7 +19,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _isLoading = true;
   final _formKey = GlobalKey<FormState>();
 
-  // Form Kontrolcüleri
   final _adController = TextEditingController();
   final _soyadController = TextEditingController();
   final _telController = TextEditingController();
@@ -189,6 +189,114 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  Future<void> _hesapSilBaslat() async {
+    bool? eminMi = await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Hesabı Sil", style: TextStyle(color: Colors.red)),
+        content: const Text("Hesabınızı silmek istediğinize emin misiniz? Bu işlem için mail onayı gerekecektir."),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text("Vazgeç")),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text("Devam Et", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold))),
+        ],
+      ),
+    );
+
+    if (eminMi != true) return;
+
+    setState(() => _isLoading = true);
+    try {
+      final response = await http.post(
+        Uri.parse("${getBaseUrl()}/Musteris/HesapSilKodGonder/$_musteriId"),
+      );
+      
+      setState(() => _isLoading = false);
+
+      if (response.statusCode == 200) {
+        if (mounted) _hesapSilKodPenceresiAc();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Hata: ${response.body}"), backgroundColor: Colors.red));
+      }
+    } catch (e) {
+      setState(() => _isLoading = false);
+      print(e);
+    }
+  }
+
+  void _hesapSilKodPenceresiAc() {
+    TextEditingController kodController = TextEditingController();
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Hesap Silme Onayı"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text("Hesabınızı silmek üzeresiniz! Mailinize gelen kodu girerek onaylayın.", style: TextStyle(color: Colors.red)),
+            const SizedBox(height: 15),
+            TextField(
+              controller: kodController,
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              maxLength: 6,
+              decoration: const InputDecoration(hintText: "KOD", border: OutlineInputBorder(), counterText: ""),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("İptal")),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
+            onPressed: () {
+              Navigator.pop(ctx);
+              _hesapSilTamamla(kodController.text);
+            },
+            child: const Text("HESABI SİL"),
+          )
+        ],
+      ),
+    );
+  }
+
+  Future<void> _hesapSilTamamla(String kod) async {
+    setState(() => _isLoading = true);
+
+    try {
+      final response = await http.post(
+        Uri.parse("${getBaseUrl()}/Musteris/HesapSilOnayli"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "MusteriId": _musteriId,
+          "Kod": kod
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.clear();
+
+        if (mounted) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginScreen()), 
+            (route) => false,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Hesabınız silindi. Üzüldük :("), backgroundColor: Colors.grey));
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Hata: ${response.body}"), backgroundColor: Colors.red));
+        }
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -245,8 +353,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         child: const Text("BİLGİLERİ GÜNCELLE", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                       ),
                     ),
+                    const SizedBox(height: 30), 
+                    const Divider(), 
+                    const SizedBox(height: 10),
+
+                    TextButton.icon(
+                      onPressed: _hesapSilBaslat,
+                      icon: const Icon(Icons.delete_forever, color: Colors.red),
+                      label: const Text(
+                        "Hesabımı Kalıcı Olarak Sil", 
+                        style: TextStyle(
+                          color: Colors.red, 
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15
+                        )
+                      ),
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.red.withOpacity(0.1), 
+                      ),
+                    ),
+
+                    const SizedBox(height: 40),
                   ],
+                  
                 ),
+                
               ),
             ),
     );

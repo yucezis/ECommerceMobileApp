@@ -228,6 +228,50 @@ namespace ECommerceBackEnd.Controllers
             }
         }
 
+        [HttpPost("HesapSilKodGonder/{id}")]
+        public IActionResult HesapSilKodGonder(int id)
+        {
+            var musteri = _context.musteris.Find(id);
+            if (musteri == null) return NotFound("Kullanıcı bulunamadı.");
+
+            // Kod üret
+            Random rnd = new Random();
+            string kod = rnd.Next(100000, 999999).ToString();
+            musteri.OnayKodu = kod;
+            _context.SaveChanges();
+
+            // Özel silme mailini gönder
+            try
+            {
+                ECommerceBackEnd.Helpers.MailHelper.MailGonderHesapSilme(musteri.MusteriMail, kod, musteri.MusteriAdi);
+                return Ok("Silme onay kodu gönderildi.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Mail gönderilemedi: " + ex.Message);
+            }
+        }
+
+        [HttpPost("HesapSilOnayli")]
+        public IActionResult HesapSilOnayli([FromBody] DogrulamaModel model)
+        {
+            var musteri = _context.musteris.Find(model.MusteriId);
+            if (musteri == null) return NotFound("Kullanıcı bulunamadı.");
+
+            if (musteri.OnayKodu == model.Kod)
+            {
+                musteri.Durum = false; 
+                musteri.OnayKodu = null;
+
+                _context.SaveChanges();
+                return Ok("Hesabınız başarıyla silindi.");
+            }
+            else
+            {
+                return BadRequest("Hatalı doğrulama kodu.");
+            }
+        }
+
         public class DogrulamaModel
         {
             public int MusteriId { get; set; }

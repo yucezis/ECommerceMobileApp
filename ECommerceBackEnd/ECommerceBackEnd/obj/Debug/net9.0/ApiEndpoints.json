@@ -419,6 +419,38 @@
   },
   {
     "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
+    "Method": "HesapSilKodGonder",
+    "RelativePath": "api/Musteris/HesapSilKodGonder/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
+    "Method": "HesapSilOnayli",
+    "RelativePath": "api/Musteris/HesapSilOnayli",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "ECommerceBackEnd.Controllers.MusterisController\u002BDogrulamaModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
     "Method": "KodGonder",
     "RelativePath": "api/Musteris/KodGonder/{id}",
     "HttpMethod": "POST",
