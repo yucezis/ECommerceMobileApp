@@ -26,11 +26,13 @@ The management panel and backend infrastructure are largely complete, while the 
 ### Completed (Admin Panel & Backend)
 - [x] **API Architecture:** RESTful services and database integration with Entity Framework Core.
 - [x] **Category & Product Management:** Full-scope CRUD (Create, Read, Update, Delete) operations.
+- [x] **Customer Support Module:** Real-time messaging interface for Admins to reply to customer inquiries.
 - [x] **Advanced Product Features:** Stock tracking, Active/Passive status control, and Featured products.
 - [x] **Customer Management:** Customer listing with data privacy masking (Hiding Name, Surname, Phone).
 - [x] **Sales History:** Detailed viewing of customer-specific past orders.
 - [x] **Security & Session:** Admin login and secure Session management.
 - [x] **Dashboard:** Summary data and statistical charts.
+- [ ] **Review Management:** System to view and moderate user comments and ratings.
 
 ### In Development (Mobile App)
 **Core Features**
@@ -46,12 +48,15 @@ The management panel and backend infrastructure are largely complete, while the 
 - [x] **Order History:** Displaying past orders and their status details.
 - [x] **Shipment Tracking:** Visual interface to track the delivery status (Preparing, Shipped, Delivered).
 
-**User Experience & Security**
+**User Experience & Interaction**
+- [x] **Email Verification:** Mandatory validation step via email for new registrations and profile updates.
+- [x] **Live Support:** Direct chat interface for users to communicate with store admins.
+- [x] **AI-Powered Chat:** Integrated **Google Gemini** to provide real-time support and personalized book recommendations.
 - [x] **OTP / SMS Verification Simulation:** Simulating code verification for secure registration.
-- [x] **Wishlist:** Ability to favorite products for quick access. 
-- [ ] **Advanced Search:** Filtering products by price, author, or publisher.
+- [x] **Wishlist:** Ability to favorite products for quick access.
+- [x] **Advanced Search:** Filtering products by price, author, or publisher.
 - [x] **Profile Page:** Displaying and editing user information via API.
-- [x] **AI-Powered Chat:** Integrated **Google Gemini** to provide real-time support and personalized book recommendations within the app.
+- [ ] **Reviews & Ratings:** Users can rate books (1-5 stars) and write comments.
       
 ---
 
