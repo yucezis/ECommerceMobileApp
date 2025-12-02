@@ -135,6 +135,35 @@ namespace ECommerceBackEnd.Migrations
                     b.ToTable("KayitliKartlar");
                 });
 
+            modelBuilder.Entity("ECommerceBackEnd.Models.Mesaj", b =>
+                {
+                    b.Property<int>("MesajId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MesajId"));
+
+                    b.Property<bool>("GonderenAdminMi")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Icerik")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MusteriId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("OkunduMu")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Tarih")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("MesajId");
+
+                    b.ToTable("Mesajlar");
+                });
+
             modelBuilder.Entity("ECommerceBackEnd.Models.Musteri", b =>
                 {
                     b.Property<int>("MusteriId")

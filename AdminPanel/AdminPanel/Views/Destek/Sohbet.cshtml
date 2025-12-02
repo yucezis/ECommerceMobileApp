@@ -1,0 +1,227 @@
+﻿@model AdminPanel.Models.AdminChatViewModel
+
+@{
+    ViewData["Title"] = "Sohbet";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .chat-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        background-color: #fff;
+        height: 80vh; 
+        max-height: 700px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chat-header {
+        background-color: #ffffff;
+        padding: 15px 20px;
+        border-bottom: 1px solid #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 10;
+    }
+
+    .user-avatar {
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #42a5f5, #1976d2);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-right: 15px;
+    }
+
+    .chat-box {
+        flex: 1;
+        overflow-y: auto;
+        background-color: #f4f7f6; 
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        padding: 20px;
+        scroll-behavior: smooth;
+    }
+
+        .chat-box::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-box::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-box::-webkit-scrollbar-thumb {
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+    .message-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 5px; 
+    }
+
+    .message-bubble {
+        max-width: 75%;
+        padding: 12px 18px;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        position: relative;
+        word-wrap: break-word;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        margin-bottom: 10px;
+    }
+
+    .customer-msg {
+        background-color: #ffffff;
+        color: #444;
+        align-self: flex-start;
+        border-radius: 15px 15px 15px 0; 
+        border: 1px solid #eee;
+    }
+
+    .admin-msg {
+        background: linear-gradient(135deg, #00b09b, #96c93d);
+        color: #fff;
+        align-self: flex-end;
+        border-radius: 15px 15px 0 15px
+    }
+
+    /* Zaman Etiketi */
+    .msg-time {
+        font-size: 0.7rem;
+        margin-top: 5px;
+        display: block;
+        text-align: right;
+        opacity: 0.7;
+    }
+
+    .admin-msg .msg-time {
+        color: #e0e0e0;
+    }
+
+    .customer-msg .msg-time {
+        color: #888;
+    }
+
+    .chat-footer {
+        background-color: #fff;
+        padding: 15px 20px;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .chat-input {
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+
+        .chat-input:focus {
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(0, 176, 155, 0.1);
+            border-color: #00b09b;
+        }
+
+    .btn-send {
+        background: #00b09b;
+        border: none;
+        color: white;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s;
+        box-shadow: 0 4px 10px rgba(0, 176, 155, 0.3);
+    }
+
+        .btn-send:hover {
+            background: #008a7a;
+            transform: scale(1.05);
+            color: white;
+        }
+</style>
+
+<div class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-8">
+
+            <div class="chat-card">
+                <div class="chat-header">
+                    <div class="d-flex align-items-center">
+                        <a href="/Destek/Index" class="btn btn-sm btn-light rounded-circle me-3" title="Geri Dön" style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; color:#555;">
+                            <i class="bi bi-arrow-left fs-5"></i>
+                        </a>
+
+                        <div class="user-avatar">
+                            @Model.Musteri.MusteriAdi.Substring(0, 1).ToUpper()
+                        </div>
+
+                        <div class="d-flex flex-column">
+                            <h6 class="mb-0 fw-bold text-dark">@Model.Musteri.MusteriAdi @Model.Musteri.MusteriSoyadi</h6>
+                            <small class="text-muted">@Model.Musteri.MusteriMail</small>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-sm btn-link text-muted"><i class="bi bi-three-dots-vertical"></i></button>
+                    </div>
+                </div>
+
+                <div class="chat-box" id="chatContainer">
+                    <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                        <div class="spinner-border text-success mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
+                        <p class="text-muted">Sohbet geçmişi yükleniyor...</p>
+                    </div>
+                </div>
+
+                <div class="chat-footer">
+                    <form action="/Destek/Gonder" method="post" class="d-flex align-items-center">
+                        <input type="hidden" name="musteriId" id="musteriIdInput" value="@Model.Musteri.MusteriId" />
+
+                        <input type="text" name="mesajIcerik" class="form-control rounded-pill chat-input me-3"
+                               placeholder="Mesajınızı yazın..." required autocomplete="off">
+
+                        <button type="submit" class="btn btn-send rounded-circle">
+                            <i class="bi bi-send-fill fs-5"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    var musteriId = @Model.Musteri.MusteriId;
+    var chatContainer = $("#chatContainer");
+
+    loadChat();
+
+    setInterval(function () {
+        loadChat();
+    }, 3000);
+
+    function loadChat() {
+        $.get("/Destek/MesajlariGetir?musteriId=" + musteriId, function (data) {
+            
+            chatContainer.html(data);
+
+            chatContainer.scrollTop(chatContainer[0].scrollHeight);
+        });
+    }
+</script>

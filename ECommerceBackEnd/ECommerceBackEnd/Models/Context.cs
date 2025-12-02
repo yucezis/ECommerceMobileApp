@@ -13,6 +13,7 @@ namespace ECommerceBackEnd.Models
         public DbSet<Urun> uruns { get; set; }
         public DbSet<Adres> Adresler { get; set; }
         public DbSet<KayitliKart> KayitliKartlar { get; set; }
+        public DbSet<Mesaj> Mesajlar { get; set; }
 
     }
 }

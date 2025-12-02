@@ -228,6 +228,48 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ECommerceBackEnd.Controllers.MesajlarController",
+    "Method": "Getir",
+    "RelativePath": "api/Mesajlar/Getir/{musteriId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "musteriId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.MesajlarController",
+    "Method": "Gonder",
+    "RelativePath": "api/Mesajlar/Gonder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "mesaj",
+        "Type": "ECommerceBackEnd.Models.Mesaj",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.MesajlarController",
+    "Method": "GetMesajlasanlar",
+    "RelativePath": "api/Mesajlar/Mesajlasanlar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
     "Method": "GetMusteriler",
     "RelativePath": "api/Musteris",

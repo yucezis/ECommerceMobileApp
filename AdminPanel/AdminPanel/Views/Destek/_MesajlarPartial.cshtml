@@ -1,0 +1,18 @@
+﻿@model List<AdminPanel.Models.MesajViewModel>
+
+@if (Model == null || Model.Count == 0)
+{
+    <div class="text-center text-muted mt-5">
+        <span class="badge bg-secondary p-2">Henüz mesaj yok.</span>
+    </div>
+}
+else
+{
+    @foreach (var mesaj in Model)
+    {
+        <div class="message-bubble @(mesaj.GonderenAdminMi ? "admin-msg" : "customer-msg")">
+            @mesaj.Icerik
+            <span class="msg-time">@mesaj.Tarih.ToString("HH:mm")</span>
+        </div>
+    }
+}

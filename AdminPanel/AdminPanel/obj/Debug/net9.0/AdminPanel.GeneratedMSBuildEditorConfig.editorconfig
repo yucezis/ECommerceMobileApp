@@ -24,6 +24,18 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/bitirme_projesi/AdminPanel/AdminPanel/Views/Destek/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGVrXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/bitirme_projesi/AdminPanel/AdminPanel/Views/Destek/Sohbet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGVrXFNvaGJldC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/bitirme_projesi/AdminPanel/AdminPanel/Views/Destek/_MesajlarPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVzdGVrXF9NZXNhamxhclBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/bitirme_projesi/AdminPanel/AdminPanel/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'chat_screen.dart';
+import 'admin_chat_screen.dart';
 
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kDarkGreen = Color(0xFF283618);
@@ -115,8 +116,8 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
       // Chat Butonu
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const ChatScreen()));
-        },
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminChatScreen()));
+  },
         backgroundColor: kDarkGreen,
         icon: const Icon(Icons.chat_bubble_outline, color: kBookPaper),
         label: const Text("Canlı Destek", style: TextStyle(color: kBookPaper, fontWeight: FontWeight.bold)),
