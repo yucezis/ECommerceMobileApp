@@ -10,7 +10,7 @@ namespace ECommerceBackEnd.Controllers
     [ApiController]
     public class ChatController : ControllerBase
     {
-        private readonly string _apiKey = "Yapay zeka api key buraya yazılacak";
+        private readonly string _apiKey = "ai api key buraya";
         private readonly string _baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
         private readonly Context _context;

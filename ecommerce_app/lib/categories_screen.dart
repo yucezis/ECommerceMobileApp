@@ -5,7 +5,6 @@ import 'models/kategori_model.dart';
 import 'footer.dart';
 import 'product_list_screen.dart';
 
-// --- RENK PALETİ ---
 const Color kBookPaper = Color(0xFFFEFAE0); 
 const Color kDarkGreen = Color(0xFF283618); 
 const Color kOliveGreen = Color(0xFF606C38); 
@@ -31,7 +30,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   late Future<List<Kategori>> _kategorilerFuture;
 
   final List<IconData> _icons = [
-    Icons.menu_book_rounded, Icons.history_edu_rounded, Icons.science_rounded,
+    Icons.menu_book_rounded, Icons.child_care_rounded, Icons.science_rounded,
     Icons.auto_stories_rounded, Icons.psychology_rounded, Icons.rocket_launch_rounded,
     Icons.child_care_rounded, Icons.brush_rounded,
   ];
@@ -43,7 +42,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   String getBaseUrl() {
-    String ipAdresim = "10.180.131.237"; // IP adresini kontrol et
+    String ipAdresim = "10.180.131.237"; 
     String port = "5126";
     return "http://$ipAdresim:$port/api";
   }
@@ -80,7 +79,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 final kategoriler = snapshot.data!;
 
                 return GridView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 25, bottom: 120),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 15,
@@ -105,7 +104,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   Widget _buildCategoryCard(Kategori kategori, Color color, IconData icon) {
-    // Material widget'ı ekledik ki InkWell efekti görünsün ve tıklama algılansın
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -184,7 +182,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // GERİ BUTONU DÜZELTİLDİ
               IconButton(
                 icon: const Icon(Icons.arrow_back_ios_new, color: kBookPaper, size: 22),
                 onPressed: () {

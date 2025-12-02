@@ -7,7 +7,6 @@ import 'footer.dart';
 import 'product_list_screen.dart';
 import 'favorite_screen.dart';
 
-// --- RENK PALETİ ---
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kDarkGreen = Color(0xFF283618);
 const Color kOliveGreen = Color(0xFF606C38);
@@ -82,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: kBookPaper, // Ana arka plan
+      backgroundColor: kBookPaper,
       drawer: _buildDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -348,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildCategoriesList() {
     return SizedBox(
-      height: 45, // Daha modern, "hap" şeklinde tasarım
+      height: 45,
       child: FutureBuilder<List<Kategori>>(
         future: _kategorilerFuture,
         builder: (context, snapshot) {
@@ -439,7 +438,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Resim Alanı
                       Expanded(
                         child: ClipRRect(
                           borderRadius: const BorderRadius.vertical(
@@ -468,7 +466,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                         ),
                       ),
-                      // Bilgi Alanı
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: Column(
@@ -525,7 +522,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  //-----------ÇOK SATANLAR---
   Widget _buildBestsellersList() {
     return FutureBuilder<List<Urun>>(
       future: cokSatanlariGetir(),
@@ -550,7 +546,6 @@ class _HomeScreenState extends State<HomeScreen> {
             final urun = urunler[index];
             return GestureDetector(
               onTap: () {
-                // Footer üzerinden detay sayfasına git
                 Footer.footerKey.currentState?.uruneGit(urun);
               },
               child: Container(
@@ -569,7 +564,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Row(
                   children: [
-                    // Sol Resim ve Sıra Numarası
                     Stack(
                       children: [
                         ClipRRect(
@@ -611,7 +605,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             decoration: const BoxDecoration(
                               color: Color(
                                 0xFFBC4749,
-                              ), // kpink yerine sabit renk (veya senin değişkenin)
+                              ),
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
                                 bottomRight: Radius.circular(8),

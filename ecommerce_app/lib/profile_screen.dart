@@ -197,7 +197,7 @@ _buildMenuItem(
                             }
                           },
                         ),
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 80),
                       ],
                     ),
                   ),
@@ -207,14 +207,12 @@ _buildMenuItem(
     );
   }
 
-  // --- WIDGETS ---
 
   Widget _buildProfileHeader() {
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.center,
       children: [
-        // 1. Arka Plan Kutusu
         Container(
           width: double.infinity,
           height: 330, 
@@ -292,36 +290,6 @@ _buildMenuItem(
                     color: kBookPaper.withOpacity(0.8),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-
-        Positioned(
-          bottom: -40, 
-          left: 20,
-          right: 20,
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: kDarkGreen.withOpacity(0.15),
-                  blurRadius: 15,
-                  offset: const Offset(0, 10),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildStatItem("Siparişler", "12"),
-                _buildVerticalDivider(),
-                _buildStatItem("Puanım", "350"),
-                _buildVerticalDivider(),
-                _buildStatItem("Yorumlar", "5"),
               ],
             ),
           ),
