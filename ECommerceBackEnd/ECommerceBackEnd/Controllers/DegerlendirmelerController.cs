@@ -50,7 +50,13 @@ namespace ECommerceBackEnd.Controllers
                 return BadRequest("Bu ürünü değerlendirmek için satın almalı ve teslim almalısınız.");
             }
 
+            bool dahaOnceYorumlamis = _context.degerlendirmes
+            .Any(x => x.MusteriId == yeniYorum.MusteriId && x.UrunId == yeniYorum.UrunId);
 
+            if (dahaOnceYorumlamis)
+            {
+                return BadRequest("Bu ürüne zaten daha önce puan verdiniz veya yorum yaptınız. Tekrar değerlendiremezsiniz.");
+            }
             yeniYorum.Tarih = DateTime.Now;
 
             if (string.IsNullOrWhiteSpace(yeniYorum.Yorum))

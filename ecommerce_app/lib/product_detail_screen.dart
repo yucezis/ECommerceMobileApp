@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:http/http.dart' as http; 
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart'; 
+import 'package:http/http.dart' as http;
 import 'models/urun_model.dart'; 
 import 'footer.dart';
 import 'models/cart_service.dart';
@@ -26,8 +25,8 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int adet = 1;
-  bool isFavorite = false;
   
+  // Yorum Değişkenleri
   List<dynamic> _yorumlar = [];
   bool _yorumlarYukleniyor = true;
 
@@ -38,9 +37,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   String getBaseUrl() {
-    return "http://10.180.131.237:5126/api"; 
+    return "http://10.180.131.237:5126/api"; // IP Adresini kontrol et
   }
 
+  // API: Yorumları Getir
   Future<void> _yorumlariGetir() async {
     try {
       final response = await http.get(Uri.parse("${getBaseUrl()}/Degerlendirmeler/Getir/${widget.urun.urunId}"));
@@ -54,122 +54,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       print("Yorum hatası: $e");
       setState(() => _yorumlarYukleniyor = false);
     }
-  }
-
-  Future<void> _yorumuKaydet(double puan, String yorum) async {
-    final prefs = await SharedPreferences.getInstance();
-    final int? musteriId = prefs.getInt('musteriId');
-
-    if (musteriId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Yorum yapmak için giriş yapmalısınız.")));
-      return;
-    }
-
-    try {
-      print("Gönderilen Veri: UrunId:${widget.urun.urunId}, MusteriId:$musteriId, Puan:$puan, Yorum:$yorum");
-
-      final response = await http.post(
-        Uri.parse("${getBaseUrl()}/Degerlendirmeler/Ekle"),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "UrunId": widget.urun.urunId,
-          "MusteriId": musteriId,
-          "Puan": puan.toInt(),
-          "Yorum": yorum,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        _yorumlariGetir(); 
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Yorumunuz eklendi!"), backgroundColor: kDarkGreen)
-          );
-        }
-      } else {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Kaydedilemedi (${response.statusCode}): ${response.body}"), backgroundColor: Colors.red)
-          );
-          print("API Hatası: ${response.body}");
-        }
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Bağlantı hatası: $e"), backgroundColor: Colors.red));
-      }
-    }
-  }
-
-  void _yorumYapPenceresiAc() {
-    double secilenPuan = 5;
-    TextEditingController yorumController = TextEditingController();
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
-      builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-            left: 20, right: 20, top: 20
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text("Değerlendir", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: kDarkGreen)),
-              const SizedBox(height: 15),
-              
-              RatingBar.builder(
-                initialRating: 5,
-                minRating: 1,
-                direction: Axis.horizontal,
-                itemCount: 5,
-                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => const Icon(Icons.star_rounded, color: Colors.amber, size: 36),
-                onRatingUpdate: (rating) {
-                  secilenPuan = rating;
-                },
-              ),
-              
-              const SizedBox(height: 20),
-              
-              TextField(
-                controller: yorumController,
-                decoration: InputDecoration(
-                  hintText: "Bu kitap hakkında ne düşünüyorsunuz?",
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                  filled: true,
-                  fillColor: kSoftGrey,
-                ),
-                maxLines: 3,
-              ),
-              
-              const SizedBox(height: 20),
-              
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kDarkGreen, 
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    _yorumuKaydet(secilenPuan, yorumController.text);
-                  },
-                  child: const Text("GÖNDER", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                ),
-              )
-            ],
-          ),
-        );
-      },
-    );
   }
 
   @override
@@ -258,7 +142,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(35)),
                 boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 40, offset: Offset(0, -10))],
               ),
-              child: SingleChildScrollView(
+              child: SingleChildScrollView( 
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -306,17 +190,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     const Divider(),
                     const SizedBox(height: 10),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text("Değerlendirmeler", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkCoffee)),
-                        TextButton.icon(
-                          onPressed: _yorumYapPenceresiAc,
-                          icon: const Icon(Icons.rate_review_outlined, size: 18, color: kDarkGreen),
-                          label: const Text("Yorum Yap", style: TextStyle(color: kDarkGreen, fontWeight: FontWeight.bold)),
-                        )
-                      ],
-                    ),
+                    // --- SADECE YORUMLAR LİSTESİ (BUTON YOK) ---
+                    const Text("Değerlendirmeler", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkCoffee)),
                     
                     const SizedBox(height: 10),
 
@@ -325,7 +200,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         : _yorumlar.isEmpty
                             ? Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 20),
-                                child: Center(child: Text("Henüz yorum yapılmamış. İlk yorumu sen yap!", style: TextStyle(color: Colors.grey[400]))),
+                                child: Center(child: Text("Henüz yorum yapılmamış.", style: TextStyle(color: Colors.grey[400]))),
                               )
                             : ListView.builder(
                                 shrinkWrap: true, 
@@ -356,8 +231,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(height: 8),
-                                        Text(yorum['yorum'], style: TextStyle(color: kDarkCoffee.withOpacity(0.8), fontSize: 14)),
+                                        // Eğer yorum varsa göster, yoksa sadece yıldız yeter
+                                        if (yorum['yorum'] != null && yorum['yorum'].toString().isNotEmpty) ...[
+                                          const SizedBox(height: 8),
+                                          Text(yorum['yorum'], style: TextStyle(color: kDarkCoffee.withOpacity(0.8), fontSize: 14)),
+                                        ],
                                         const SizedBox(height: 5),
                                         Text(
                                           yorum['tarih'].toString().substring(0, 10), 
@@ -369,13 +247,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 },
                               ),
 
-                    const SizedBox(height: 120), 
+                    const SizedBox(height: 120), // Footer ve Buton için boşluk
                   ],
                 ),
               ),
             ),
           ),
 
+          // SEPETE EKLE BUTONU (SABİT EN ALTTA)
           Positioned(
             bottom: 20, left: 20, right: 20,
             child: Container(
