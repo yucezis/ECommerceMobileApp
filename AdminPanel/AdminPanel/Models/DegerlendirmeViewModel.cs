@@ -12,5 +12,6 @@ namespace AdminPanel.Models
         public bool Onaylandi { get; set; }
         public string UrunAdi { get; set; }    
         public string MusteriAdi { get; set; }
+        public string ResimUrl { get; set; }
     }
 }

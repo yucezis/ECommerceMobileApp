@@ -17,10 +17,11 @@
                     <table class="table table-hover table-striped align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th scope="col" style="width: 20%;">Ürün</th>
+                                <th scope="col" style="width: 15%;">Ürün</th>
                                 <th scope="col" style="width: 15%;">Müşteri</th>
-                                <th scope="col" style="width: 10%;">Puan</th>
+                                <th scope="col" class="text-center" style="width: 5%;">Puan</th>
                                 <th scope="col" style="width: 35%;">Yorum</th>
+                                <th scope="col" style="width: 10%;">Görsel</th>
                                 <th scope="col" class="text-end" style="width: 20%;">İşlem</th>
                             </tr>
                         </thead>
@@ -49,6 +50,15 @@
                                         <span class="d-inline-block text-truncate" style="max-width: 300px;" title="@item.Yorum">
                                             @item.Yorum
                                         </span>
+                                    </td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.ResimUrl))
+                                        {
+                                            <br />
+                                            <a href="http://localhost:5126@(item.ResimUrl)" target="_blank">
+                                                <img src="http://localhost:5126@(item.ResimUrl)" style="max-height: 50px; margin-top: 5px;" />
+                                            </a>
+                                        }
                                     </td>
                                     <td class="text-end">
                                         <div class="btn-group" role="group">

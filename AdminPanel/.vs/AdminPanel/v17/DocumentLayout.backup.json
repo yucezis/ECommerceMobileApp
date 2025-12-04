@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\bitirme_projesi\\AdminPanel\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\views\\yorumonay\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\views\\yorumonay\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\models\\degerlendirmeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\models\\degerlendirmeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\views\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\views\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\views\\yorumonay\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\views\\yorumonay\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\controllers\\yorumonaycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,6 +39,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "DegerlendirmeViewModel.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Models\\DegerlendirmeViewModel.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Models\\DegerlendirmeViewModel.cs",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Models\\DegerlendirmeViewModel.cs",
+              "RelativeToolTip": "AdminPanel\\Models\\DegerlendirmeViewModel.cs",
+              "ViewState": "AgIAAAsAAAAARJpqoEInwA0AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-02T16:33:04.36Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\YorumOnay\\Index.cshtml",
+              "RelativeDocumentMoniker": "AdminPanel\\Views\\YorumOnay\\Index.cshtml",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\YorumOnay\\Index.cshtml*",
+              "RelativeToolTip": "AdminPanel\\Views\\YorumOnay\\Index.cshtml*",
+              "ViewState": "AgIAACQAAAAAAAAAAAAewDwAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-02T16:29:57.324Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "_AdminLayout.cshtml",
               "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Shared\\_AdminLayout.cshtml",
               "RelativeDocumentMoniker": "AdminPanel\\Views\\Shared\\_AdminLayout.cshtml",
@@ -47,31 +73,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-02T17:10:01.371Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DegerlendirmeViewModel.cs",
-              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Models\\DegerlendirmeViewModel.cs",
-              "RelativeDocumentMoniker": "AdminPanel\\Models\\DegerlendirmeViewModel.cs",
-              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Models\\DegerlendirmeViewModel.cs",
-              "RelativeToolTip": "AdminPanel\\Models\\DegerlendirmeViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T16:33:04.36Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\YorumOnay\\Index.cshtml",
-              "RelativeDocumentMoniker": "AdminPanel\\Views\\YorumOnay\\Index.cshtml",
-              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\YorumOnay\\Index.cshtml",
-              "RelativeToolTip": "AdminPanel\\Views\\YorumOnay\\Index.cshtml",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAAFcAAAAGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-02T16:29:57.324Z"
             },
             {
               "$type": "Document",

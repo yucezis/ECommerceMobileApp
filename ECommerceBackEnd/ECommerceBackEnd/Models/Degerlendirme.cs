@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace ECommerceBackEnd.Models
@@ -22,5 +23,10 @@ namespace ECommerceBackEnd.Models
         [JsonIgnore] 
         public virtual Musteri? Musteri { get; set; }
         public bool Onaylandi { get; set; } = false;
+
+        public string? ResimUrl { get; set; }
+
+        [NotMapped]
+        public string? ResimBase64 { get; set; }
     }
 }

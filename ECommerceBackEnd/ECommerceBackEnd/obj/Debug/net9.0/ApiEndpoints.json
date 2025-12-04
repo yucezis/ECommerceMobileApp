@@ -113,22 +113,6 @@
   },
   {
     "ContainingType": "ECommerceBackEnd.Controllers.DegerlendirmelerController",
-    "Method": "Getir",
-    "RelativePath": "api/Degerlendirmeler/Getir/{urunId}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "urunId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "ECommerceBackEnd.Controllers.DegerlendirmelerController",
     "Method": "GetOnayBekleyenler",
     "RelativePath": "api/Degerlendirmeler/OnayBekleyenler",
     "HttpMethod": "GET",

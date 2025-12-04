@@ -1,6 +1,8 @@
 ﻿using ECommerceBackEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using System;
 
 namespace ECommerceBackEnd.Controllers
 {
@@ -8,42 +10,26 @@ namespace ECommerceBackEnd.Controllers
     [ApiController]
     public class DegerlendirmelerController : ControllerBase
     {
-        private readonly Context _context;
+        private readonly Context _context; 
+        private readonly IWebHostEnvironment _environment;
 
-        public DegerlendirmelerController(Context context)
+        public DegerlendirmelerController(Context context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
+        
 
-        [HttpGet("Getir/{urunId}")]
-        public IActionResult Getir(int urunId)
-        {
-            var yorumlar = _context.degerlendirmes
-                .Include(x => x.Musteri)
-                .Where(x => x.UrunId == urunId && x.Onaylandi == true) 
-                .OrderByDescending(x => x.Tarih)
-                .Select(x => new
-                {
-                    x.DegerlendirmeId,
-                    x.Puan,
-                    x.Yorum,
-                    x.Tarih,
-                    MusteriAdi = x.Musteri != null ? x.Musteri.MusteriAdi + " " + x.Musteri.MusteriSoyadi : "Anonim"
-                })
-                .ToList();
-
-            return Ok(yorumlar);
-        }
 
         [HttpPost("Ekle")]
-        public IActionResult Ekle([FromBody] Degerlendirme yeniYorum)
+        public async Task<IActionResult> Ekle([FromBody] Degerlendirme yeniYorum) 
         {
             if (yeniYorum == null) return BadRequest("Veri yok");
 
             var satisKaydi = _context.satislars
                 .FirstOrDefault(x => x.MusteriId == yeniYorum.MusteriId
                                   && x.UrunId == yeniYorum.UrunId
-                                  && x.SiparisDurumu == SiparisDurum.TeslimEdildi); 
+                                  && x.SiparisDurumu == SiparisDurum.TeslimEdildi);
 
             if (satisKaydi == null)
             {
@@ -51,17 +37,42 @@ namespace ECommerceBackEnd.Controllers
             }
 
             bool dahaOnceYorumlamis = _context.degerlendirmes
-            .Any(x => x.MusteriId == yeniYorum.MusteriId && x.UrunId == yeniYorum.UrunId);
+                .Any(x => x.MusteriId == yeniYorum.MusteriId && x.UrunId == yeniYorum.UrunId);
 
             if (dahaOnceYorumlamis)
             {
-                return BadRequest("Bu ürüne zaten daha önce puan verdiniz veya yorum yaptınız. Tekrar değerlendiremezsiniz.");
+                return BadRequest("Bu ürüne zaten yorum yaptınız.");
             }
+
+            if (!string.IsNullOrEmpty(yeniYorum.ResimBase64))
+            {
+                try
+                {
+                    string dosyaAdi = Guid.NewGuid().ToString() + ".jpg";
+                    string uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "yorumlar");
+
+                    if (!Directory.Exists(uploadsFolder))
+                        Directory.CreateDirectory(uploadsFolder);
+
+                    string dosyaYolu = Path.Combine(uploadsFolder, dosyaAdi);
+
+                    byte[] imageBytes = Convert.FromBase64String(yeniYorum.ResimBase64);
+
+                    await System.IO.File.WriteAllBytesAsync(dosyaYolu, imageBytes);
+
+                    yeniYorum.ResimUrl = "/uploads/yorumlar/" + dosyaAdi;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Resim hatası: " + ex.Message);
+                }
+            }
+
             yeniYorum.Tarih = DateTime.Now;
 
             if (string.IsNullOrWhiteSpace(yeniYorum.Yorum))
             {
-                yeniYorum.Onaylandi = true; 
+                yeniYorum.Onaylandi = true;
             }
             else
             {
@@ -69,7 +80,7 @@ namespace ECommerceBackEnd.Controllers
             }
 
             _context.degerlendirmes.Add(yeniYorum);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(); 
 
             if (yeniYorum.Onaylandi)
                 return Ok("Değerlendirmeniz yayınlandı.");
@@ -81,24 +92,24 @@ namespace ECommerceBackEnd.Controllers
         public IActionResult GetOnayBekleyenler()
         {
             var yorumlar = _context.degerlendirmes
-                .Include(x => x.Urun)
-                .Include(x => x.Musteri)
-                .Where(x => x.Onaylandi == false)
-                .OrderByDescending(x => x.Tarih)
-                .Select(x => new
-                {
-                    x.DegerlendirmeId,
-                    x.Puan,
-                    x.Yorum,
-                    x.Tarih,
-                    x.Onaylandi,
-
-                    UrunAdi = x.Urun != null ? x.Urun.UrunAdi : "Silinmiş Ürün",
-                    MusteriAdi = x.Musteri != null
-                ? x.Musteri.MusteriAdi.Substring(0, 2) + "*** " + x.Musteri.MusteriSoyadi.Substring(0, 2) + "***"
-                : "Anonim Kullanıcı"
-                })
-                .ToList();
+               .Include(x => x.Urun)
+               .Include(x => x.Musteri)
+               .Where(x => x.Onaylandi == false)
+               .OrderByDescending(x => x.Tarih)
+               .Select(x => new
+               {
+                   x.DegerlendirmeId,
+                   x.Puan,
+                   x.Yorum,
+                   x.Tarih,
+                   x.Onaylandi,
+                   x.ResimUrl,
+                   UrunAdi = x.Urun != null ? x.Urun.UrunAdi : "Silinmiş Ürün",
+                   MusteriAdi = x.Musteri != null
+                       ? x.Musteri.MusteriAdi + " " + x.Musteri.MusteriSoyadi 
+                       : "Anonim"
+               })
+               .ToList();
 
             return Ok(yorumlar);
         }

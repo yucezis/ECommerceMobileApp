@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io'; // Dosya işlemleri için
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart'; // Resim seçmek için
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/satislar_model.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -39,6 +41,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   String _hataMesaji = "";
   List<SiparisGrubu> _gruplanmisSiparisler = [];
 
+  // --- RESİM İŞLEMLERİ İÇİN DEĞİŞKENLER ---
+  File? _secilenResim;
+  final ImagePicker _picker = ImagePicker();
+
   @override
   void initState() {
     super.initState();
@@ -46,10 +52,16 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   }
 
   String getBaseUrl() {
-    // BURAYA KENDİ IP ADRESİNİ YAZMAYI UNUTMA
     String ipAdresim = "10.180.131.237";
     String port = "5126";
     return "http://$ipAdresim:$port/api";
+  }
+
+  // Base64 Çevirici
+  String? _resmiBase64Yap() {
+    if (_secilenResim == null) return null;
+    List<int> imageBytes = _secilenResim!.readAsBytesSync();
+    return base64Encode(imageBytes);
   }
 
   Future<void> _siparisleriGetir() async {
@@ -71,7 +83,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         List<dynamic> body = jsonDecode(response.body);
         List<Satis> hamListe = body.map((item) => Satis.fromJson(item)).toList();
 
-        // Gruplama Mantığı
         Map<String, List<Satis>> gruplar = {};
         
         for (var satis in hamListe) {
@@ -88,19 +99,13 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         List<SiparisGrubu> tempListe = [];
         gruplar.forEach((siparisNo, urunler) {
           double toplam = urunler.fold(0, (sum, item) => sum + item.toplamTutar);
-          
-          // Grubun ilk ürününden tarih ve adres bilgisini alıyoruz
           var ilkUrun = urunler.first;
           
-          // --- ADRES MANTIĞI DÜZELTİLDİ ---
           String adresMetni = "Adres yok"; 
-
-          // Eğer modelde teslimatAdresi dolu gelmişse formatla
           if (ilkUrun.teslimatAdresi != null) {
              var adr = ilkUrun.teslimatAdresi!;
              adresMetni = "${adr.baslik} (${adr.sehir}/${adr.ilce})\n${adr.acikAdres}";
           }
-          // ---------------------------------
 
           tempListe.add(SiparisGrubu(
             siparisNo: siparisNo,
@@ -111,7 +116,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
           ));
         });
 
-        // Tarihe göre sırala (En yeni en üstte)
         tempListe.sort((a, b) => b.tarih.compareTo(a.tarih));
 
         if (mounted) {
@@ -164,9 +168,15 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     );
   }
 
+  // --- DEĞERLENDİRME PENCERESİ (RESİM SEÇMELİ) ---
   void _degerlendirmePenceresiAc(int urunId, String urunAdi) {
     double secilenPuan = 5;
     TextEditingController yorumController = TextEditingController();
+    
+    // Her açılışta resmi sıfırla
+    setState(() {
+      _secilenResim = null;
+    });
 
     showModalBottomSheet(
       context: context,
@@ -174,71 +184,144 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
       builder: (context) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-            left: 20, right: 20, top: 20
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text("Değerlendir: $urunAdi", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkGreen), textAlign: TextAlign.center),
-              const SizedBox(height: 15),
-              
-              RatingBar.builder(
-                initialRating: 5,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: false,
-                itemCount: 5,
-                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => const Icon(Icons.star_rounded, color: Colors.amber, size: 36),
-                onRatingUpdate: (rating) {
-                  secilenPuan = rating;
-                },
+        // StatefulBuilder: BottomSheet içindeki durumu (resmi) güncelleyebilmek için
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+                left: 20, right: 20, top: 20
               ),
-              
-              const SizedBox(height: 20),
-              
-              TextField(
-                controller: yorumController,
-                decoration: InputDecoration(
-                  hintText: "Düşünceleriniz neler? (İsteğe bağlı)",
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                  filled: true,
-                  fillColor: Colors.grey[100],
-                ),
-                maxLines: 3,
-              ),
-              
-              const SizedBox(height: 10),
-              const Text("Not: Sadece puan verirseniz anında yayınlanır. Yorum yaparsanız onay beklersiniz.", style: TextStyle(fontSize: 12, color: Colors.grey), textAlign: TextAlign.center),
-              const SizedBox(height: 20),
-              
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kDarkGreen, 
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text("Değerlendir: $urunAdi", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkGreen), textAlign: TextAlign.center),
+                  const SizedBox(height: 15),
+                  
+                  RatingBar.builder(
+                    initialRating: 5,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(Icons.star_rounded, color: Colors.amber, size: 36),
+                    onRatingUpdate: (rating) {
+                      secilenPuan = rating;
+                    },
                   ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    _yorumuKaydet(urunId, secilenPuan, yorumController.text);
-                  },
-                  child: const Text("GÖNDER", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                ),
-              )
-            ],
-          ),
+                  
+                  const SizedBox(height: 20),
+                  
+                  TextField(
+                    controller: yorumController,
+                    decoration: InputDecoration(
+                      hintText: "Düşünceleriniz neler? (İsteğe bağlı)",
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                      filled: true,
+                      fillColor: Colors.grey[100],
+                    ),
+                    maxLines: 3,
+                  ),
+                  
+                  const SizedBox(height: 15),
+
+                  // --- FOTOĞRAF SEÇME ALANI ---
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          final XFile? image = await _picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+                          if (image != null) {
+                            // Hem modalı hem ana sayfayı güncelle
+                            setModalState(() {
+                              _secilenResim = File(image.path);
+                            });
+                          }
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.grey[400]!)
+                          ),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.camera_alt, color: Colors.grey),
+                              SizedBox(width: 5),
+                              Text("Fotoğraf Ekle"),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+                      
+                      // Seçilen Resmin Önizlemesi
+                      if (_secilenResim != null)
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.file(
+                                _secilenResim!,
+                                width: 60,
+                                height: 60,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Positioned(
+                              right: 0, top: 0,
+                              child: InkWell(
+                                onTap: () {
+                                  setModalState(() => _secilenResim = null);
+                                },
+                                child: Container(
+                                  color: Colors.black54,
+                                  child: const Icon(Icons.close, size: 16, color: Colors.white),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                    ],
+                  ),
+                  // ----------------------------
+
+                  const SizedBox(height: 10),
+                  const Text("Not: Sadece puan verirseniz anında yayınlanır. Yorum yaparsanız onay beklersiniz.", style: TextStyle(fontSize: 12, color: Colors.grey), textAlign: TextAlign.center),
+                  const SizedBox(height: 20),
+                  
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kDarkGreen, 
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        
+                        // Resmi Base64 yapıp gönderiyoruz
+                        String? resimData = _resmiBase64Yap();
+                        _yorumuKaydet(urunId, secilenPuan, yorumController.text, resimData);
+                      },
+                      child: const Text("GÖNDER", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
         );
       },
     );
   }
 
-  Future<void> _yorumuKaydet(int urunId, double puan, String yorum) async {
+  // --- YORUMU KAYDET (RESİM PARAMETRESİ EKLENDİ) ---
+  Future<void> _yorumuKaydet(int urunId, double puan, String yorum, String? resimBase64) async {
     final prefs = await SharedPreferences.getInstance();
     final int? musteriId = prefs.getInt('musteriId');
 
@@ -252,7 +335,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
           "UrunId": urunId,
           "MusteriId": musteriId,
           "Puan": puan.toInt(),
-          "Yorum": yorum 
+          "Yorum": yorum,
+          "ResimBase64": resimBase64 // Resmi de gönderiyoruz
         }),
       );
 
@@ -295,7 +379,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     );
   }
 
- Widget _buildSiparisKarti(SiparisGrubu siparis) {
+  Widget _buildSiparisKarti(SiparisGrubu siparis) {
     String tarihFormatli = "${siparis.tarih.day}.${siparis.tarih.month}.${siparis.tarih.year} - ${siparis.tarih.hour}:${siparis.tarih.minute.toString().padLeft(2, '0')}";
     int durumId = siparis.urunler.isNotEmpty ? siparis.urunler.first.siparisDurumu : 0;
 
