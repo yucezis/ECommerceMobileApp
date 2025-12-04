@@ -4,27 +4,36 @@ import 'urun_model.dart';
 
 class SepetServisi {
   
-  static Future<void> sepeteEkle(Urun urun) async {
+  static Future<void> sepeteEkle(Urun urun, {int eklenecekAdet = 1}) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> sepetListesi = prefs.getStringList('sepet') ?? [];
 
-    bool varMi = false;
-    for (var item in sepetListesi) {
-      Map<String, dynamic> jsonUrun = jsonDecode(item);
-      if (jsonUrun['urunId'] == urun.urunId) {
-        varMi = true;
-        break;
-      }
+    // Mevcut listeyi Urun objelerine çevir
+    List<Urun> mevcutUrunler = sepetListesi
+        .map((item) => Urun.fromJson(jsonDecode(item)))
+        .toList();
+
+    // Ürün zaten sepette var mı kontrol et
+    int index = mevcutUrunler.indexWhere((element) => element.urunId == urun.urunId);
+
+    if (index != -1) {
+      // VARSA: Mevcut adedin üzerine ekle
+      mevcutUrunler[index].sepetAdedi += eklenecekAdet;
+    } else {
+      // YOKSA: Yeni ürün olarak ekle ve adedini ayarla
+      urun.sepetAdedi = eklenecekAdet;
+      mevcutUrunler.add(urun);
     }
 
-    if (!varMi) {
-      sepetListesi.add(jsonEncode(urun.toJson()));
-      await prefs.setStringList('sepet', sepetListesi);
-    }
+    // Listeyi tekrar JSON string'e çevirip kaydet
+    List<String> yeniListeString = mevcutUrunler
+        .map((item) => jsonEncode(item.toJson()))
+        .toList();
+
+    await prefs.setStringList('sepet', yeniListeString);
   }
 
-  static Future<List<Urun>> sepetiGetir() async 
-  {
+  static Future<List<Urun>> sepetiGetir() async {
     final prefs = await SharedPreferences.getInstance();
     List<String> sepetListesi = prefs.getStringList('sepet') ?? [];
 
@@ -33,16 +42,46 @@ class SepetServisi {
         .toList();
   }
 
+  static Future<void> adetAzalt(int urunId) async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> sepetListesi = prefs.getStringList('sepet') ?? [];
+
+    List<Urun> mevcutUrunler = sepetListesi
+        .map((item) => Urun.fromJson(jsonDecode(item)))
+        .toList();
+
+    int index = mevcutUrunler.indexWhere((element) => element.urunId == urunId);
+
+    if (index != -1) {
+      if (mevcutUrunler[index].sepetAdedi > 1) {
+        mevcutUrunler[index].sepetAdedi--; 
+      } else {
+        mevcutUrunler.removeAt(index); 
+      }
+    }
+
+    List<String> yeniListeString = mevcutUrunler
+        .map((item) => jsonEncode(item.toJson()))
+        .toList();
+
+    await prefs.setStringList('sepet', yeniListeString);
+  }
+
   static Future<void> sepettenSil(int urunId) async {
     final prefs = await SharedPreferences.getInstance();
     List<String> sepetListesi = prefs.getStringList('sepet') ?? [];
 
-    sepetListesi.removeWhere((item) {
-      Map<String, dynamic> jsonUrun = jsonDecode(item);
-      return jsonUrun['urunId'] == urunId;
-    });
+    List<Urun> mevcutUrunler = sepetListesi
+        .map((item) => Urun.fromJson(jsonDecode(item)))
+        .toList();
 
-    await prefs.setStringList('sepet', sepetListesi);
+    mevcutUrunler.removeWhere((item) => item.urunId == urunId);
+
+    List<String> yeniListeString = mevcutUrunler
+        .map((item) => jsonEncode(item.toJson()))
+        .toList();
+
+    await prefs.setStringList('sepet', yeniListeString);
   }
 
   static Future<void> sepetiBosalt() async {

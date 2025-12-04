@@ -9,8 +9,9 @@ class Urun {
   final String aciklama;
   final int urunStok;
   final String kategoriAdi;
-  
   final int kategoriID; 
+
+  int sepetAdedi;
 
   Urun({
     required this.urunId,
@@ -23,8 +24,8 @@ class Urun {
     required this.aciklama,
     required this.urunStok,
     required this.kategoriAdi,
-    
     required this.kategoriID, 
+    this.sepetAdedi = 1,
   });
 
   factory Urun.fromJson(Map<String, dynamic> json) {
@@ -43,6 +44,7 @@ class Urun {
       kategoriAdi: json['kategoriAdi'] ?? '',
       
       kategoriID: json['kategoriID'] ?? json['KategoriID'] ?? 0, 
+      sepetAdedi: json['sepetAdedi'] ?? 1,
     );
   }
 
@@ -59,7 +61,7 @@ class Urun {
       'urunStok': urunStok,
       'kategoriAdi': kategoriAdi,
       'kategoriID': kategoriID,
-      'adet': 1, 
+      'sepetAdedi': sepetAdedi,
     };
   }
 

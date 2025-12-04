@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/models/satislar_model.dart';
 import 'package:flutter/material.dart';
 import 'models/urun_model.dart';
 import 'models/cart_service.dart';
@@ -5,10 +6,7 @@ import 'footer.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'models/cart_service.dart'; 
-//import 'payment_screen.dart';
 import 'address_selection_screen.dart';
-
 
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kBackgroundAccent = Color(0xFFFAEDCD);
@@ -38,11 +36,13 @@ class _CartScreenState extends State<CartScreen> {
   Future<void> _sepetiYukle() async {
     List<Urun> urunler = await SepetServisi.sepetiGetir();
     double toplam = 0;
+    
     for (var u in urunler) {
       double fiyat = (u.indirimliFiyat != null && u.indirimliFiyat! > 0)
           ? u.indirimliFiyat!
           : u.urunSatisFiyati;
-      toplam += fiyat;
+      
+      toplam += fiyat * u.sepetAdedi; 
     }
 
     if (mounted) {
@@ -56,7 +56,7 @@ class _CartScreenState extends State<CartScreen> {
 
   Future<void> _urunuSil(int id) async {
     await SepetServisi.sepettenSil(id);
-    _sepetiYukle();
+    _sepetiYukle(); 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -68,98 +68,11 @@ class _CartScreenState extends State<CartScreen> {
       );
     }
   }
-
-  Future<void> _satinAl() async {
-    setState(() => _isLoading = true);
-
-    final prefs = await SharedPreferences.getInstance();
-    final int? musteriId = prefs.getInt('musteriId');
-
-    if (musteriId == null) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Sipariş vermek için lütfen giriş yapın."),
-            backgroundColor: Colors.redAccent,
-          ),
-        );
-      }
-      setState(() => _isLoading = false);
-      return;
-    }
-
-    String ipAdresim = "10.180.131.237"; 
-    String port = "5126";
-    final url = Uri.parse("http://$ipAdresim:$port/api/Musteris/SepetOnayla");
-
-    try {
-      final bodyVerisi = jsonEncode({
-        "MusteriId": musteriId,
-        "SepetUrunleri": _sepetUrunleri.map((e) => {
-          "UrunId": e.urunId,
-          "Fiyat": (e.indirimliFiyat != null && e.indirimliFiyat! > 0) 
-                   ? e.indirimliFiyat 
-                   : e.urunSatisFiyati
-        }).toList(),
-      });
-      final response = await http.post(
-        url,
-        headers: {"Content-Type": "application/json"},
-        body: bodyVerisi,
-      );
-
-      if (response.statusCode == 200) {
-        var cevapJson = jsonDecode(response.body);
-        String siparisNo = cevapJson['siparisNo'] ?? "---";
-
-        await SepetServisi.sepetiBosalt();
-
-        if (mounted) {
-          setState(() {
-            _sepetUrunleri = [];
-            _toplamTutar = 0;
-            _isLoading = false;
-          });
-
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (ctx) => AlertDialog(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              title: const Row(
-                children: [
-                  Icon(Icons.check_circle, color: Colors.green, size: 30),
-                  SizedBox(width: 10),
-                  Text("Sipariş Alındı!", style: TextStyle(fontWeight: FontWeight.bold)),
-                ],
-              ),
-              content: Text(
-                "Siparişiniz başarıyla oluşturuldu.\n\nSipariş No:\n👉 $siparisNo\n\nSiparişlerim sayfasından durumunu takip edebilirsiniz.",
-                style: const TextStyle(fontSize: 16),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(ctx),
-                  child: const Text("Tamam", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: kDarkGreen)),
-                )
-              ],
-            ),
-          );
-        }
-      } else {
-        throw Exception("Sunucu Hatası: ${response.statusCode}");
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Bir hata oluştu: $e"), backgroundColor: Colors.red),
-        );
-        setState(() => _isLoading = false);
-      }
-    }
-  }
-
   
+  Future<void> _adetAzalt(int id) async {
+    await SepetServisi.adetAzalt(id);
+    _sepetiYukle();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +158,8 @@ class _CartScreenState extends State<CartScreen> {
 
     return GestureDetector(
       onTap: () {
-        Footer.footerKey.currentState?.uruneGit(urun);
+        // Ürün detayına gitme kodu (Varsa açabilirsin)
+        // Footer.footerKey.currentState?.uruneGit(urun);
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 20),
@@ -259,6 +173,7 @@ class _CartScreenState extends State<CartScreen> {
         ),
         child: Row(
           children: [
+            // RESİM ALANI
             Container(
               decoration: BoxDecoration(
                 boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5, offset: const Offset(2, 2))],
@@ -275,6 +190,8 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
             const SizedBox(width: 20),
+            
+            // BİLGİ VE BUTONLAR
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -283,20 +200,70 @@ class _CartScreenState extends State<CartScreen> {
                   const SizedBox(height: 4),
                   Text(urun.urunYazar.isNotEmpty ? urun.urunYazar : urun.urunMarka, style: const TextStyle(color: kOliveGreen, fontSize: 13, fontStyle: FontStyle.italic)),
                   const SizedBox(height: 10),
-                  if (indirimVar) ...[
-                    Row(
-                      children: [
-                        Text("${urun.urunSatisFiyati} ₺", style: TextStyle(decoration: TextDecoration.lineThrough, color: kOliveGreen.withOpacity(0.6), fontSize: 14)),
-                        const SizedBox(width: 8),
-                        Text("$guncelFiyat ₺", style: const TextStyle(color: kDiscountRed, fontWeight: FontWeight.bold, fontSize: 18)),
+                  
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // FİYAT
+                      if (indirimVar) ...[
+                        Row(
+                          children: [
+                            Text("${urun.urunSatisFiyati} ₺", style: TextStyle(decoration: TextDecoration.lineThrough, color: kOliveGreen.withOpacity(0.6), fontSize: 12)),
+                            const SizedBox(width: 5),
+                            Text("$guncelFiyat ₺", style: const TextStyle(color: kDiscountRed, fontWeight: FontWeight.bold, fontSize: 16)),
+                          ],
+                        )
+                      ] else ...[
+                        Text("$guncelFiyat ₺", style: const TextStyle(color: kDarkGreen, fontWeight: FontWeight.bold, fontSize: 16)),
                       ],
-                    )
-                  ] else ...[
-                    Text("$guncelFiyat ₺", style: const TextStyle(color: kDarkGreen, fontWeight: FontWeight.bold, fontSize: 18)),
-                  ],
+
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4), 
+                        decoration: BoxDecoration(
+                          color: kBackgroundAccent,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: kOliveGreen.withOpacity(0.3))
+                        ),
+                        child: Row(
+                          children: [
+                             InkWell(
+                               onTap: () async {
+                                 await _adetAzalt(urun.urunId);
+                               },
+                               child: const Padding(
+                                 padding: EdgeInsets.all(4.0),
+                                 child: Icon(Icons.remove, size: 18, color: kDarkGreen),
+                               ),
+                             ),
+                             
+                             const SizedBox(width: 8),
+                             
+                             Text(
+                               "${urun.sepetAdedi}", 
+                               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: kDarkCoffee)
+                             ),
+                             
+                             const SizedBox(width: 8),
+                             
+                             InkWell(
+                               onTap: () async {
+                                 await SepetServisi.sepeteEkle(urun); 
+                                 _sepetiYukle(); 
+                               },
+                               child: const Padding(
+                                 padding: EdgeInsets.all(4.0),
+                                 child: Icon(Icons.add, size: 18, color: kDarkGreen),
+                               ),
+                             ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
+            
             IconButton(
               icon: const Icon(Icons.delete_outline_rounded),
               color: kDiscountRed,
@@ -308,7 +275,6 @@ class _CartScreenState extends State<CartScreen> {
       ),
     );
   }
-
   Widget _buildAltToplam() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
@@ -340,28 +306,28 @@ class _CartScreenState extends State<CartScreen> {
               height: 55,
               child: ElevatedButton(
                 onPressed: _sepetUrunleri.isEmpty
-    ? null
-    : () async {
-        final result = await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AddressSelectionScreen(
-              toplamTutar: _toplamTutar,
-              sepetUrunleri: _sepetUrunleri,
-            ),
-          ),
-        );
+                    ? null
+                    : () async {
+                        final result = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddressSelectionScreen(
+                              toplamTutar: _toplamTutar,
+                              sepetUrunleri: _sepetUrunleri,
+                            ),
+                          ),
+                        );
 
-        if (result == true) {
-          setState(() {
-            _sepetUrunleri.clear();
-            _toplamTutar = 0;
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Sipariş başarıyla tamamlandı!"), backgroundColor: Colors.green),
-          );
-        }
-      },
+                        if (result == true) {
+                          setState(() {
+                            _sepetUrunleri.clear();
+                            _toplamTutar = 0;
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Sipariş başarıyla tamamlandı!"), backgroundColor: Colors.green),
+                          );
+                        }
+                      },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: kDarkGreen,
                   foregroundColor: kBookPaper,
@@ -384,5 +350,5 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
     );
-}
+  }
 }

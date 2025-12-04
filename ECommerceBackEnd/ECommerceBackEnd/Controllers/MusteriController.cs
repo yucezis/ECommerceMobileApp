@@ -128,7 +128,7 @@ namespace ECommerceBackEnd.Controllers
                 {
                     MusteriId = model.MusteriId,
                     UrunId = item.UrunId,
-                    Adet = 1,
+                    Adet = item.Adet,
                     Fiyat = item.Fiyat,
                     ToplamTutar = item.Fiyat,
                     Tarih = DateTime.Now,
@@ -240,7 +240,6 @@ namespace ECommerceBackEnd.Controllers
             musteri.OnayKodu = kod;
             _context.SaveChanges();
 
-            // Özel silme mailini gönder
             try
             {
                 ECommerceBackEnd.Helpers.MailHelper.MailGonderHesapSilme(musteri.MusteriMail, kod, musteri.MusteriAdi);
@@ -282,6 +281,8 @@ namespace ECommerceBackEnd.Controllers
         {
             public int UrunId { get; set; }
             public decimal Fiyat { get; set; }
+
+            public int Adet { get; set; }
         }
 
         public class SepetOnayModel

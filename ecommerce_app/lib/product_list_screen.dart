@@ -334,7 +334,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           ]
                         ]),
                         InkWell(
-                          onTap: () {
+                          onTap: () async {
+                            await SepetServisi.sepeteEkle(urun);
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text("${urun.urunAdi} sepete eklendi!"), 
@@ -345,10 +346,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                             );
                           },
                           child: InkWell(
-  // Tıklama kenarlıkları Container ile aynı olsun diye
   borderRadius: BorderRadius.circular(12), 
   onTap: () async {
-    // 1. Sepet Servisini Çağır ve Ürünü Ekle
     await SepetServisi.sepeteEkle(urun);
 
     if (context.mounted) {

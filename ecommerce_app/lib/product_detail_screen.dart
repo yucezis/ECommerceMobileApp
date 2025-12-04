@@ -26,7 +26,6 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int adet = 1;
   
-  // Yorum Değişkenleri
   List<dynamic> _yorumlar = [];
   bool _yorumlarYukleniyor = true;
 
@@ -37,10 +36,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   String getBaseUrl() {
-    return "http://10.180.131.237:5126/api"; // IP Adresini kontrol et
+    return "http://10.180.131.237:5126/api"; 
   }
 
-  // API: Yorumları Getir
   Future<void> _yorumlariGetir() async {
     try {
       final response = await http.get(Uri.parse("${getBaseUrl()}/Degerlendirmeler/Getir/${widget.urun.urunId}"));
@@ -231,7 +229,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                             ),
                                           ],
                                         ),
-                                        // Eğer yorum varsa göster, yoksa sadece yıldız yeter
                                         if (yorum['yorum'] != null && yorum['yorum'].toString().isNotEmpty) ...[
                                           const SizedBox(height: 8),
                                           Text(yorum['yorum'], style: TextStyle(color: kDarkCoffee.withOpacity(0.8), fontSize: 14)),
@@ -247,14 +244,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 },
                               ),
 
-                    const SizedBox(height: 120), // Footer ve Buton için boşluk
+                    const SizedBox(height: 120), 
                   ],
                 ),
               ),
             ),
           ),
 
-          // SEPETE EKLE BUTONU (SABİT EN ALTTA)
           Positioned(
             bottom: 20, left: 20, right: 20,
             child: Container(
@@ -284,9 +280,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Expanded(
                     child: InkWell(
                       onTap: () async {
-                        await SepetServisi.sepeteEkle(urun);
+                        await SepetServisi.sepeteEkle(urun, eklenecekAdet: adet);
                         if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${urun.urunAdi} sepete eklendi!"), backgroundColor: kDarkCoffee, duration: const Duration(milliseconds: 800)));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${adet} adet ${urun.urunAdi} sepete eklendi!"), backgroundColor: kDarkCoffee, duration: const Duration(milliseconds: 800)));
                         }
                       },
                       child: Column(
