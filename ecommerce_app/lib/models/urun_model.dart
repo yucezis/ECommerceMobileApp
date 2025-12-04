@@ -10,6 +10,8 @@ class Urun {
   final int urunStok;
   final String kategoriAdi;
   final int kategoriID; 
+  final int? urunSayfa;
+  final String? urunDil;
 
   int sepetAdedi;
 
@@ -25,6 +27,8 @@ class Urun {
     required this.urunStok,
     required this.kategoriAdi,
     required this.kategoriID, 
+    this.urunDil,
+    this.urunSayfa,
     this.sepetAdedi = 1,
   });
 
@@ -45,6 +49,8 @@ class Urun {
       
       kategoriID: json['kategoriID'] ?? json['KategoriID'] ?? 0, 
       sepetAdedi: json['sepetAdedi'] ?? 1,
+      urunDil: json['urunDil'] ?? json['UrunDil'], 
+      urunSayfa: json['urunSayfa'] ?? json['UrunSayfa'],
     );
   }
 
@@ -62,6 +68,8 @@ class Urun {
       'kategoriAdi': kategoriAdi,
       'kategoriID': kategoriID,
       'sepetAdedi': sepetAdedi,
+      'urunSayfa' : urunSayfa,
+      'urunDil' : urunDil
     };
   }
 

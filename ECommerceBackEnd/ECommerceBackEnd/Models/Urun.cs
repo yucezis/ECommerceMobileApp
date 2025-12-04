@@ -24,6 +24,8 @@ namespace ECommerceBackEnd.Models
         public short UrunStok { get; set; }
 
         public decimal UrunSatisFiyati { get; set; }
+        public string? UrunDil {  get; set; }
+        public int? UrunSayfa { get; set; }
         public bool UrunStokDurum { get; set; }
 
         [Column(TypeName = "VARCHAR")]

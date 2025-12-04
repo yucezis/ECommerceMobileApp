@@ -168,13 +168,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     const SizedBox(height: 25),
 
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildModernBadge(Icons.star_rounded, "4.8", Colors.amber),
-                        _buildModernBadge(Icons.language, "Türkçe", Colors.blueGrey),
-                        _buildModernBadge(Icons.auto_stories, "320 Syf", kOliveGreen),
-                      ],
-                    ),
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+    _buildModernBadge(Icons.star_rounded, "4.8", Colors.amber),
+
+    _buildModernBadge(
+        Icons.language, 
+        urun.urunDil ?? "-", 
+        Colors.blueGrey
+    ),
+
+    _buildModernBadge(
+        Icons.auto_stories, 
+        "${urun.urunSayfa ?? '-'} Syf", 
+        kOliveGreen
+    ),
+  ],
+),
                     const SizedBox(height: 25),
                     
                     const Text("Kitap Hakkında", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkCoffee)),
@@ -188,7 +198,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     const Divider(),
                     const SizedBox(height: 10),
 
-                    // --- SADECE YORUMLAR LİSTESİ (BUTON YOK) ---
                     const Text("Değerlendirmeler", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkCoffee)),
                     
                     const SizedBox(height: 10),

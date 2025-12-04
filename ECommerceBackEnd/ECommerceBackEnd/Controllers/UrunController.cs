@@ -15,7 +15,6 @@ namespace ECommerceBackEnd.Controllers
             _context = context;
         }
 
-        // LİSTELEME
         [HttpGet]
         public IActionResult Get()
         {
@@ -35,14 +34,15 @@ namespace ECommerceBackEnd.Controllers
                     UrunYazar = x.UrunYazar,
                     IndirimliFiyat = x.IndirimliFiyat,
                     Aciklama = x.Aciklama,
-                    UrunStokDurum = x.UrunStokDurum
+                    UrunStokDurum = x.UrunStokDurum,
+                    UrunSayfa = x.UrunSayfa,
+                    UrunDil = x.UrunDil
                 })
                 .ToList();
 
             return Ok(urunler);
         }
 
-        // TEK ÜRÜN GETİR
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -51,7 +51,6 @@ namespace ECommerceBackEnd.Controllers
             return Ok(urun);
         }
 
-        // EKLEME (Düzeltilmiş Tek Metot)
         [HttpPost]
         public IActionResult Post(Urun p)
         {
@@ -64,29 +63,24 @@ namespace ECommerceBackEnd.Controllers
             return Ok("Ürün başarıyla eklendi.");
         }
 
-        // SİLME
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var urun = _context.uruns.Find(id);
             if (urun == null) return NotFound();
-
-            // Veriyi tamamen silmek yerine pasife çekiyoruz (Soft Delete)
-            // Eğer tamamen silmek istersen: _context.uruns.Remove(urun);
+;
             urun.Durum = false;
 
             _context.SaveChanges();
             return Ok("Ürün silindi (Pasife alındı).");
         }
 
-        // GÜNCELLEME
         [HttpPut]
         public IActionResult Put(Urun p)
         {
             var urun = _context.uruns.Find(p.UrunId);
             if (urun == null) return NotFound();
 
-            // Gelen verilerle mevcut verileri güncelle
             urun.UrunAdi = p.UrunAdi;
             urun.UrunMarka = p.UrunMarka;
             urun.UrunYazar = p.UrunYazar;
@@ -103,7 +97,6 @@ namespace ECommerceBackEnd.Controllers
             return Ok("Ürün güncellendi.");
         }
 
-        // ÇOK SATANLAR
         [HttpGet("CokSatanlar")]
         public IActionResult GetCokSatanlar()
         {
