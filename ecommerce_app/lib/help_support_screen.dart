@@ -120,7 +120,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
   },
         backgroundColor: kDarkGreen,
         icon: const Icon(Icons.chat_bubble_outline, color: kBookPaper),
-        label: const Text("Canlı Destek", style: TextStyle(color: kBookPaper, fontWeight: FontWeight.bold)),
+        label: const Text("Müşteri Temsilcisi", style: TextStyle(color: kBookPaper, fontWeight: FontWeight.bold)),
       ),
       
       body: SingleChildScrollView( 

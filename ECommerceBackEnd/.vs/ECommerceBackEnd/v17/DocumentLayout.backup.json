@@ -118,9 +118,9 @@
               "Title": "MusteriController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\MusteriController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\MusteriController.cs",
-              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\MusteriController.cs*",
-              "RelativeToolTip": "ECommerceBackEnd\\Controllers\\MusteriController.cs*",
-              "ViewState": "AgIAABkBAAAAAAAAAIA6wB8BAAAjAAAAAAAAAA==",
+              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\MusteriController.cs",
+              "RelativeToolTip": "ECommerceBackEnd\\Controllers\\MusteriController.cs",
+              "ViewState": "AgIAABoBAAAAAAAAAIA4wCoBAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T09:01:27.904Z",
               "EditorCaption": ""
@@ -135,8 +135,7 @@
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\SatislarController.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAIAzwEAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T17:41:21.382Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-19T17:41:21.382Z"
             },
             {
               "$type": "Document",
@@ -196,8 +195,7 @@
               "RelativeToolTip": "ECommerceBackEnd\\Models\\Satislar.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-29T18:24:24.206Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-29T18:24:24.206Z"
             },
             {
               "$type": "Document",
