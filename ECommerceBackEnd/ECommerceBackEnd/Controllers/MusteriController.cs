@@ -271,6 +271,38 @@ namespace ECommerceBackEnd.Controllers
             }
         }
 
+
+        [HttpPost("SifremiUnuttum")]
+        public IActionResult SifremiUnuttum([FromBody] SifreSifirlamaModel model)
+        {
+            var musteri = _context.musteris.FirstOrDefault(x => x.MusteriMail == model.Mail);
+
+            if (musteri == null)
+            {
+                return NotFound("Bu e-posta adresiyle kayıtlı bir kullanıcı bulunamadı.");
+            }
+
+            Random rnd = new Random();
+            string yeniSifre = rnd.Next(100000, 999999).ToString();
+
+            musteri.MusteriSifre = yeniSifre;
+            _context.SaveChanges();
+
+            try
+            {
+                ECommerceBackEnd.Helpers.MailHelper.MailGonderYeniSifre(musteri.MusteriMail, yeniSifre, musteri.MusteriAdi);
+                return Ok("Yeni şifreniz e-posta adresinize gönderildi.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Mail gönderilemedi: " + ex.Message);
+            }
+        }
+
+        public class SifreSifirlamaModel
+        {
+            public string Mail { get; set; }
+        }
         public class DogrulamaModel
         {
             public int MusteriId { get; set; }

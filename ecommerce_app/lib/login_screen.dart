@@ -5,6 +5,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'footer.dart';
 import 'register_screen.dart';
 
+// --- RENKLERİ BURAYA (CLASS DIŞINA) TAŞIDIK ---
+const Color kPrimary = Color(0xFF606C38);
+const Color kDarkGreen = Color(0xFF283618);
+const Color kCream = Color(0xFFFEFAE0);
+const Color kBrown = Color(0xFF211508);
+const Color kBookPaper = Color(0xFFFEFAE0); 
+const Color kOliveGreen = Color(0xFF606C38); // İkonlar için
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -16,12 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
-
-  // Color Palette
-  final Color primary = const Color(0xFF606C38);
-  final Color darkGreen = const Color(0xFF283618);
-  final Color cream = const Color(0xFFFEFAE0);
-  final Color brown = const Color(0xFF211508);
 
   String getBaseUrl() {
     String ipAdresim = "10.180.131.237";
@@ -54,19 +56,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text("Giriş Başarılı! Hoşgeldiniz."),
-              backgroundColor: brown,
+            const SnackBar(
+              content: Text("Giriş Başarılı! Hoşgeldiniz."),
+              backgroundColor: kBrown,
             ),
           );
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Footer(key: Footer.footerKey)));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Footer(key: Footer.footerKey)));
         }
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text("Hatalı E-posta veya Şifre!"),
-              backgroundColor: brown,
+            const SnackBar(
+              content: Text("Hatalı E-posta veya Şifre!"),
+              backgroundColor: kBrown,
             ),
           );
         }
@@ -76,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Bağlantı Hatası: $e"),
-            backgroundColor: brown,
+            backgroundColor: kBrown,
           ),
         );
       }
@@ -85,10 +87,88 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future<void> _sifreSifirla(String mail) async {
+    if (mail.isEmpty) return;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => const Center(child: CircularProgressIndicator(color: kDarkGreen)),
+    );
+
+    try {
+      final response = await http.post(
+        Uri.parse("${getBaseUrl()}/Musteris/SifremiUnuttum"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"Mail": mail}),
+      );
+
+      if (mounted) Navigator.pop(context); 
+
+      if (response.statusCode == 200) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Yeni şifreniz mail adresinize gönderildi."), backgroundColor: Colors.green),
+          );
+          Navigator.pop(context); 
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Hata: ${response.body}"), backgroundColor: Colors.red),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Hata: $e")));
+      }
+    }
+  }
+
+  void _sifremiUnuttumPenceresiAc() {
+    TextEditingController mailController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Şifremi Unuttum", style: TextStyle(color: kDarkGreen)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text("Sisteme kayıtlı e-posta adresinizi giriniz. Yeni şifreniz mail olarak gönderilecektir."),
+            const SizedBox(height: 15),
+            TextField(
+              controller: mailController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                hintText: "E-Posta Adresi",
+                prefixIcon: Icon(Icons.email_outlined, color: kPrimary),
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text("İptal", style: TextStyle(color: Colors.grey)),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: kDarkGreen, foregroundColor: kCream),
+            onPressed: () => _sifreSifirla(mailController.text),
+            child: const Text("GÖNDER"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: cream,
+      backgroundColor: kCream,
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(28),
@@ -98,30 +178,29 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: primary.withOpacity(.2),
+                  color: kPrimary.withOpacity(.2),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.menu_book_rounded,
                   size: 80,
-                  color: darkGreen,
+                  color: kDarkGreen,
                 ),
               ),
               const SizedBox(height: 20),
 
-              Text(
+              const Text(
                 "Books",
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: darkGreen,
+                  color: kDarkGreen,
                   letterSpacing: 1.3,
                 ),
               ),
 
               const SizedBox(height: 40),
 
-              // TEXTFIELD DESIGNED
               _buildStyledTextField(
                 controller: _emailController,
                 label: "E-Posta",
@@ -136,18 +215,33 @@ class _LoginScreenState extends State<LoginScreen> {
                 isPassword: true,
               ),
               const SizedBox(height: 30),
+              
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: _sifremiUnuttumPenceresiAc,
+                  child: const Text(
+                    "Şifremi Unuttum?",
+                    style: TextStyle(
+                      color: kDarkGreen,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
 
-              // LOGIN BUTTON
+              const SizedBox(height: 20),
+              
               SizedBox(
                 width: double.infinity,
                 height: 55,
                 child: ElevatedButton(
                   onPressed: _isLoading ? null : _girisYap,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: primary,
+                    backgroundColor: kPrimary,
                     foregroundColor: Colors.white,
                     elevation: 4,
-                    shadowColor: darkGreen,
+                    shadowColor: kDarkGreen,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
@@ -163,21 +257,20 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 20),
 
-              // REGISTER LINK
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Hesabın yok mu?",
-                      style: TextStyle(color: darkGreen, fontSize: 14)),
+                  const Text("Hesabın yok mu?",
+                      style: TextStyle(color: kDarkGreen, fontSize: 14)),
                   TextButton(
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (_) => const RegisterScreen()));
                     },
-                    child: Text(
+                    child: const Text(
                       "Kayıt Ol",
                       style: TextStyle(
-                        color: primary,
+                        color: kPrimary,
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
                       ),
@@ -201,20 +294,20 @@ class _LoginScreenState extends State<LoginScreen> {
     return TextField(
       controller: controller,
       obscureText: isPassword,
-      cursorColor: darkGreen,
+      cursorColor: kDarkGreen,
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
         labelText: label,
-        labelStyle: TextStyle(color: darkGreen),
-        prefixIcon: Icon(icon, color: darkGreen),
+        labelStyle: const TextStyle(color: kDarkGreen),
+        prefixIcon: Icon(icon, color: kDarkGreen),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: primary.withOpacity(.4)),
+          borderSide: BorderSide(color: kPrimary.withOpacity(.4)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: primary, width: 2),
+          borderSide: const BorderSide(color: kPrimary, width: 2),
         ),
       ),
     );

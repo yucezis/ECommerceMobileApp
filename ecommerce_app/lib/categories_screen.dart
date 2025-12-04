@@ -179,14 +179,19 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       ),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Stack(
+            alignment: Alignment.center, 
             children: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: kBookPaper, size: 22),
-                onPressed: () {
-                  Footer.footerKey.currentState?.sayfaDegistir(0);
-                },
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios_new, color: kBookPaper, size: 22),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(), 
+                  onPressed: () {
+                    Footer.footerKey.currentState?.sayfaDegistir(0);
+                  },
+                ),
               ),
               const Text(
                 "Kategoriler",
@@ -196,24 +201,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1,
                 ),
-              ),
-              
-              Stack(
-                children: [
-                  IconButton(
-                    onPressed: () {}, 
-                    icon: const Icon(Icons.favorite_outline, color: kBookPaper, size: 28),
-                  ),
-                  Positioned(
-                    right: 8,
-                    top: 8,
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(color: Color(0xFFBC4749), shape: BoxShape.circle),
-                      child: const Text("3", style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
-                    ),
-                  )
-                ],
               ),
             ],
           ),

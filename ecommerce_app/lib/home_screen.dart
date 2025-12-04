@@ -8,6 +8,7 @@ import 'product_list_screen.dart';
 import 'favorite_screen.dart';
 import 'product_detail_screen.dart';
 
+// RENK PALETİ
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kDarkGreen = Color(0xFF283618);
 const Color kOliveGreen = Color(0xFF606C38);
@@ -25,9 +26,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  // --- DEĞİŞKENLER ---
   late Future<List<Kategori>> _kategorilerFuture;
+  late Future<List<Urun>> _cokSatanlarFuture; // Çok satanlar için ayrı future
   
-  List<Urun> _tumUrunler = [];         
+  List<Urun> _tumUrunler = [];          
   List<Urun> _filtrelenmisUrunler = []; 
   bool _urunlerYukleniyor = true;
   final TextEditingController _searchController = TextEditingController();
@@ -37,12 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _urunleriGetir();
     _kategorilerFuture = kategorileriGetir();
+    _cokSatanlarFuture = cokSatanlariGetir();
   }
 
   String getBaseUrl() {
-    return "http://10.180.131.237:5126/api";
+    return "http://10.180.131.237:5126/api"; 
   }
 
+  // 1. TÜM ÜRÜNLERİ ÇEK (Arama ve Öne Çıkanlar İçin)
   Future<void> _urunleriGetir() async {
     try {
       final response = await http.get(Uri.parse("${getBaseUrl()}/urun"));
@@ -53,15 +58,15 @@ class _HomeScreenState extends State<HomeScreen> {
         if (mounted) {
           setState(() {
             _tumUrunler = gelenUrunler;
-            _filtrelenmisUrunler = gelenUrunler; 
+            _filtrelenmisUrunler = gelenUrunler;
             _urunlerYukleniyor = false;
           });
         }
       } else {
-        throw Exception("Ürünler yüklenemedi: ${response.statusCode}");
+        throw Exception("Hata: ${response.statusCode}");
       }
     } catch (e) {
-      print("Hata: $e");
+      print("Ürün çekme hatası: $e");
       if (mounted) setState(() => _urunlerYukleniyor = false);
     }
   }
@@ -86,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  // 2. ARAMA MANTIĞI
   void _aramaYap(String kelime) {
     if (kelime.isEmpty) {
       setState(() => _filtrelenmisUrunler = _tumUrunler);
@@ -109,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: kBookPaper,
+      drawer: _buildDrawer(),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,6 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: _urunlerYukleniyor
                   ? const Center(child: CircularProgressIndicator(color: kDarkGreen))
                   : aramaAktif
+                      // ARAMA SONUÇLARI
                       ? _filtrelenmisUrunler.isEmpty
                           ? const Center(child: Text("Sonuç bulunamadı."))
                           : GridView.builder(
@@ -134,6 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return _buildProductCard(_filtrelenmisUrunler[index]);
                               },
                             )
+                      // ANA SAYFA İÇERİĞİ
                       : SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               const SizedBox(height: 30),
                               _buildSectionTitle("Çok Satanlar"),
                               const SizedBox(height: 15),
+                              // ÇOK SATANLAR LİSTESİ (ROZETLİ)
                               _buildBestsellersList(),
                               const SizedBox(height: 40),
                             ],
@@ -163,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // --- WIDGETLAR -------------------------------------------
+  // --- WIDGETLAR ---
 
   Widget _buildHeader() {
     return Container(
@@ -204,10 +214,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           const SizedBox(height: 25),
-          
           TextField(
             controller: _searchController,
-            onChanged: _aramaYap, 
+            onChanged: _aramaYap,
             style: const TextStyle(color: kDarkGreen),
             decoration: InputDecoration(
               hintText: "Kitap, yazar veya kategori ara...",
@@ -235,16 +244,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Öne Çıkanlar (Yatay)
   Widget _buildFeaturedBooksList() {
-    if (_tumUrunler.isEmpty) {
-      return const Center(child: Text("Ürün bulunamadı"));
-    }
+    if (_tumUrunler.isEmpty) return const Center(child: Text("Ürün bulunamadı"));
     return SizedBox(
       height: 290,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.only(left: 20),
-        itemCount: _tumUrunler.length, 
+        itemCount: _tumUrunler.length,
         itemBuilder: (context, index) {
           final urun = _tumUrunler[index];
           return GestureDetector(
@@ -258,6 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Genel Kart Tasarımı
   Widget _buildCardContent(Urun urun) {
     return Container(
       width: 150,
@@ -280,7 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -297,15 +306,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Arama Sonuçları Kartı
   Widget _buildProductCard(Urun urun) {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailScreen(urun: urun)));
       },
       child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15),
           boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 5, offset: const Offset(0, 5))],
         ),
         child: Column(
@@ -314,8 +322,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: ClipRRect(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                child: Container(
-                  width: double.infinity, color: Colors.grey[200],
+                child: Container(width: double.infinity, color: Colors.grey[200],
                   child: Image.network(urun.urunGorsel, fit: BoxFit.cover,
                     errorBuilder: (c, o, s) => const Icon(Icons.book, color: Colors.grey, size: 40)),
                 ),
@@ -338,10 +345,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // --- ÇOK SATANLAR (FutureBuilder ile kalabilir) ---
+  // --- ÇOK SATANLAR (ROZETLİ) ---
   Widget _buildBestsellersList() {
     return FutureBuilder<List<Urun>>(
-      future: cokSatanlariGetir(),
+      future: _cokSatanlarFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) return const Center(child: CircularProgressIndicator(color: kOliveGreen));
         if (!snapshot.hasData || snapshot.data!.isEmpty) return const Center(child: Text("Henüz satış yok."));
@@ -354,22 +361,47 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: urunler.length,
           itemBuilder: (context, index) {
             final urun = urunler[index];
-            // Çok Satan Kart Tasarımı (Seninkinin aynısı - basitleştirilmiş)
             return GestureDetector(
-               onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailScreen(urun: urun))),
-               child: Container(
-                 margin: const EdgeInsets.only(bottom: 15),
-                 padding: const EdgeInsets.all(10),
-                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15), boxShadow: [BoxShadow(color: kDarkCoffee.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))]),
-                 child: Row(children: [
-                   ClipRRect(borderRadius: BorderRadius.circular(10), child: Image.network(urun.urunGorsel, width: 70, height: 90, fit: BoxFit.cover, errorBuilder: (c, o, s) => const Icon(Icons.book))),
-                   const SizedBox(width: 15),
-                   Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                     Text(urun.urunAdi, maxLines: 2, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                     Text("${urun.urunSatisFiyati} ₺", style: const TextStyle(fontWeight: FontWeight.bold, color: kDarkGreen))
-                   ]))
-                 ]),
-               ),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDetailScreen(urun: urun))),
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 15),
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15), boxShadow: [BoxShadow(color: kDarkCoffee.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))]),
+                child: Row(
+                  children: [
+                    // GÖRSEL VE ROZET
+                    Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(urun.urunGorsel, width: 70, height: 90, fit: BoxFit.cover, errorBuilder: (c, o, s) => const Icon(Icons.book)),
+                        ),
+                        // --- ROZET BURADA ---
+                        Positioned(
+                          top: 0, left: 0,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            decoration: const BoxDecoration(
+                              color: Color(0xFFBC4749),
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(10), bottomRight: Radius.circular(8)),
+                            ),
+                            child: Text("${index + 1}", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 15),
+                    // BİLGİLER VE FİYAT
+                    Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Text(urun.urunAdi, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: kDarkCoffee)),
+                      const SizedBox(height: 4),
+                      Text(urun.urunYazar ?? urun.urunMarka, style: const TextStyle(fontSize: 12, color: kOliveGreen)),
+                      const SizedBox(height: 8),
+                      Text("${urun.urunSatisFiyati} ₺", style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: kDarkGreen))
+                    ]))
+                  ],
+                ),
+              ),
             );
           },
         );
@@ -377,7 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // --- KATEGORİ LİSTESİ (Aynı Kaldı) ---
+  // Kategori Listesi
   Widget _buildCategoriesList() {
     return SizedBox(
       height: 45,
@@ -447,6 +479,22 @@ class _HomeScreenState extends State<HomeScreen> {
             ]),
           ),
           const Icon(Icons.menu_book, size: 90, color: Colors.white24),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDrawer() {
+    return Drawer(
+      backgroundColor: kBookPaper,
+      child: Column(
+        children: [
+          UserAccountsDrawerHeader(
+            decoration: const BoxDecoration(color: kDarkGreen),
+            accountName: const Text("Hoşgeldiniz", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            accountEmail: const Text("Kitap dünyasına dalın!"),
+            currentAccountPicture: CircleAvatar(backgroundColor: kBookPaper, child: const Icon(Icons.person, size: 40, color: kDarkGreen)),
+          ),
         ],
       ),
     );

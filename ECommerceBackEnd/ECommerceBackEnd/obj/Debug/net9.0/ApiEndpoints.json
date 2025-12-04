@@ -515,6 +515,22 @@
   },
   {
     "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
+    "Method": "SifremiUnuttum",
+    "RelativePath": "api/Musteris/SifremiUnuttum",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "ECommerceBackEnd.Controllers.MusterisController\u002BSifreSifirlamaModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
     "Method": "SiparisDurumGuncelle",
     "RelativePath": "api/Musteris/SiparisDurumGuncelle",
     "HttpMethod": "PUT",

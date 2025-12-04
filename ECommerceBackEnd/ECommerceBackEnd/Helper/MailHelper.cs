@@ -88,5 +88,35 @@ namespace ECommerceBackEnd.Helpers
                 Console.WriteLine("Mail hatası: " + ex.Message);
             }
         }
+
+        // ECommerceBackEnd -> Helpers -> MailHelper.cs içine ekle:
+
+        public static void MailGonderYeniSifre(string aliciMail, string yeniSifre, string isim)
+        {
+            try
+            {
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                client.EnableSsl = true;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential("yucezisan@gmail.com", "zzxcgoswwqlbpfcg");
+
+                MailMessage mailMessage = new MailMessage();
+                mailMessage.From = new MailAddress("yucezisan@gmail.com", "Books Güvenlik");
+                mailMessage.To.Add(aliciMail);
+                mailMessage.Subject = "Yeni Şifreniz";
+
+                mailMessage.Body = $"Merhaba {isim},\n\n" +
+                                   $"Şifre sıfırlama talebiniz üzerine hesabınız için geçici bir şifre oluşturuldu.\n\n" +
+                                   $"YENİ ŞİFRENİZ: {yeniSifre}\n\n" +
+                                   $"Lütfen giriş yaptıktan sonra şifrenizi değiştirmeyi unutmayın.";
+
+                client.Send(mailMessage);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Mail hatası: " + ex.Message);
+            }
+        }
     }
 }
