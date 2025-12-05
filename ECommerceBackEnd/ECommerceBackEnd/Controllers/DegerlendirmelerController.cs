@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace ECommerceBackEnd.Controllers
 {
@@ -10,7 +12,7 @@ namespace ECommerceBackEnd.Controllers
     [ApiController]
     public class DegerlendirmelerController : ControllerBase
     {
-        private readonly Context _context; 
+        private readonly Context _context;
         private readonly IWebHostEnvironment _environment;
 
         public DegerlendirmelerController(Context context, IWebHostEnvironment environment)
@@ -18,11 +20,32 @@ namespace ECommerceBackEnd.Controllers
             _context = context;
             _environment = environment;
         }
-        
 
+        [HttpGet("Getir/{urunId}")]
+        public IActionResult Getir(int urunId)
+        {
+            var yorumlar = _context.degerlendirmes
+                .Include(x => x.Musteri)
+                .Where(x => x.UrunId == urunId && x.Onaylandi == true)
+                .OrderByDescending(x => x.Tarih)
+                .Select(x => new
+                {
+                    x.DegerlendirmeId,
+                    x.Puan,
+                    x.Yorum,
+                    x.Tarih,
+                    x.ResimUrl,
+                    MusteriAdi = x.Musteri != null
+                        ? x.Musteri.MusteriAdi.Substring(0, 1) + "***"
+                        : "Anonim"
+                })
+                .ToList();
+
+            return Ok(yorumlar);
+        }
 
         [HttpPost("Ekle")]
-        public async Task<IActionResult> Ekle([FromBody] Degerlendirme yeniYorum) 
+        public async Task<IActionResult> Ekle([FromBody] Degerlendirme yeniYorum)
         {
             if (yeniYorum == null) return BadRequest("Veri yok");
 
@@ -49,13 +72,14 @@ namespace ECommerceBackEnd.Controllers
                 try
                 {
                     string dosyaAdi = Guid.NewGuid().ToString() + ".jpg";
-                    string uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "yorumlar");
+                    string rootPath = _environment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+
+                    string uploadsFolder = Path.Combine(rootPath, "uploads", "yorumlar");
 
                     if (!Directory.Exists(uploadsFolder))
                         Directory.CreateDirectory(uploadsFolder);
 
                     string dosyaYolu = Path.Combine(uploadsFolder, dosyaAdi);
-
                     byte[] imageBytes = Convert.FromBase64String(yeniYorum.ResimBase64);
 
                     await System.IO.File.WriteAllBytesAsync(dosyaYolu, imageBytes);
@@ -80,7 +104,7 @@ namespace ECommerceBackEnd.Controllers
             }
 
             _context.degerlendirmes.Add(yeniYorum);
-            await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
 
             if (yeniYorum.Onaylandi)
                 return Ok("Değerlendirmeniz yayınlandı.");
@@ -92,24 +116,24 @@ namespace ECommerceBackEnd.Controllers
         public IActionResult GetOnayBekleyenler()
         {
             var yorumlar = _context.degerlendirmes
-               .Include(x => x.Urun)
-               .Include(x => x.Musteri)
-               .Where(x => x.Onaylandi == false)
-               .OrderByDescending(x => x.Tarih)
-               .Select(x => new
-               {
-                   x.DegerlendirmeId,
-                   x.Puan,
-                   x.Yorum,
-                   x.Tarih,
-                   x.Onaylandi,
-                   x.ResimUrl,
-                   UrunAdi = x.Urun != null ? x.Urun.UrunAdi : "Silinmiş Ürün",
-                   MusteriAdi = x.Musteri != null
-                       ? x.Musteri.MusteriAdi + " " + x.Musteri.MusteriSoyadi 
-                       : "Anonim"
-               })
-               .ToList();
+                .Include(x => x.Urun)
+                .Include(x => x.Musteri)
+                .Where(x => x.Onaylandi == false)
+                .OrderByDescending(x => x.Tarih)
+                .Select(x => new
+                {
+                    x.DegerlendirmeId,
+                    x.Puan,
+                    x.Yorum,
+                    x.Tarih,
+                    x.Onaylandi,
+                    x.ResimUrl,
+                    UrunAdi = x.Urun != null ? x.Urun.UrunAdi : "Silinmiş Ürün",
+                    MusteriAdi = x.Musteri != null
+                        ? x.Musteri.MusteriAdi + " " + x.Musteri.MusteriSoyadi
+                        : "Anonim"
+                })
+                .ToList();
 
             return Ok(yorumlar);
         }
@@ -119,7 +143,6 @@ namespace ECommerceBackEnd.Controllers
         {
             var yorum = _context.degerlendirmes.Find(id);
             if (yorum == null) return NotFound();
-
             yorum.Onaylandi = true;
             _context.SaveChanges();
             return Ok("Onaylandı");
@@ -130,7 +153,6 @@ namespace ECommerceBackEnd.Controllers
         {
             var yorum = _context.degerlendirmes.Find(id);
             if (yorum == null) return NotFound();
-
             _context.degerlendirmes.Remove(yorum);
             _context.SaveChanges();
             return Ok("Silindi");

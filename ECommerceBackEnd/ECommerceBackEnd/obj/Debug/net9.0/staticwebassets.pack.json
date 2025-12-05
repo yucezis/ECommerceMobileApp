@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\wwwroot\\uploads\\yorumlar\\30eb08e8-41ef-4a09-b351-7514b516fc53.jpg",
+      "PackagePath": "staticwebassets\\uploads\\yorumlar\\30eb08e8-41ef-4a09-b351-7514b516fc53.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.ECommerceBackEnd.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.ECommerceBackEnd.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.build.ECommerceBackEnd.props",
+      "PackagePath": "build\\ECommerceBackEnd.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.ECommerceBackEnd.props",
+      "PackagePath": "buildMultiTargeting\\ECommerceBackEnd.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildTransitive.ECommerceBackEnd.props",
+      "PackagePath": "buildTransitive\\ECommerceBackEnd.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -54,10 +54,16 @@
                                     <td>
                                         @if (!string.IsNullOrEmpty(item.ResimUrl))
                                         {
-                                            <br />
                                             <a href="http://localhost:5126@(item.ResimUrl)" target="_blank">
-                                                <img src="http://localhost:5126@(item.ResimUrl)" style="max-height: 50px; margin-top: 5px;" />
+                                                <img src="http://localhost:5126@(item.ResimUrl)"
+                                                     style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;"
+                                                     alt="Yorum Görseli"
+                                                     onerror="this.style.display='none'" />
                                             </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">-</span>
                                         }
                                     </td>
                                     <td class="text-end">

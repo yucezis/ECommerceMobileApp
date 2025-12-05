@@ -332,3 +332,4 @@ C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\obj\Debug\net9.0\refint\ECo
 C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\obj\Debug\net9.0\ECommerceBackEnd.pdb
 C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\obj\Debug\net9.0\ECommerceBackEnd.genruntimeconfig.cache
 C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\obj\Debug\net9.0\ref\ECommerceBackEnd.dll
+C:\bitirme_projesi\ECommerceBackEnd\ECommerceBackEnd\bin\Debug\net9.0\ECommerceBackEnd.staticwebassets.runtime.json

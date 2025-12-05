@@ -1,0 +1,22 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\yorumlar\30eb08e8-41ef-4a09-b351-7514b516fc53.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>ECommerceBackEnd</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/ECommerceBackEnd</BasePath>
+      <RelativePath>uploads/yorumlar/30eb08e8-41ef-4a09-b351-7514b516fc53.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>5u5bcfi49e</Fingerprint>
+      <Integrity>TToEkhGn3XpFitLKIxiytQjOyWcNCIPcEX5yhJrlf5o=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\yorumlar\30eb08e8-41ef-4a09-b351-7514b516fc53.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+  </ItemGroup>
+</Project>

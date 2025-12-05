@@ -29,7 +29,7 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 633,
+          "DockedHeight": 812,
           "SelectedChildIndex": 2,
           "Children": [
             {
@@ -46,8 +46,7 @@
               "RelativeToolTip": "AdminPanel\\Models\\DegerlendirmeViewModel.cs",
               "ViewState": "AgIAAAsAAAAARJpqoEInwA0AAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T16:33:04.36Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-02T16:33:04.36Z"
             },
             {
               "$type": "Document",
@@ -57,7 +56,7 @@
               "RelativeDocumentMoniker": "AdminPanel\\Views\\YorumOnay\\Index.cshtml",
               "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\YorumOnay\\Index.cshtml",
               "RelativeToolTip": "AdminPanel\\Views\\YorumOnay\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAACAAAAAAAAAAAAAmwEAAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-02T16:29:57.324Z",
               "EditorCaption": ""
@@ -111,7 +110,7 @@
           ]
         },
         {
-          "DockedHeight": 217,
+          "DockedHeight": 38,
           "SelectedChildIndex": -1,
           "Children": [
             {

@@ -1,6 +1,9 @@
 using ECommerceBackEnd.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization; 
+using Microsoft.Extensions.FileProviders;
+using System.Text.Json.Serialization;
+using Microsoft.Extensions.FileProviders;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +29,12 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "wwwroot")),
+    RequestPath = "" 
+});
 
 //app.UseHttpsRedirection();
 
@@ -33,6 +42,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseStaticFiles();
+
 
 app.Run();
