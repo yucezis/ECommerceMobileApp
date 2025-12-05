@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\uploads\\yorumlar\\30eb08e8-41ef-4a09-b351-7514b516fc53.jpg"
     },
     {
+      "Id": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\wwwroot\\uploads\\yorumlar\\7b388651-5025-4a15-a036-1c53f7aca6a8.jpg",
+      "PackagePath": "staticwebassets\\uploads\\yorumlar\\7b388651-5025-4a15-a036-1c53f7aca6a8.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.ECommerceBackEnd.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },

@@ -83,6 +83,88 @@
           "Value": "sha256-TToEkhGn3XpFitLKIxiytQjOyWcNCIPcEX5yhJrlf5o="
         }
       ]
+    },
+    {
+      "Route": "uploads/yorumlar/7b388651-5025-4a15-a036-1c53f7aca6a8.5u5bcfi49e.jpg",
+      "AssetFile": "uploads/yorumlar/7b388651-5025-4a15-a036-1c53f7aca6a8.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "166749"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TToEkhGn3XpFitLKIxiytQjOyWcNCIPcEX5yhJrlf5o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 05 Dec 2025 07:45:31 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5u5bcfi49e"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-TToEkhGn3XpFitLKIxiytQjOyWcNCIPcEX5yhJrlf5o="
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/yorumlar/7b388651-5025-4a15-a036-1c53f7aca6a8.jpg"
+        }
+      ]
+    },
+    {
+      "Route": "uploads/yorumlar/7b388651-5025-4a15-a036-1c53f7aca6a8.jpg",
+      "AssetFile": "uploads/yorumlar/7b388651-5025-4a15-a036-1c53f7aca6a8.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "166749"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TToEkhGn3XpFitLKIxiytQjOyWcNCIPcEX5yhJrlf5o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 05 Dec 2025 07:45:31 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-TToEkhGn3XpFitLKIxiytQjOyWcNCIPcEX5yhJrlf5o="
+        }
+      ]
     }
   ]
 }

@@ -54,6 +54,48 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
   }
 
+  void _resmiBuyut(String imageUrl) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: const EdgeInsets.all(10), 
+          child: Stack(
+            alignment: Alignment.topRight,
+            children: [
+              InteractiveViewer(
+                panEnabled: true, 
+                boundaryMargin: const EdgeInsets.all(20),
+                minScale: 0.5,
+                maxScale: 4.0,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.network(
+                    imageUrl,
+                    fit: BoxFit.contain, 
+                  ),
+                ),
+              ),
+              
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: CircleAvatar(
+                  backgroundColor: Colors.black.withOpacity(0.6),
+                  radius: 20,
+                  child: IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white, size: 20),
+                    onPressed: () => Navigator.pop(ctx),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final urun = widget.urun;
@@ -203,57 +245,87 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     const SizedBox(height: 10),
 
                     _yorumlarYukleniyor 
-                        ? const Center(child: CircularProgressIndicator(color: kDarkGreen))
-                        : _yorumlar.isEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 20),
-                                child: Center(child: Text("Henüz yorum yapılmamış.", style: TextStyle(color: Colors.grey[400]))),
-                              )
-                            : ListView.builder(
-                                shrinkWrap: true, 
-                                physics: const NeverScrollableScrollPhysics(), 
-                                itemCount: _yorumlar.length,
-                                itemBuilder: (context, index) {
-                                  var yorum = _yorumlar[index];
-                                  return Container(
-                                    margin: const EdgeInsets.only(bottom: 15),
-                                    padding: const EdgeInsets.all(15),
-                                    decoration: BoxDecoration(
-                                      color: kSoftGrey,
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(yorum['musteriAdi'], style: const TextStyle(fontWeight: FontWeight.bold, color: kDarkCoffee)),
-                                            RatingBarIndicator(
-                                              rating: (yorum['puan'] as int).toDouble(),
-                                              itemBuilder: (context, index) => const Icon(Icons.star_rounded, color: Colors.amber),
-                                              itemCount: 5,
-                                              itemSize: 16.0,
-                                              direction: Axis.horizontal,
-                                            ),
-                                          ],
-                                        ),
-                                        if (yorum['yorum'] != null && yorum['yorum'].toString().isNotEmpty) ...[
-                                          const SizedBox(height: 8),
-                                          Text(yorum['yorum'], style: TextStyle(color: kDarkCoffee.withOpacity(0.8), fontSize: 14)),
-                                        ],
-                                        const SizedBox(height: 5),
-                                        Text(
-                                          yorum['tarih'].toString().substring(0, 10), 
-                                          style: TextStyle(fontSize: 10, color: Colors.grey[500])
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
+    ? const Center(child: CircularProgressIndicator(color: kDarkGreen))
+    : _yorumlar.isEmpty
+        ? Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Center(child: Text("Henüz yorum yapılmamış.", style: TextStyle(color: Colors.grey[400]))),
+          )
+        : ListView.builder(
+            shrinkWrap: true, 
+            physics: const NeverScrollableScrollPhysics(), 
+            itemCount: _yorumlar.length,
+            itemBuilder: (context, index) {
+              var yorum = _yorumlar[index];
+              String? resimUrl = yorum['resimUrl']; 
 
-                    const SizedBox(height: 120), 
+              return Container(
+                margin: const EdgeInsets.only(bottom: 15),
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: kSoftGrey,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(yorum['musteriAdi'], style: const TextStyle(fontWeight: FontWeight.bold, color: kDarkCoffee)),
+                        RatingBarIndicator(
+                          rating: (yorum['puan'] as int).toDouble(),
+                          itemBuilder: (context, index) => const Icon(Icons.star_rounded, color: Colors.amber),
+                          itemCount: 5,
+                          itemSize: 16.0,
+                          direction: Axis.horizontal,
+                        ),
+                      ],
+                    ),
+                    
+                    if (yorum['yorum'] != null && yorum['yorum'].toString().isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Text(yorum['yorum'], style: TextStyle(color: kDarkCoffee.withOpacity(0.8), fontSize: 14)),
+                    ],
+
+                    if (resimUrl != null && resimUrl.isNotEmpty) ...[
+  const SizedBox(height: 10),
+  
+  GestureDetector(
+    onTap: () {
+      String fullUrl = "${getBaseUrl().replaceAll('/api', '')}$resimUrl";
+      _resmiBuyut(fullUrl);
+    },
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        height: 120, 
+        width: double.infinity,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Image.network(
+          "${getBaseUrl().replaceAll('/api', '')}$resimUrl",
+          fit: BoxFit.cover, 
+          errorBuilder: (c, o, s) => const SizedBox(),
+        ),
+      ),
+    ),
+  ),
+],
+
+                    const SizedBox(height: 5),
+                    
+                    Text(
+                      yorum['tarih'].toString().substring(0, 10), 
+                      style: TextStyle(fontSize: 10, color: Colors.grey[500])
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
                   ],
                 ),
               ),

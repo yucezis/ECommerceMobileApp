@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qj599oAfd1yNZoigAEBc3+0fcLBGFpCyrl/qbnRGWLs=",
+  "Hash": "p3lWvHA+VX/NicdQJlKFPSVvYs4TYUPwLo0gGA7pbfM=",
   "Source": "ECommerceBackEnd",
   "BasePath": "_content/ECommerceBackEnd",
   "Mode": "Default",
@@ -36,6 +36,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\yorumlar\\30eb08e8-41ef-4a09-b351-7514b516fc53.jpg"
+    },
+    {
+      "Identity": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\wwwroot\\uploads\\yorumlar\\7b388651-5025-4a15-a036-1c53f7aca6a8.jpg",
+      "SourceId": "ECommerceBackEnd",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\wwwroot\\",
+      "BasePath": "_content/ECommerceBackEnd",
+      "RelativePath": "uploads/yorumlar/7b388651-5025-4a15-a036-1c53f7aca6a8#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "5u5bcfi49e",
+      "Integrity": "TToEkhGn3XpFitLKIxiytQjOyWcNCIPcEX5yhJrlf5o=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\yorumlar\\7b388651-5025-4a15-a036-1c53f7aca6a8.jpg"
     }
   ],
   "Endpoints": [
@@ -108,6 +129,88 @@
         {
           "Name": "Last-Modified",
           "Value": "Fri, 05 Dec 2025 07:27:33 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-TToEkhGn3XpFitLKIxiytQjOyWcNCIPcEX5yhJrlf5o="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/yorumlar/7b388651-5025-4a15-a036-1c53f7aca6a8.5u5bcfi49e.jpg",
+      "AssetFile": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\wwwroot\\uploads\\yorumlar\\7b388651-5025-4a15-a036-1c53f7aca6a8.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "166749"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TToEkhGn3XpFitLKIxiytQjOyWcNCIPcEX5yhJrlf5o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 05 Dec 2025 07:45:31 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5u5bcfi49e"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/yorumlar/7b388651-5025-4a15-a036-1c53f7aca6a8.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-TToEkhGn3XpFitLKIxiytQjOyWcNCIPcEX5yhJrlf5o="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/yorumlar/7b388651-5025-4a15-a036-1c53f7aca6a8.jpg",
+      "AssetFile": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\wwwroot\\uploads\\yorumlar\\7b388651-5025-4a15-a036-1c53f7aca6a8.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "166749"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TToEkhGn3XpFitLKIxiytQjOyWcNCIPcEX5yhJrlf5o=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 05 Dec 2025 07:45:31 GMT"
         },
         {
           "Name": "Cache-Control",
