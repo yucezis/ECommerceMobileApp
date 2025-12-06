@@ -53,6 +53,7 @@ namespace ECommerceBackEnd.Controllers
                     MusteriId = x.MusteriId,
                     TeslimatAdresiId = x.TeslimatAdresiId,
                     TeslimatAdresi = x.TeslimatAdresi,
+                    IadeKodu = x.IadeKodu,
                     DegerlendirmeYapildiMi = _context.degerlendirmes
                     .Any(d => d.MusteriId == id && d.UrunId == x.UrunId),
                     DegerlendirmeId = _context.degerlendirmes
@@ -240,7 +241,6 @@ namespace ECommerceBackEnd.Controllers
             var musteri = _context.musteris.Find(id);
             if (musteri == null) return NotFound("Kullanıcı bulunamadı.");
 
-            // Kod üret
             Random rnd = new Random();
             string kod = rnd.Next(100000, 999999).ToString();
             musteri.OnayKodu = kod;
@@ -303,6 +303,54 @@ namespace ECommerceBackEnd.Controllers
             {
                 return BadRequest("Mail gönderilemedi: " + ex.Message);
             }
+        }
+
+        [HttpPost("SiparisiIptalEt/{siparisNo}")]
+        public IActionResult SiparisiIptalEt(string siparisNo)
+        {
+            var siparisUrunleri = _context.satislars.Where(x => x.SiparisNo == siparisNo).ToList();
+
+            if (!siparisUrunleri.Any()) return NotFound("Sipariş bulunamadı.");
+
+            if (siparisUrunleri.First().SiparisDurumu != SiparisDurum.SiparisAlindi)
+            {
+                return BadRequest("Bu sipariş hazırlanma aşamasına geçtiği için iptal edilemez. Teslim aldıktan sonra iade edebilirsiniz.");
+            }
+
+            foreach (var urun in siparisUrunleri)
+            {
+                urun.SiparisDurumu = SiparisDurum.IptalEdildi; 
+            }
+
+            _context.SaveChanges();
+            return Ok("Siparişiniz başarıyla iptal edildi.");
+        }
+
+        [HttpPost("IadeTalebiOlustur")]
+        public IActionResult IadeTalebiOlustur([FromBody] IadeTalepModel model)
+        {
+            var iadeEdilecekUrunler = _context.satislars
+                .Where(x => model.SecilenSatisIds.Contains(x.SatislarId))
+                .ToList();
+
+            if (!iadeEdilecekUrunler.Any()) return NotFound("Seçilen ürünler bulunamadı.");
+
+            Random rnd = new Random();
+            string iadeKodu = "IADE-" + rnd.Next(10000, 99999).ToString();
+
+            foreach (var urun in iadeEdilecekUrunler)
+            {
+                urun.IadeKodu = iadeKodu;
+                urun.IadeNedeni = model.Neden;
+            }
+
+            _context.SaveChanges();
+            return Ok(new { mesaj = "İade talebi oluşturuldu.", iadeKodu = iadeKodu });
+        }
+        public class IadeTalepModel
+        {
+            public List<int> SecilenSatisIds { get; set; }
+            public string Neden { get; set; }
         }
 
         public class SifreSifirlamaModel

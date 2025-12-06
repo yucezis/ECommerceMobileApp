@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io'; // Dosya işlemleri için
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart'; 
@@ -21,6 +21,7 @@ class SiparisGrubu {
   final double toplamTutar;
   final List<Satis> urunler;
   final String teslimatAdresi;
+  final String? iadeKodu;
 
   SiparisGrubu({
     required this.siparisNo,
@@ -28,6 +29,7 @@ class SiparisGrubu {
     required this.toplamTutar,
     required this.urunler,
     required this.teslimatAdresi,
+    this.iadeKodu,
   });
 }
 
@@ -62,6 +64,210 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     if (_secilenResim == null) return null;
     List<int> imageBytes = _secilenResim!.readAsBytesSync();
     return base64Encode(imageBytes);
+  }
+
+  final List<String> _iadeNedenleri = [
+    "Ürün hasarlı/kusurlu geldi",
+    "Yanlış ürün gönderildi",
+    "Ürünü beğenmedim / Vazgeçtim",
+    "Kargo çok geç geldi",
+    "Diğer"
+  ];
+
+  void _iadePenceresiAc(SiparisGrubu siparis) {
+    String secilenNeden = _iadeNedenleri.first;
+    
+    // Seçilen ürünlerin ID'lerini tutacak liste
+    List<int> secilenSatisIds = [];
+
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              title: const Row(
+                children: [
+                  Icon(Icons.assignment_return, color: kDarkGreen),
+                  SizedBox(width: 10),
+                  Text("İade Talebi", style: TextStyle(color: kDarkGreen, fontWeight: FontWeight.bold, fontSize: 18)),
+                ],
+              ),
+              content: SizedBox(
+                width: double.maxFinite,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text("İade etmek istediğiniz ürünleri seçiniz:", style: TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 10),
+                      
+                      // 1. ÜRÜN LİSTESİ (CHECKBOX İLE)
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade300),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Column(
+                          children: siparis.urunler.map((satis) {
+                            // Eğer zaten iade edilmişse (kodu varsa) listeye koyma veya pasif yap
+                            bool zatenIade = satis.iadeKodu != null && satis.iadeKodu!.isNotEmpty;
+                            
+                            return CheckboxListTile(
+                              activeColor: kOliveGreen,
+                              title: Text(satis.urun?.urunAdi ?? "Ürün", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                              subtitle: Text(zatenIade ? "Zaten iade kodu var" : "${satis.fiyat} ₺", style: TextStyle(fontSize: 12, color: zatenIade ? Colors.red : Colors.grey)),
+                              secondary: ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                child: Image.network(
+                                  satis.urun?.urunGorsel ?? "",
+                                  width: 40, height: 60, fit: BoxFit.cover,
+                                  errorBuilder: (c,o,s) => const Icon(Icons.book),
+                                ),
+                              ),
+                              value: zatenIade ? false : secilenSatisIds.contains(satis.satisId),
+                              onChanged: zatenIade ? null : (bool? value) {
+                                setState(() {
+                                  if (value == true) {
+                                    secilenSatisIds.add(satis.satisId);
+                                  } else {
+                                    secilenSatisIds.remove(satis.satisId);
+                                  }
+                                });
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 20),
+
+                      // 2. NEDEN SEÇİMİ
+                      const Text("İade Nedeni:", style: TextStyle(fontWeight: FontWeight.bold)),
+                      ..._iadeNedenleri.map((neden) {
+                        return RadioListTile<String>(
+                          title: Text(neden, style: const TextStyle(fontSize: 13)),
+                          value: neden,
+                          groupValue: secilenNeden,
+                          activeColor: kOliveGreen,
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
+                          onChanged: (value) {
+                            setState(() {
+                              secilenNeden = value!;
+                            });
+                          },
+                        );
+                      }).toList(),
+                      
+                      const SizedBox(height: 10),
+                      if (secilenSatisIds.isEmpty)
+                        const Text("* Lütfen en az bir ürün seçiniz.", style: TextStyle(color: Colors.red, fontSize: 12)),
+                    ],
+                  ),
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  child: const Text("Vazgeç", style: TextStyle(color: Colors.grey)),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: kDarkGreen, foregroundColor: Colors.white),
+                  // Eğer hiç ürün seçilmediyse butonu pasif yap
+                  onPressed: secilenSatisIds.isEmpty ? null : () {
+                    Navigator.pop(ctx);
+                    _iadeTalebiGonder(secilenSatisIds, secilenNeden);
+                  },
+                  child: const Text("TALEBİ OLUŞTUR"),
+                )
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildIslemButonu(SiparisGrubu siparis) {
+    int durum = siparis.urunler.first.siparisDurumu;
+
+    if (durum == 0) {
+      return TextButton.icon(
+        onPressed: () {
+          _islemOnayDialog(
+            baslik: "Siparişi İptal Et",
+            icerik: "Bu siparişi iptal etmek istediğinize emin misiniz?",
+            butonMetni: "Evet, İptal Et",
+            islemTipi: "iptal",
+            siparisNo: siparis.siparisNo,
+          );
+        },
+        icon: const Icon(Icons.cancel_outlined, size: 18, color: Colors.red),
+        label: const Text("İptal Et", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+      );
+    }
+
+    else if (durum >= 1 && durum != 4) {
+      
+      if (siparis.iadeKodu != null && siparis.iadeKodu!.isNotEmpty) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          decoration: BoxDecoration(
+            color: Colors.orange.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.orange),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.inventory_2_outlined, size: 16, color: Colors.orange),
+              const SizedBox(width: 5),
+              Text("İade Kodu: ${siparis.iadeKodu}", style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.orange)),
+            ],
+          ),
+        );
+      } 
+      else {
+        return TextButton.icon(
+          onPressed: () {
+            _iadePenceresiAc(siparis);
+          },
+          icon: const Icon(Icons.assignment_return, size: 18, color: Colors.blueGrey),
+          label: const Text("İade Talebi", style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold)),
+        );
+      }
+    }
+
+    return const SizedBox.shrink();
+  }
+
+  Future<void> _iadeTalebiGonder(List<int> satisIds, String neden) async {
+    try {
+      final response = await http.post(
+        Uri.parse("${getBaseUrl()}/Musteris/IadeTalebiOlustur"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "SecilenSatisIds": satisIds, // Backend'deki isimle aynı olmalı
+          "Neden": neden
+        })
+      );
+      
+      if (response.statusCode == 200) {
+        _siparisleriGetir(); 
+        if (mounted) {
+           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("İade kodu oluşturuldu!"), backgroundColor: Colors.green));
+        }
+      } else {
+        if (mounted) {
+           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Hata: ${response.body}"), backgroundColor: Colors.red));
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<void> _siparisleriGetir() async {
@@ -113,6 +319,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
             toplamTutar: toplam,
             urunler: urunler,
             teslimatAdresi: adresMetni, 
+            iadeKodu: ilkUrun.iadeKodu,
           ));
         });
 
@@ -135,6 +342,43 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         });
       }
     }
+  }
+
+  void _islemOnayDialog({required String baslik, required String icerik, required String butonMetni, required String islemTipi, required String siparisNo}) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(baslik, style: const TextStyle(fontWeight: FontWeight.bold)),
+        content: Text(icerik),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("Vazgeç", style: TextStyle(color: Colors.grey))),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: islemTipi == "iptal" ? Colors.red : kOliveGreen),
+            onPressed: () async {
+              Navigator.pop(ctx); 
+              
+              String endpoint = islemTipi == "iptal" 
+                  ? "SiparisiIptalEt/$siparisNo" 
+                  : "IadeTalebiOlustur/$siparisNo";
+              
+              try {
+                final response = await http.post(Uri.parse("${getBaseUrl()}/Musteris/$endpoint"));
+                
+                if (response.statusCode == 200) {
+                  _siparisleriGetir(); 
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("İşlem başarılı!"), backgroundColor: Colors.green));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Hata: ${response.body}"), backgroundColor: Colors.red));
+                }
+              } catch (e) {
+                print(e);
+              }
+            },
+            child: Text(butonMetni, style: const TextStyle(color: Colors.white)),
+          )
+        ],
+      ),
+    );
   }
 
   Future<void> _yorumDetayiniGoster(String urunAdi, int? degerlendirmeId) async {
@@ -520,6 +764,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         ),
 
         children: [
+          // 1. ADRES KUTUSU
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(12),
@@ -551,29 +796,48 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
             ),
           ),
 
-          if (siparis.urunler.first.siparisDurumu >= 1) 
+          // 2. İŞLEM BUTONLARI (Fatura / İade / İptal)
+          // Bu kısım siparişe özeldir, döngünün DIŞINDA olmalıdır.
+          if (durumId >= 1) 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: TextButton.icon(
-                  onPressed: () async {
-                    final Uri url = Uri.parse("${getBaseUrl()}/Fatura/Olustur/${siparis.siparisNo}");
-                    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Fatura açılamadı.")));
-                    }
-                  },
-                  icon: const Icon(Icons.picture_as_pdf, size: 20, color: Colors.redAccent),
-                  label: const Text("E-Fatura Görüntüle", style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)),
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    backgroundColor: Colors.redAccent.withOpacity(0.05),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  // Fatura Butonu
+                  TextButton.icon(
+                    onPressed: () async {
+                      final Uri url = Uri.parse("${getBaseUrl()}/Fatura/Olustur/${siparis.siparisNo}");
+                      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Fatura açılamadı.")));
+                      }
+                    },
+                    icon: const Icon(Icons.picture_as_pdf, size: 20, color: Colors.redAccent),
+                    label: const Text("E-Fatura", style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)),
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      backgroundColor: Colors.redAccent.withOpacity(0.05),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
+                    ),
                   ),
-                ),
+
+                  const SizedBox(width: 8),
+                  
+                  // İade / İptal Butonları
+                  _buildIslemButonu(siparis),
+                ],
               ),
-            ),
+            )
+          else if (durumId == 0)
+             Padding(
+               padding: const EdgeInsets.only(right: 16, bottom: 5),
+               child: Align(
+                 alignment: Alignment.centerRight,
+                 child: _buildIslemButonu(siparis), // İptal butonu burada
+               ),
+             ),
           
+          // 3. ÜRÜN LİSTESİ VE DEĞERLENDİRME BUTONU
           ...siparis.urunler.map((urunSatis) {
             return Container(
               margin: const EdgeInsets.only(bottom: 8, left: 16, right: 16, top: 4), 
@@ -610,7 +874,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                     trailing: Text("${(urunSatis.fiyat * urunSatis.adet).toStringAsFixed(2)} ₺", style: const TextStyle(fontWeight: FontWeight.bold, color: kDarkCoffee)),
                   ),
 
-                  if (siparis.urunler.first.siparisDurumu == 3) 
+                  // DEĞERLENDİR BUTONU (Döngü içinde, her ürün için ayrı)
+                  if (durumId == 3) // Sadece Teslim Edildiyse (3)
                     Padding(
                       padding: const EdgeInsets.only(right: 10, bottom: 8),
                       child: Align(

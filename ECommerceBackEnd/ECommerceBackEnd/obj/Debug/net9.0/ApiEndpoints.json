@@ -483,6 +483,22 @@
   },
   {
     "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
+    "Method": "IadeTalebiOlustur",
+    "RelativePath": "api/Musteris/IadeTalebiOlustur",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "ECommerceBackEnd.Controllers.MusterisController\u002BIadeTalepModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
     "Method": "KodGonder",
     "RelativePath": "api/Musteris/KodGonder/{id}",
     "HttpMethod": "POST",
@@ -578,6 +594,22 @@
         "Name": "yeniDurumId",
         "Type": "System.Int32",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.MusterisController",
+    "Method": "SiparisiIptalEt",
+    "RelativePath": "api/Musteris/SiparisiIptalEt/{siparisNo}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "siparisNo",
+        "Type": "System.String",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

@@ -31,6 +31,8 @@ namespace ECommerceBackEnd.Models
 
         [NotMapped]
         public int? DegerlendirmeId { get; set; }
+        public string? IadeKodu { get; set; }
+        public string? IadeNedeni { get; set; }
     }
 
     public enum SiparisDurum
