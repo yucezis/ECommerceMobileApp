@@ -138,8 +138,7 @@
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\ChatController.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAQwA0AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T10:38:54.617Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-05T10:38:54.617Z"
             },
             {
               "$type": "Document",
@@ -163,8 +162,7 @@
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\MusteriController.cs",
               "ViewState": "AgIAACIAAAAAAAAAAAA5wDYAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T09:01:27.904Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-25T09:01:27.904Z"
             },
             {
               "$type": "Document",
@@ -212,8 +210,7 @@
               "RelativeToolTip": "ECommerceBackEnd\\Models\\Satislar.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAgwBwAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-29T18:24:24.206Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-29T18:24:24.206Z"
             },
             {
               "$type": "Document",
@@ -221,9 +218,9 @@
               "Title": "DegerlendirmelerController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\DegerlendirmelerController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\DegerlendirmelerController.cs",
-              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\DegerlendirmelerController.cs*",
-              "RelativeToolTip": "ECommerceBackEnd\\Controllers\\DegerlendirmelerController.cs*",
-              "ViewState": "AgIAAJcAAAAAAAAAAAAiwJ8AAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\DegerlendirmelerController.cs",
+              "RelativeToolTip": "ECommerceBackEnd\\Controllers\\DegerlendirmelerController.cs",
+              "ViewState": "AgIAAJcAAAAAAAAAAAA4wJ8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-04T17:34:27.711Z",
               "EditorCaption": ""

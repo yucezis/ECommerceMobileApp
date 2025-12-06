@@ -25,7 +25,9 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   List<Urun> _sepetUrunleri = [];
   bool _isLoading = true;
-  double _toplamTutar = 0;
+  double _araToplam = 0; 
+  double _kargoBedeli = 0; 
+  double _genelToplam = 0;
 
   @override
   void initState() {
@@ -35,20 +37,31 @@ class _CartScreenState extends State<CartScreen> {
 
   Future<void> _sepetiYukle() async {
     List<Urun> urunler = await SepetServisi.sepetiGetir();
-    double toplam = 0;
+    double araToplamHesap = 0;
     
     for (var u in urunler) {
       double fiyat = (u.indirimliFiyat != null && u.indirimliFiyat! > 0)
           ? u.indirimliFiyat!
           : u.urunSatisFiyati;
-      
-      toplam += fiyat * u.sepetAdedi; 
+
+      araToplamHesap += fiyat * u.sepetAdedi; 
+    }
+
+    double kargoHesap = 0;
+    if (urunler.isNotEmpty) {
+      if (araToplamHesap >= 500) {
+        kargoHesap = 0; 
+      } else {
+        kargoHesap = 50; 
+      }
     }
 
     if (mounted) {
       setState(() {
         _sepetUrunleri = urunler;
-        _toplamTutar = toplam;
+        _araToplam = araToplamHesap;
+        _kargoBedeli = kargoHesap;
+        _genelToplam = araToplamHesap + kargoHesap;
         _isLoading = false;
       });
     }
@@ -173,7 +186,6 @@ class _CartScreenState extends State<CartScreen> {
         ),
         child: Row(
           children: [
-            // RESİM ALANI
             Container(
               decoration: BoxDecoration(
                 boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5, offset: const Offset(2, 2))],
@@ -191,7 +203,6 @@ class _CartScreenState extends State<CartScreen> {
             ),
             const SizedBox(width: 20),
             
-            // BİLGİ VE BUTONLAR
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,7 +287,7 @@ class _CartScreenState extends State<CartScreen> {
   }
   Widget _buildAltToplam() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       decoration: BoxDecoration(
         color: kBookPaper,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(35)),
@@ -292,14 +303,53 @@ class _CartScreenState extends State<CartScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // 1. ARA TOPLAM SATIRI
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Toplam Tutar", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: kOliveGreen)),
-                Text("${_toplamTutar.toStringAsFixed(2)} ₺", style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: kDarkGreen)),
+                const Text("Ara Toplam", style: TextStyle(fontSize: 14, color: Colors.grey)),
+                Text("${_araToplam.toStringAsFixed(2)} ₺", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: kDarkCoffee)),
+              ],
+            ),
+            const SizedBox(height: 10),
+
+            // 2. KARGO SATIRI
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Kargo", style: TextStyle(fontSize: 14, color: Colors.grey)),
+                _kargoBedeli == 0
+                    ? const Text("BEDAVA", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.green))
+                    : Text("${_kargoBedeli.toStringAsFixed(2)} ₺", style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: kDarkCoffee)),
+              ],
+            ),
+            
+            // Kargo bilgilendirmesi (500 TL altındaysa göster)
+            if (_kargoBedeli > 0 && _sepetUrunleri.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    "${(500 - _araToplam).toStringAsFixed(2)} TL daha ekle, kargo bedava olsun!",
+                    style: const TextStyle(fontSize: 11, color: kOliveGreen, fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ),
+
+            const Divider(height: 30),
+
+            // 3. GENEL TOPLAM SATIRI
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Genel Toplam", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kOliveGreen)),
+                Text("${_genelToplam.toStringAsFixed(2)} ₺", style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: kDarkGreen)),
               ],
             ),
             const SizedBox(height: 20),
+            
+            // 4. ÖDEME BUTONU
             SizedBox(
               width: double.infinity,
               height: 55,
@@ -311,7 +361,7 @@ class _CartScreenState extends State<CartScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => AddressSelectionScreen(
-                              toplamTutar: _toplamTutar,
+                              toplamTutar: _genelToplam, // DİKKAT: _genelToplam gönderiyoruz
                               sepetUrunleri: _sepetUrunleri,
                             ),
                           ),
@@ -320,7 +370,9 @@ class _CartScreenState extends State<CartScreen> {
                         if (result == true) {
                           setState(() {
                             _sepetUrunleri.clear();
-                            _toplamTutar = 0;
+                            _araToplam = 0;
+                            _kargoBedeli = 0;
+                            _genelToplam = 0;
                           });
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text("Sipariş başarıyla tamamlandı!"), backgroundColor: Colors.green),
@@ -338,7 +390,7 @@ class _CartScreenState extends State<CartScreen> {
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Ödemeyi Tamamla", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1)),
+                    Text("Sepeti Onayla", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1)),
                     SizedBox(width: 10),
                     Icon(Icons.arrow_forward_rounded, size: 22),
                   ],
