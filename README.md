@@ -23,40 +23,44 @@ The project is designed with a modular structure, prioritizing sustainability an
 
 The management panel and backend infrastructure are largely complete, while the mobile application development process is actively ongoing.
 
-### Completed (Admin Panel & Backend)
-- [x] **API Architecture:** RESTful services and database integration with Entity Framework Core.
-- [x] **Category & Product Management:** Full-scope CRUD (Create, Read, Update, Delete) operations.
-- [x] **Customer Support Module:** Real-time messaging interface for Admins to reply to customer inquiries.
-- [x] **Advanced Product Features:** Stock tracking, Active/Passive status control, and Featured products.
-- [x] **Customer Management:** Customer listing with data privacy masking (Hiding Name, Surname, Phone).
-- [x] **Sales History:** Detailed viewing of customer-specific past orders.
-- [x] **Security & Session:** Admin login and secure Session management.
-- [x] **Dashboard:** Summary data and statistical charts.
-- [ ] **Review Management:** System to view and moderate user comments and ratings.
+### Admin Panel & Backend
+-  **API Architecture:** RESTful services and database integration with Entity Framework Core.
+-  **Category & Product Management:** Full-scope CRUD (Create, Read, Update, Delete) operations.
+-  **Customer Support Module:** Real-time messaging interface for Admins to reply to customer inquiries.
+-  **Advanced Product Features:** Stock tracking, Active/Passive status control, and Featured products.
+-  **Customer Management:** Customer listing with data privacy masking (Hiding Name, Surname, Phone).
+-  **Sales History:** Detailed viewing of customer-specific past orders.
+-  **Security & Session:** Admin login and secure Session management.
+-  **Dashboard:** Summary data and statistical charts.
+-  **Review Management:** System to view and moderate user comments, photos, and ratings.
 
-### In Development (Mobile App)
+### Mobile App
 **Core Features**
-- [x] **Home Page:** Banner areas, Category list, and Featured products showcase.
-- [x] **API Integration:** Fetching product and category data from the live database.
-- [x] **Sorting Algorithm:** Dynamic listing of "Best Sellers" based on sales quantity.
-- [x] **Authentication:** User registration (Register) and login (Login) processes.
+-  **Home Page:** Banner areas, Category list, and Featured products showcase.
+-  **API Integration:** Fetching product and category data from the live database.
+-  **Sorting Algorithm:** Dynamic listing of "Best Sellers" based on sales quantity.
+-  **Authentication:** User registration (Register) and login (Login) processes.
+-  **E-Invoice Generation:** Automatic creation of digital invoices (PDF) for completed orders.
 
 **Shopping & Checkout**
-- [x] **Cart Operations:** Functions to add, update, and remove products from the cart.
-- [x] **Address Management:** Saving and managing multiple shipping addresses.
-- [x] **Purchasing Process:** Payment screen interface and order creation service.
-- [x] **Order History:** Displaying past orders and their status details.
-- [x] **Shipment Tracking:** Visual interface to track the delivery status (Preparing, Shipped, Delivered).
+-  **Cart Operations:** Functions to add, update, and remove products from the cart.
+-  **Address Management:** Saving and managing multiple shipping addresses.
+-  **Purchasing Process:** Payment screen interface and order creation service.
+-  **Order History:** Displaying past orders and their status details.
+-  **Shipment Tracking:** Visual interface to track the delivery status (Preparing, Shipped, Delivered).
+-  **Conditional Shipping Fee:** Automatically adds a shipping fee for orders below 500 TL.
 
 **User Experience & Interaction**
-- [x] **Email Verification:** Mandatory validation step via email for new registrations and profile updates.
-- [x] **Live Support:** Direct chat interface for users to communicate with store admins.
-- [x] **AI-Powered Chat:** Integrated **Google Gemini** to provide real-time support and personalized book recommendations.
-- [x] **OTP / SMS Verification Simulation:** Simulating code verification for secure registration.
-- [x] **Wishlist:** Ability to favorite products for quick access.
-- [x] **Advanced Search:** Filtering products by price, author, or publisher.
-- [x] **Profile Page:** Displaying and editing user information via API.
-- [ ] **Reviews & Ratings:** Users can rate books (1-5 stars) and write comments.
+-  **Email Verification:** Mandatory validation step via email for new registrations and profile updates.
+-  **Secure Profile Updates:** Mandatory email verification for updating passwords and personal information.
+-  **Account Deletion:** Users can permanently close their accounts, secured via email confirmation.
+-  **Live Support:** Direct chat interface for users to communicate with store admins.
+-  **AI-Powered Chat:** Integrated **Google Gemini** to provide real-time support and personalized book recommendations.
+-  **OTP / SMS Verification Simulation:** Simulating code verification for secure registration.
+-  **Wishlist:** Ability to favorite products for quick access.
+-  **Advanced Search:** Filtering products by price, author, or publisher.
+-  **Profile Page:** Displaying and editing user information via API.
+-  **Reviews & Ratings:** Users can rate books (1-5 stars) and write comments, and upload photos.
       
 ---
 
