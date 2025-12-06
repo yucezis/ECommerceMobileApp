@@ -11,6 +11,8 @@ class Satis {
   final double toplamTutar;
   final Adres? teslimatAdresi;
   final Urun? urun; 
+  final bool degerlendirmeYapildiMi; 
+  final int? degerlendirmeId;
 
   Satis({
     required this.satisId,
@@ -22,6 +24,8 @@ class Satis {
     required this.toplamTutar,
     this.teslimatAdresi,
     this.urun,
+    this.degerlendirmeYapildiMi = false,
+    this.degerlendirmeId,
   });
 
   factory Satis.fromJson(Map<String, dynamic> json) {
@@ -40,6 +44,8 @@ class Satis {
       teslimatAdresi: (json['teslimatAdresi'] != null || json['TeslimatAdresi'] != null)
           ? Adres.fromJson(json['teslimatAdresi'] ?? json['TeslimatAdresi'])
           : null,
+      degerlendirmeYapildiMi: json['degerlendirmeYapildiMi'] ?? false,
+      degerlendirmeId: json['degerlendirmeId'],
     );
   }
 }

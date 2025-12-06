@@ -41,7 +41,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   String _hataMesaji = "";
   List<SiparisGrubu> _gruplanmisSiparisler = [];
 
-  // --- RESİM İŞLEMLERİ İÇİN DEĞİŞKENLER ---
   File? _secilenResim;
   final ImagePicker _picker = ImagePicker();
 
@@ -57,7 +56,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     return "http://$ipAdresim:$port/api";
   }
 
-  // Base64 Çevirici
   String? _resmiBase64Yap() {
     if (_secilenResim == null) return null;
     List<int> imageBytes = _secilenResim!.readAsBytesSync();
@@ -137,6 +135,113 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     }
   }
 
+  Future<void> _yorumDetayiniGoster(String urunAdi, int? degerlendirmeId) async {
+    if (degerlendirmeId == null) return;
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => const Center(child: CircularProgressIndicator(color: kOliveGreen)),
+    );
+
+    try {
+      final response = await http.get(
+        Uri.parse("${getBaseUrl()}/Degerlendirmeler/GetirTek/$degerlendirmeId"),
+      );
+
+      if (mounted) Navigator.pop(context);
+
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        
+        if (mounted) {
+          _yorumPenceresiniAc(urunAdi, data);
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Yorum yüklenemedi.")));
+        }
+      }
+    } catch (e) {
+      if (mounted) Navigator.pop(context); 
+      print("Hata: $e");
+    }
+  }
+
+  void _yorumPenceresiniAc(String urunAdi, dynamic data) {
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        bool onayli = data['onaylandi'] ?? false;
+        String? resimUrl = data['resimUrl'];
+
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: Column(
+            children: [
+              Text(urunAdi, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkGreen), textAlign: TextAlign.center),
+              const SizedBox(height: 5),
+              Text(
+                onayli ? "Yayında ✅" : "İnceleniyor ⏳", 
+                style: TextStyle(fontSize: 12, color: onayli ? Colors.green : Colors.orange, fontWeight: FontWeight.bold)
+              ),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RatingBarIndicator(
+                rating: (data['puan'] as int).toDouble(),
+                itemBuilder: (context, index) => const Icon(Icons.star_rounded, color: Colors.amber),
+                itemCount: 5,
+                itemSize: 30.0,
+                direction: Axis.horizontal,
+              ),
+              const SizedBox(height: 20),
+              
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: kBookPaper,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  (data['yorum'] != null && data['yorum'].toString().isNotEmpty) 
+                      ? data['yorum'] 
+                      : "Yorum yazılmamış.",
+                  style: const TextStyle(color: kDarkCoffee, fontSize: 15),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+
+              // VARSA RESİM
+              if (resimUrl != null && resimUrl.isNotEmpty) ...[
+                const SizedBox(height: 15),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(
+                    "${getBaseUrl().replaceAll('/api', '')}$resimUrl",
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.cover,
+                    errorBuilder: (c, o, s) => const SizedBox(),
+                  ),
+                ),
+              ],
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: const Text("Kapat", style: TextStyle(color: kDarkGreen, fontWeight: FontWeight.bold)),
+            )
+          ],
+        );
+      },
+    );
+  }
+
   Widget _buildDurumRozeti(int durumId) {
     String metin = "Bilinmiyor";
     Color renk = Colors.grey;
@@ -168,12 +273,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     );
   }
 
-  // --- DEĞERLENDİRME PENCERESİ (RESİM SEÇMELİ) ---
   void _degerlendirmePenceresiAc(int urunId, String urunAdi) {
     double secilenPuan = 5;
     TextEditingController yorumController = TextEditingController();
     
-    // Her açılışta resmi sıfırla
     setState(() {
       _secilenResim = null;
     });
@@ -184,7 +287,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
       builder: (context) {
-        // StatefulBuilder: BottomSheet içindeki durumu (resmi) güncelleyebilmek için
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setModalState) {
             return Padding(
@@ -304,7 +406,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                         
-                        // Resmi Base64 yapıp gönderiyoruz
                         String? resimData = _resmiBase64Yap();
                         _yorumuKaydet(urunId, secilenPuan, yorumController.text, resimData);
                       },
@@ -320,7 +421,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     );
   }
 
-  // --- YORUMU KAYDET (RESİM PARAMETRESİ EKLENDİ) ---
   Future<void> _yorumuKaydet(int urunId, double puan, String yorum, String? resimBase64) async {
     final prefs = await SharedPreferences.getInstance();
     final int? musteriId = prefs.getInt('musteriId');
@@ -491,27 +591,42 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                   ),
 
                   if (siparis.urunler.first.siparisDurumu == 3) 
-                    Padding(
-                      padding: const EdgeInsets.only(right: 16, bottom: 8),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: SizedBox(
-                          height: 30,
-                          child: OutlinedButton.icon(
-                            onPressed: () {
-                              _degerlendirmePenceresiAc(urunSatis.urun?.urunId ?? 0, urunSatis.urun?.urunAdi ?? "Kitap");
-                            },
-                            icon: const Icon(Icons.star_rate_rounded, size: 16, color: Colors.amber),
-                            label: const Text("Değerlendir", style: TextStyle(fontSize: 12, color: kDarkGreen)),
-                            style: OutlinedButton.styleFrom(
-                              side: const BorderSide(color: kDarkGreen, width: 1),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+
+Padding(
+  padding: const EdgeInsets.only(right: 16, bottom: 8),
+  child: Align(
+    alignment: Alignment.centerRight,
+    child: SizedBox(
+      height: 30,
+      
+      child: urunSatis.degerlendirmeYapildiMi
+          ? OutlinedButton.icon(
+              onPressed: () {
+                _yorumDetayiniGoster(urunSatis.urun?.urunAdi ?? "Ürün", urunSatis.degerlendirmeId);
+              },
+              icon: const Icon(Icons.check, size: 16, color: Colors.green),
+              label: const Text("Değerlendirildi", style: TextStyle(fontSize: 12, color: Colors.green)),
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Colors.green, width: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+              ),
+            )
+          : OutlinedButton.icon(
+              onPressed: () {
+                _degerlendirmePenceresiAc(urunSatis.urun?.urunId ?? 0, urunSatis.urun?.urunAdi ?? "Kitap");
+              },
+              icon: const Icon(Icons.star_rate_rounded, size: 16, color: Colors.amber),
+              label: const Text("Değerlendir", style: TextStyle(fontSize: 12, color: kDarkGreen)),
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: kDarkGreen, width: 1),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+              ),
+            ),
+    ),
+  ),
+),
                 ],
               ),
             );

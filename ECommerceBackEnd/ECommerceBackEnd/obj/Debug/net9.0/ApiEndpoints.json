@@ -129,6 +129,22 @@
   },
   {
     "ContainingType": "ECommerceBackEnd.Controllers.DegerlendirmelerController",
+    "Method": "GetirTek",
+    "RelativePath": "api/Degerlendirmeler/GetirTek/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ECommerceBackEnd.Controllers.DegerlendirmelerController",
     "Method": "GetOnayBekleyenler",
     "RelativePath": "api/Degerlendirmeler/OnayBekleyenler",
     "HttpMethod": "GET",

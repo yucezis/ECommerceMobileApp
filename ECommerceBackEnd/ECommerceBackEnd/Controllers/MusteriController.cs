@@ -52,7 +52,13 @@ namespace ECommerceBackEnd.Controllers
                     Urun = x.Urun,
                     MusteriId = x.MusteriId,
                     TeslimatAdresiId = x.TeslimatAdresiId,
-                    TeslimatAdresi = x.TeslimatAdresi
+                    TeslimatAdresi = x.TeslimatAdresi,
+                    DegerlendirmeYapildiMi = _context.degerlendirmes
+                    .Any(d => d.MusteriId == id && d.UrunId == x.UrunId),
+                    DegerlendirmeId = _context.degerlendirmes
+                    .Where(d => d.MusteriId == id && d.UrunId == x.UrunId)
+                    .Select(d => (int?)d.DegerlendirmeId)
+                    .FirstOrDefault()
                 })
                 .ToList();
 

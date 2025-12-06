@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ECommerceBackEnd.Models
 {
@@ -24,6 +25,12 @@ namespace ECommerceBackEnd.Models
         public Adres? TeslimatAdresi { get; set; }
 
         public SiparisDurum SiparisDurumu { get; set; } = SiparisDurum.SiparisAlindi;
+
+        [NotMapped]
+        public bool DegerlendirmeYapildiMi { get; set; }
+
+        [NotMapped]
+        public int? DegerlendirmeId { get; set; }
     }
 
     public enum SiparisDurum

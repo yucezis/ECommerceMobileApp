@@ -157,5 +157,25 @@ namespace ECommerceBackEnd.Controllers
             _context.SaveChanges();
             return Ok("Silindi");
         }
+
+        [HttpGet("GetirTek/{id}")]
+        public IActionResult GetirTek(int id)
+        {
+            var yorum = _context.degerlendirmes
+                .Where(x => x.DegerlendirmeId == id)
+                .Select(x => new
+                {
+                    x.Puan,
+                    x.Yorum,
+                    x.Tarih,
+                    x.Onaylandi,
+                    x.ResimUrl
+                })
+                .FirstOrDefault();
+
+            if (yorum == null) return NotFound("Değerlendirme bulunamadı.");
+
+            return Ok(yorum);
+        }
     }
 }
