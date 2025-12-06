@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\bitirme_projesi\\ECommerceBackEnd\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\controllers\\faturacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\controllers\\faturacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|c:\\bitirme_projesi\\ecommercebackend\\ecommercebackend\\controllers\\degerlendirmelercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{744B0B29-C01A-4005-AF8A-61759A8558B8}|ECommerceBackEnd\\ECommerceBackEnd.csproj|solutionrelative:ecommercebackend\\controllers\\degerlendirmelercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -122,7 +126,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 800,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -130,7 +134,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "FaturaController.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\FaturaController.cs",
+              "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\FaturaController.cs",
+              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\FaturaController.cs",
+              "RelativeToolTip": "ECommerceBackEnd\\Controllers\\FaturaController.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAYwFsAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-06T17:20:04.918Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ChatController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\ChatController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\ChatController.cs",
@@ -138,35 +155,38 @@
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\ChatController.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAQwA0AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-05T10:38:54.617Z"
+              "WhenOpened": "2025-12-05T10:38:54.617Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Degerlendirme.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Degerlendirme.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Degerlendirme.cs",
               "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Degerlendirme.cs",
               "RelativeToolTip": "ECommerceBackEnd\\Models\\Degerlendirme.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAUwB0AAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAA0wB0AAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-04T17:32:11.558Z"
+              "WhenOpened": "2025-12-04T17:32:11.558Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "MusteriController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\MusteriController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\MusteriController.cs",
               "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\MusteriController.cs",
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\MusteriController.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAA5wDYAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAACMAAAAAAAAAAAAgwDYAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T09:01:27.904Z"
+              "WhenOpened": "2025-11-25T09:01:27.904Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Mesaj.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Mesaj.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Mesaj.cs",
@@ -174,11 +194,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Models\\Mesaj.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-02T13:49:44.738Z"
+              "WhenOpened": "2025-12-02T13:49:44.738Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Musteri.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Musteri.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Musteri.cs",
@@ -186,48 +207,51 @@
               "RelativeToolTip": "ECommerceBackEnd\\Models\\Musteri.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAAQwBsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T17:15:38.548Z"
+              "WhenOpened": "2025-11-11T17:15:38.548Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Program.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Program.cs",
               "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Program.cs",
               "RelativeToolTip": "ECommerceBackEnd\\Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAQAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAIBJwAQAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T14:04:28.425Z"
+              "WhenOpened": "2025-11-11T14:04:28.425Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Satislar.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Satislar.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Satislar.cs",
               "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Satislar.cs",
               "RelativeToolTip": "ECommerceBackEnd\\Models\\Satislar.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAgwBwAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAA3wBwAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-29T18:24:24.206Z"
+              "WhenOpened": "2025-11-29T18:24:24.206Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "DegerlendirmelerController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\DegerlendirmelerController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\DegerlendirmelerController.cs",
               "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\DegerlendirmelerController.cs",
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\DegerlendirmelerController.cs",
-              "ViewState": "AgIAAJcAAAAAAAAAAAA4wJ8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJ8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-04T17:34:27.711Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "KartlarController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\KartlarController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\KartlarController.cs",
@@ -235,11 +259,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\KartlarController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T17:20:38.551Z"
+              "WhenOpened": "2025-11-30T17:20:38.551Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "MailHelper.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Helper\\MailHelper.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Helper\\MailHelper.cs",
@@ -247,11 +272,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Helper\\MailHelper.cs",
               "ViewState": "AgIAAFUAAAAAAAAAAAAqwHEAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-04T16:48:12.198Z"
+              "WhenOpened": "2025-12-04T16:48:12.198Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "Adres.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Adres.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Adres.cs",
@@ -259,23 +285,25 @@
               "RelativeToolTip": "ECommerceBackEnd\\Models\\Adres.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T16:59:20.172Z"
+              "WhenOpened": "2025-11-30T16:59:20.172Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Urun.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Urun.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Urun.cs",
               "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Urun.cs",
               "RelativeToolTip": "ECommerceBackEnd\\Models\\Urun.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAA8wBsAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAmwBsAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T18:16:45.034Z"
+              "WhenOpened": "2025-11-19T18:16:45.034Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "UrunController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\UrunController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\UrunController.cs",
@@ -283,11 +311,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\UrunController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T17:36:08.645Z"
+              "WhenOpened": "2025-11-19T17:36:08.645Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Context.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Context.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Context.cs",
@@ -295,23 +324,25 @@
               "RelativeToolTip": "ECommerceBackEnd\\Models\\Context.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T16:59:55.229Z"
+              "WhenOpened": "2025-11-30T16:59:55.229Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "SatislarController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\SatislarController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\SatislarController.cs",
               "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\SatislarController.cs",
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\SatislarController.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAIAzwEAAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAEwEAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T17:41:21.382Z"
+              "WhenOpened": "2025-11-19T17:41:21.382Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "KayitliKart.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\KayitliKart.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\KayitliKart.cs",
@@ -319,11 +350,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Models\\KayitliKart.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T17:17:21.226Z"
+              "WhenOpened": "2025-11-30T17:17:21.226Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "AdreslerController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\AdreslerController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\AdreslerController.cs",
@@ -331,11 +363,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\AdreslerController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T17:01:16.087Z"
+              "WhenOpened": "2025-11-30T17:01:16.087Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "KategoriController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\KategoriController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\KategoriController.cs",
@@ -343,11 +376,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\KategoriController.cs",
               "ViewState": "AgIAAC4AAAAAAAAAAAAqwEIAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T17:13:10.565Z"
+              "WhenOpened": "2025-11-19T17:13:10.565Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "20251130122526_SiparisDurumuSutunuEklendi.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Migrations\\20251130122526_SiparisDurumuSutunuEklendi.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Migrations\\20251130122526_SiparisDurumuSutunuEklendi.cs",
@@ -355,11 +389,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Migrations\\20251130122526_SiparisDurumuSutunuEklendi.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T12:25:26.243Z"
+              "WhenOpened": "2025-11-30T12:25:26.243Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "20251130090239_SiparisDurumuEklendi.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Migrations\\20251130090239_SiparisDurumuEklendi.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Migrations\\20251130090239_SiparisDurumuEklendi.cs",
@@ -367,11 +402,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Migrations\\20251130090239_SiparisDurumuEklendi.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T09:02:39.511Z"
+              "WhenOpened": "2025-11-30T09:02:39.511Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "Dashboard.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Dashboard.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Dashboard.cs",
@@ -379,11 +415,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Models\\Dashboard.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T17:03:45.496Z"
+              "WhenOpened": "2025-11-19T17:03:45.496Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "Kategori.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Kategori.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Kategori.cs",
@@ -391,11 +428,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Models\\Kategori.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T17:15:26.704Z"
+              "WhenOpened": "2025-11-11T17:15:26.704Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "IstatistikController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\IstatistikController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\IstatistikController.cs",
@@ -403,11 +441,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\IstatistikController.cs",
               "ViewState": "AgIAAC4AAAAAQ9Md7DchwAwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T17:05:13.781Z"
+              "WhenOpened": "2025-11-19T17:05:13.781Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\appsettings.json",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\appsettings.json",
@@ -415,11 +454,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-11-11T14:08:01.558Z"
+              "WhenOpened": "2025-11-11T14:08:01.558Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\AuthController.cs",
@@ -427,11 +467,12 @@
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\AuthController.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAQwCYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T17:26:28.285Z"
+              "WhenOpened": "2025-11-19T17:26:28.285Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "AdminLoginController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Controllers\\AdminLoginController.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Controllers\\AdminLoginController.cs",
@@ -439,23 +480,25 @@
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\AdminLoginController.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAQwCAAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T17:23:04.967Z"
+              "WhenOpened": "2025-11-19T17:23:04.967Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "Admin.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Admin.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Admin.cs",
               "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Admin.cs",
               "RelativeToolTip": "ECommerceBackEnd\\Models\\Admin.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAQwBQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAzwBQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T17:15:11.913Z"
+              "WhenOpened": "2025-11-11T17:15:11.913Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "20251111140656_test.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Migrations\\20251111140656_test.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Migrations\\20251111140656_test.cs",
@@ -463,7 +506,8 @@
               "RelativeToolTip": "ECommerceBackEnd\\Migrations\\20251111140656_test.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T14:06:57.092Z"
+              "WhenOpened": "2025-11-11T14:06:57.092Z",
+              "EditorCaption": ""
             }
           ]
         },

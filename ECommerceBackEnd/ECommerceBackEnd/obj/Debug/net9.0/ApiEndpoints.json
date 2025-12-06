@@ -186,6 +186,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "ECommerceBackEnd.Controllers.FaturaController",
+    "Method": "Olustur",
+    "RelativePath": "api/Fatura/Olustur/{siparisNo}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "siparisNo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "ECommerceBackEnd.Controllers.IstatistikController",
     "Method": "GetDashboardData",
     "RelativePath": "api/Istatistik/get-dashboard-data",

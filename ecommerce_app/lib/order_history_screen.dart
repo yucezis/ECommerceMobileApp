@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'dart:io'; // Dosya işlemleri için
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart'; // Resim seçmek için
+import 'package:image_picker/image_picker.dart'; 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'models/satislar_model.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'models/urun_model.dart';
+
 
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kDarkGreen = Color(0xFF283618);
@@ -215,7 +217,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                 ),
               ),
 
-              // VARSA RESİM
               if (resimUrl != null && resimUrl.isNotEmpty) ...[
                 const SizedBox(height: 15),
                 ClipRRect(
@@ -328,14 +329,12 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                   
                   const SizedBox(height: 15),
 
-                  // --- FOTOĞRAF SEÇME ALANI ---
                   Row(
                     children: [
                       InkWell(
                         onTap: () async {
                           final XFile? image = await _picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
                           if (image != null) {
-                            // Hem modalı hem ana sayfayı güncelle
                             setModalState(() {
                               _secilenResim = File(image.path);
                             });
@@ -359,7 +358,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                       ),
                       const SizedBox(width: 15),
                       
-                      // Seçilen Resmin Önizlemesi
                       if (_secilenResim != null)
                         Stack(
                           children: [
@@ -388,7 +386,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                         )
                     ],
                   ),
-                  // ----------------------------
 
                   const SizedBox(height: 10),
                   const Text("Not: Sadece puan verirseniz anında yayınlanır. Yorum yaparsanız onay beklersiniz.", style: TextStyle(fontSize: 12, color: Colors.grey), textAlign: TextAlign.center),
@@ -436,7 +433,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
           "MusteriId": musteriId,
           "Puan": puan.toInt(),
           "Yorum": yorum,
-          "ResimBase64": resimBase64 // Resmi de gönderiyoruz
+          "ResimBase64": resimBase64 
         }),
       );
 
@@ -553,10 +550,33 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
               ],
             ),
           ),
+
+          if (siparis.urunler.first.siparisDurumu >= 1) 
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: TextButton.icon(
+                  onPressed: () async {
+                    final Uri url = Uri.parse("${getBaseUrl()}/Fatura/Olustur/${siparis.siparisNo}");
+                    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Fatura açılamadı.")));
+                    }
+                  },
+                  icon: const Icon(Icons.picture_as_pdf, size: 20, color: Colors.redAccent),
+                  label: const Text("E-Fatura Görüntüle", style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)),
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    backgroundColor: Colors.redAccent.withOpacity(0.05),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))
+                  ),
+                ),
+              ),
+            ),
           
           ...siparis.urunler.map((urunSatis) {
             return Container(
-              margin: const EdgeInsets.only(bottom: 8), 
+              margin: const EdgeInsets.only(bottom: 8, left: 16, right: 16, top: 4), 
               decoration: BoxDecoration(
                 color: kBookPaper.withOpacity(0.5),
                 border: Border(top: BorderSide(color: Colors.grey.withOpacity(0.2)))
@@ -564,7 +584,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
               child: Column(
                 children: [
                   ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     leading: SizedBox(
                       width: 45,
                       height: 60,
@@ -591,42 +611,40 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                   ),
 
                   if (siparis.urunler.first.siparisDurumu == 3) 
-
-Padding(
-  padding: const EdgeInsets.only(right: 16, bottom: 8),
-  child: Align(
-    alignment: Alignment.centerRight,
-    child: SizedBox(
-      height: 30,
-      
-      child: urunSatis.degerlendirmeYapildiMi
-          ? OutlinedButton.icon(
-              onPressed: () {
-                _yorumDetayiniGoster(urunSatis.urun?.urunAdi ?? "Ürün", urunSatis.degerlendirmeId);
-              },
-              icon: const Icon(Icons.check, size: 16, color: Colors.green),
-              label: const Text("Değerlendirildi", style: TextStyle(fontSize: 12, color: Colors.green)),
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Colors.green, width: 1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-              ),
-            )
-          : OutlinedButton.icon(
-              onPressed: () {
-                _degerlendirmePenceresiAc(urunSatis.urun?.urunId ?? 0, urunSatis.urun?.urunAdi ?? "Kitap");
-              },
-              icon: const Icon(Icons.star_rate_rounded, size: 16, color: Colors.amber),
-              label: const Text("Değerlendir", style: TextStyle(fontSize: 12, color: kDarkGreen)),
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: kDarkGreen, width: 1),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-              ),
-            ),
-    ),
-  ),
-),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10, bottom: 8),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: SizedBox(
+                          height: 30,
+                          child: urunSatis.degerlendirmeYapildiMi
+                              ? OutlinedButton.icon(
+                                  onPressed: () {
+                                    _yorumDetayiniGoster(urunSatis.urun?.urunAdi ?? "Ürün", urunSatis.degerlendirmeId);
+                                  },
+                                  icon: const Icon(Icons.check, size: 16, color: Colors.green),
+                                  label: const Text("Değerlendirildi", style: TextStyle(fontSize: 12, color: Colors.green)),
+                                  style: OutlinedButton.styleFrom(
+                                    side: const BorderSide(color: Colors.green, width: 1),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  ),
+                                )
+                              : OutlinedButton.icon(
+                                  onPressed: () {
+                                    _degerlendirmePenceresiAc(urunSatis.urun?.urunId ?? 0, urunSatis.urun?.urunAdi ?? "Kitap");
+                                  },
+                                  icon: const Icon(Icons.star_rate_rounded, size: 16, color: Colors.amber),
+                                  label: const Text("Değerlendir", style: TextStyle(fontSize: 12, color: kDarkGreen)),
+                                  style: OutlinedButton.styleFrom(
+                                    side: const BorderSide(color: kDarkGreen, width: 1),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             );
