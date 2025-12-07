@@ -1,11 +1,11 @@
-import 'package:ecommerce_app/models/satislar_model.dart';
+//import 'package:ecommerce_app/models/satislar_model.dart';
 import 'package:flutter/material.dart';
 import 'models/urun_model.dart';
 import 'models/cart_service.dart';
-import 'footer.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'footer.dart';
+//import 'dart:convert';
+//import 'package:http/http.dart' as http;
+//import 'package:shared_preferences/shared_preferences.dart';
 
 import 'address_selection_screen.dart';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Session için
 import 'home_screen.dart';
 import 'profile_screen.dart';
 import 'categories_screen.dart';
@@ -6,8 +7,8 @@ import 'product_detail_screen.dart';
 import 'models/urun_model.dart';
 import 'product_list_screen.dart'; 
 import 'cart_screen.dart';
+import 'login_screen.dart';
 
-// --- RENK PALETİ ---
 const Color kBookPaper = Color(0xFFFEFAE0); 
 const Color kDarkGreen = Color(0xFF283618); 
 const Color kOliveGreen = Color(0xFF606C38); 
@@ -28,7 +29,44 @@ class FooterState extends State<Footer> {
   Widget? _aktifListeSayfasi; 
   Urun? _seciliUrun; 
 
-  void sayfaDegistir(int index) {
+  Future<void> sayfaDegistir(int index) async {
+    
+    if (index == 3) {
+      final prefs = await SharedPreferences.getInstance();
+      bool girisYapti = prefs.containsKey('musteriId');
+
+      if (!girisYapti) {
+        if (mounted) {
+          showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+              title: const Text("Profil"),
+              content: const Text("Profilinizi görüntülemek için giriş yapmalısınız."),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(ctx), 
+                  child: const Text("Vazgeç", style: TextStyle(color: Colors.grey))
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(backgroundColor: kDarkGreen),
+                  onPressed: () {
+                    Navigator.pop(ctx); 
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (context) => const LoginScreen())
+                    );
+                  },
+                  child: const Text("Giriş Yap", style: TextStyle(color: Colors.white)),
+                )
+              ],
+            ),
+          );
+        }
+        return; // İşlemi durdur, sayfayı değiştirme
+      }
+    }
+
+    // Sorun yoksa veya diğer sekmelerse normal geçiş yap
     setState(() {
       _selectedIndex = index;
       _aktifListeSayfasi = null;
@@ -69,6 +107,7 @@ class FooterState extends State<Footer> {
     ));
   }
   void kategoridenCik() => listedenCik();
+  
   void indirimleriGoster() {
     listeAc(const ProductListScreen(
       title: "Büyük Fırsatlar",
@@ -85,7 +124,6 @@ class FooterState extends State<Footer> {
     if (_seciliUrun != null) {
       aktifSayfa = ProductDetailScreen(urun: _seciliUrun!);
     }
-    
     else if (_aktifListeSayfasi != null) {
       aktifSayfa = _aktifListeSayfasi!;
     }
@@ -96,7 +134,7 @@ class FooterState extends State<Footer> {
       aktifSayfa = const CategoriesScreen();
     } 
     else if (_selectedIndex == 2) {
-      aktifSayfa = const CartScreen(); // <-- BURAYI DEĞİŞTİRDİK
+      aktifSayfa = const CartScreen(); 
     }
     else {
       aktifSayfa = const ProfileScreen();
@@ -109,19 +147,18 @@ class FooterState extends State<Footer> {
       resizeToAvoidBottomInset: false, 
       
       body: Stack(
-  children: [
-    // Padding'i kaldırdık. Artık sayfa en alta kadar uzanacak.
-    aktifSayfa,
+        children: [
+          aktifSayfa,
 
-    if (!navBarGizle)
-      Positioned(
-        left: 0,
-        right: 0,
-        bottom: 0,
-        child: _buildCustomNavigationBar(),
+          if (!navBarGizle)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: _buildCustomNavigationBar(),
+            ),
+        ],
       ),
-  ],
-),
     );
   }
 

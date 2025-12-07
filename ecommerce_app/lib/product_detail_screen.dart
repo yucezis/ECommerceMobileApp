@@ -1,11 +1,15 @@
 import 'dart:convert';
+import 'dart:io'; 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart'; 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:image_picker/image_picker.dart'; 
 import 'models/urun_model.dart'; 
 import 'footer.dart';
 import 'models/cart_service.dart';
 import 'favorite_button.dart';
+import 'login_screen.dart';
 
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kBackgroundAccent = Color(0xFFFAEDCD);
@@ -28,15 +32,77 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   
   List<dynamic> _yorumlar = [];
   bool _yorumlarYukleniyor = true;
+  
+  bool _isLoggedIn = false; 
+
+  File? _secilenResim;
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
     _yorumlariGetir();
+    _oturumDurumunuKontrolEt(); 
   }
 
   String getBaseUrl() {
     return "http://10.180.131.237:5126/api"; 
+  }
+
+  Future<bool> _oturumVarMi() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.containsKey('musteriId'); 
+  }
+
+  Future<void> _oturumDurumunuKontrolEt() async {
+    bool girisYapti = await _oturumVarMi();
+    if (mounted) {
+      setState(() {
+        _isLoggedIn = girisYapti;
+      });
+    }
+  }
+
+  void _girisYapUyarisiAc(String islemAdi) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Giriş Yapmalısınız"),
+        content: Text("Bu ürünü $islemAdi için lütfen giriş yapın veya üye olun."),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text("Vazgeç", style: TextStyle(color: Colors.grey)),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: kDarkGreen),
+            onPressed: () {
+              Navigator.pop(ctx);
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) => const LoginScreen())
+              );
+            },
+            child: const Text("Giriş Yap", style: TextStyle(color: Colors.white)),
+          )
+        ],
+      ),
+    );
+  }
+
+  Future<void> _resimSec(StateSetter setModalState) async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+    if (image != null) {
+      setModalState(() {
+        _secilenResim = File(image.path);
+      });
+    }
+  }
+
+  String? _resmiBase64Yap() {
+    if (_secilenResim == null) return null;
+    List<int> imageBytes = _secilenResim!.readAsBytesSync();
+    return base64Encode(imageBytes);
   }
 
   Future<void> _yorumlariGetir() async {
@@ -52,6 +118,179 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       print("Yorum hatası: $e");
       setState(() => _yorumlarYukleniyor = false);
     }
+  }
+
+  Future<void> _yorumuKaydet(double puan, String yorum) async {
+    if (!await _oturumVarMi()) {
+      _girisYapUyarisiAc("değerlendirmek");
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    final int? musteriId = prefs.getInt('musteriId');
+
+    String? resimData = _resmiBase64Yap();
+
+    try {
+      final response = await http.post(
+        Uri.parse("${getBaseUrl()}/Degerlendirmeler/Ekle"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "UrunId": widget.urun.urunId,
+          "MusteriId": musteriId,
+          "Puan": puan.toInt(),
+          "Yorum": yorum,
+          "ResimBase64": resimData
+        }),
+      );
+
+      if (mounted) {
+        if (response.statusCode == 200) {
+          _yorumlariGetir(); 
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.body), backgroundColor: kDarkGreen));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Hata: ${response.body}"), backgroundColor: Colors.red));
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _yorumYapPenceresiAc() {
+    if (!_isLoggedIn) {
+      _girisYapUyarisiAc("değerlendirmek");
+      return;
+    }
+
+    double secilenPuan = 5;
+    TextEditingController yorumController = TextEditingController();
+    
+    setState(() {
+      _secilenResim = null;
+    });
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setModalState) {
+            return Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+                left: 20, right: 20, top: 20
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text("Değerlendir", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: kDarkGreen)),
+                  const SizedBox(height: 15),
+                  
+                  RatingBar.builder(
+                    initialRating: 5,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(Icons.star_rounded, color: Colors.amber, size: 36),
+                    onRatingUpdate: (rating) {
+                      secilenPuan = rating;
+                    },
+                  ),
+                  
+                  const SizedBox(height: 20),
+                  
+                  TextField(
+                    controller: yorumController,
+                    decoration: InputDecoration(
+                      hintText: "Düşünceleriniz neler?",
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                      filled: true,
+                      fillColor: kSoftGrey,
+                    ),
+                    maxLines: 3,
+                  ),
+                  
+                  const SizedBox(height: 15),
+
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () => _resimSec(setModalState),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.grey[400]!)
+                          ),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.camera_alt, color: Colors.grey),
+                              SizedBox(width: 5),
+                              Text("Fotoğraf Ekle"),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+                      
+                      if (_secilenResim != null)
+                        Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: Image.file(
+                                _secilenResim!,
+                                width: 60, height: 60, fit: BoxFit.cover,
+                              ),
+                            ),
+                            Positioned(
+                              right: 0, top: 0,
+                              child: InkWell(
+                                onTap: () {
+                                  setModalState(() => _secilenResim = null);
+                                },
+                                child: Container(
+                                  decoration: const BoxDecoration(color: Colors.black54, shape: BoxShape.circle),
+                                  child: const Icon(Icons.close, size: 16, color: Colors.white),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                    ],
+                  ),
+                  
+                  const SizedBox(height: 20),
+                  
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: kDarkGreen, 
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _yorumuKaydet(secilenPuan, yorumController.text);
+                      },
+                      child: const Text("GÖNDER", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }
+        );
+      },
+    );
   }
 
   void _resmiBuyut(String imageUrl) {
@@ -71,13 +310,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 maxScale: 4.0,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: Image.network(
-                    imageUrl,
-                    fit: BoxFit.contain, 
-                  ),
+                  child: Image.network(imageUrl, fit: BoxFit.contain),
                 ),
               ),
-              
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: CircleAvatar(
@@ -165,7 +400,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _buildCircularButton(icon: Icons.arrow_back_ios_new, onTap: () => Footer.footerKey.currentState?.urundenCik()),
-                    FavoriteButton(urun: widget.urun, size: 24),
+                    
+                    _isLoggedIn
+                        ? FavoriteButton(urun: widget.urun, size: 24)
+                        : _buildCircularButton( 
+                            icon: Icons.favorite_border,
+                            color: Colors.grey, 
+                            onTap: () => _girisYapUyarisiAc("favorilere eklemek"),
+                          ),
                   ],
                 ),
               ),
@@ -210,23 +452,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     const SizedBox(height: 25),
 
                     Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    _buildModernBadge(Icons.star_rounded, "4.8", Colors.amber),
-
-    _buildModernBadge(
-        Icons.language, 
-        urun.urunDil ?? "-", 
-        Colors.blueGrey
-    ),
-
-    _buildModernBadge(
-        Icons.auto_stories, 
-        "${urun.urunSayfa ?? '-'} Syf", 
-        kOliveGreen
-    ),
-  ],
-),
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildModernBadge(Icons.star_rounded, "4.8", Colors.amber),
+                        _buildModernBadge(Icons.language, urun.urunDil ?? "-", Colors.blueGrey),
+                        _buildModernBadge(Icons.auto_stories, "${urun.urunSayfa ?? '-'} Syf", kOliveGreen),
+                      ],
+                    ),
                     const SizedBox(height: 25),
                     
                     const Text("Kitap Hakkında", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkCoffee)),
@@ -240,92 +472,101 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     const Divider(),
                     const SizedBox(height: 10),
 
-                    const Text("Değerlendirmeler", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkCoffee)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Değerlendirmeler", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: kDarkCoffee)),
+                        TextButton.icon(
+                          onPressed: _yorumYapPenceresiAc, // Burada da kontrol var
+                          icon: const Icon(Icons.rate_review_outlined, size: 18, color: kDarkGreen),
+                          label: const Text("Yorum Yap", style: TextStyle(color: kDarkGreen, fontWeight: FontWeight.bold)),
+                        )
+                      ],
+                    ),
                     
                     const SizedBox(height: 10),
 
                     _yorumlarYukleniyor 
-    ? const Center(child: CircularProgressIndicator(color: kDarkGreen))
-    : _yorumlar.isEmpty
-        ? Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Center(child: Text("Henüz yorum yapılmamış.", style: TextStyle(color: Colors.grey[400]))),
-          )
-        : ListView.builder(
-            shrinkWrap: true, 
-            physics: const NeverScrollableScrollPhysics(), 
-            itemCount: _yorumlar.length,
-            itemBuilder: (context, index) {
-              var yorum = _yorumlar[index];
-              String? resimUrl = yorum['resimUrl']; 
+                        ? const Center(child: CircularProgressIndicator(color: kDarkGreen))
+                        : _yorumlar.isEmpty
+                            ? Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 20),
+                                child: Center(child: Text("Henüz yorum yapılmamış. İlk yorumu sen yap!", style: TextStyle(color: Colors.grey[400]))),
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true, 
+                                physics: const NeverScrollableScrollPhysics(), 
+                                itemCount: _yorumlar.length,
+                                itemBuilder: (context, index) {
+                                  var yorum = _yorumlar[index];
+                                  String? resimUrl = yorum['resimUrl']; 
 
-              return Container(
-                margin: const EdgeInsets.only(bottom: 15),
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  color: kSoftGrey,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(yorum['musteriAdi'], style: const TextStyle(fontWeight: FontWeight.bold, color: kDarkCoffee)),
-                        RatingBarIndicator(
-                          rating: (yorum['puan'] as int).toDouble(),
-                          itemBuilder: (context, index) => const Icon(Icons.star_rounded, color: Colors.amber),
-                          itemCount: 5,
-                          itemSize: 16.0,
-                          direction: Axis.horizontal,
-                        ),
-                      ],
-                    ),
-                    
-                    if (yorum['yorum'] != null && yorum['yorum'].toString().isNotEmpty) ...[
-                      const SizedBox(height: 8),
-                      Text(yorum['yorum'], style: TextStyle(color: kDarkCoffee.withOpacity(0.8), fontSize: 14)),
-                    ],
+                                  return Container(
+                                    margin: const EdgeInsets.only(bottom: 15),
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: kSoftGrey,
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(yorum['musteriAdi'], style: const TextStyle(fontWeight: FontWeight.bold, color: kDarkCoffee)),
+                                            RatingBarIndicator(
+                                              rating: (yorum['puan'] as int).toDouble(),
+                                              itemBuilder: (context, index) => const Icon(Icons.star_rounded, color: Colors.amber),
+                                              itemCount: 5,
+                                              itemSize: 16.0,
+                                              direction: Axis.horizontal,
+                                            ),
+                                          ],
+                                        ),
+                                        if (yorum['yorum'] != null && yorum['yorum'].toString().isNotEmpty) ...[
+                                          const SizedBox(height: 8),
+                                          Text(yorum['yorum'], style: TextStyle(color: kDarkCoffee.withOpacity(0.8), fontSize: 14)),
+                                        ],
 
-                    if (resimUrl != null && resimUrl.isNotEmpty) ...[
-  const SizedBox(height: 10),
-  
-  GestureDetector(
-    onTap: () {
-      String fullUrl = "${getBaseUrl().replaceAll('/api', '')}$resimUrl";
-      _resmiBuyut(fullUrl);
-    },
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
-        height: 120, 
-        width: double.infinity,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade300),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Image.network(
-          "${getBaseUrl().replaceAll('/api', '')}$resimUrl",
-          fit: BoxFit.cover, 
-          errorBuilder: (c, o, s) => const SizedBox(),
-        ),
-      ),
-    ),
-  ),
-],
+                                        if (resimUrl != null && resimUrl.isNotEmpty) ...[
+                                          const SizedBox(height: 10),
+                                          GestureDetector(
+                                            onTap: () {
+                                              String fullUrl = "${getBaseUrl().replaceAll('/api', '')}$resimUrl";
+                                              _resmiBuyut(fullUrl);
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(10),
+                                              child: Container(
+                                                height: 120, 
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(color: Colors.grey.shade300),
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                child: Image.network(
+                                                  "${getBaseUrl().replaceAll('/api', '')}$resimUrl",
+                                                  fit: BoxFit.cover, 
+                                                  errorBuilder: (c, o, s) => const SizedBox(),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
 
-                    const SizedBox(height: 5),
-                    
-                    Text(
-                      yorum['tarih'].toString().substring(0, 10), 
-                      style: TextStyle(fontSize: 10, color: Colors.grey[500])
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          yorum['tarih'].toString().substring(0, 10), 
+                                          style: TextStyle(fontSize: 10, color: Colors.grey[500])
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+
+                    const SizedBox(height: 120),
                   ],
                 ),
               ),
@@ -361,9 +602,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Expanded(
                     child: InkWell(
                       onTap: () async {
+                        bool girisYapti = await _oturumVarMi();
+                        if (!girisYapti) {
+                          _girisYapUyarisiAc("sepete eklemek");
+                          return; 
+                        }
+
                         await SepetServisi.sepeteEkle(urun, eklenecekAdet: adet);
                         if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("${adet} adet ${urun.urunAdi} sepete eklendi!"), backgroundColor: kDarkCoffee, duration: const Duration(milliseconds: 800)));
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$adet adet ${urun.urunAdi} sepete eklendi!"), backgroundColor: kDarkCoffee, duration: const Duration(milliseconds: 800)));
                         }
                       },
                       child: Column(

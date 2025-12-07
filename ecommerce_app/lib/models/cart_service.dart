@@ -8,24 +8,19 @@ class SepetServisi {
     final prefs = await SharedPreferences.getInstance();
     List<String> sepetListesi = prefs.getStringList('sepet') ?? [];
 
-    // Mevcut listeyi Urun objelerine çevir
     List<Urun> mevcutUrunler = sepetListesi
         .map((item) => Urun.fromJson(jsonDecode(item)))
         .toList();
 
-    // Ürün zaten sepette var mı kontrol et
     int index = mevcutUrunler.indexWhere((element) => element.urunId == urun.urunId);
 
     if (index != -1) {
-      // VARSA: Mevcut adedin üzerine ekle
       mevcutUrunler[index].sepetAdedi += eklenecekAdet;
     } else {
-      // YOKSA: Yeni ürün olarak ekle ve adedini ayarla
       urun.sepetAdedi = eklenecekAdet;
       mevcutUrunler.add(urun);
     }
 
-    // Listeyi tekrar JSON string'e çevirip kaydet
     List<String> yeniListeString = mevcutUrunler
         .map((item) => jsonEncode(item.toJson()))
         .toList();

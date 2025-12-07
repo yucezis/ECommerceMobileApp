@@ -5,13 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'footer.dart';
 import 'register_screen.dart';
 
-// --- RENKLERİ BURAYA (CLASS DIŞINA) TAŞIDIK ---
 const Color kPrimary = Color(0xFF606C38);
 const Color kDarkGreen = Color(0xFF283618);
 const Color kCream = Color(0xFFFEFAE0);
 const Color kBrown = Color(0xFF211508);
 const Color kBookPaper = Color(0xFFFEFAE0); 
-const Color kOliveGreen = Color(0xFF606C38); // İkonlar için
+const Color kOliveGreen = Color(0xFF606C38);
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -255,8 +254,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                 ),
               ),
+              
               const SizedBox(height: 20),
-
+              
+              // KAYIT OL KISMI
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -277,7 +278,25 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ],
-              )
+              ),
+
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Footer(key: Footer.footerKey)),
+                  );
+                },
+                child: const Text(
+                  "Üye Olmadan Devam Et",
+                  style: TextStyle(
+                    color: Colors.grey, 
+                    decoration: TextDecoration.underline,
+                    fontSize: 14,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

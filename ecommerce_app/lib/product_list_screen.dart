@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart'; 
 import 'models/urun_model.dart';
 import 'footer.dart';
 import 'models/cart_service.dart';
 import 'favorite_button.dart';
+import 'login_screen.dart'; 
 
-// --- TASARIM SİSTEMİ RENKLERİ ---
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kDarkGreen = Color(0xFF283618);
 const Color kOliveGreen = Color(0xFF606C38);
@@ -45,9 +46,39 @@ class _ProductListScreenState extends State<ProductListScreen> {
   }
 
   String getBaseUrl() {
-    String ipAdresim = "10.180.131.237";
-    String port = "5126";
-    return "http://$ipAdresim:$port/api";
+    return "http://10.180.131.237:5126/api"; 
+  }
+
+  Future<bool> _oturumVarMi() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.containsKey('musteriId');
+  }
+
+  void _girisYapUyarisiAc(String islemAdi) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text("Giriş Yapmalısınız"),
+        content: Text("Bu ürünü $islemAdi için lütfen giriş yapın veya üye olun."),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text("Vazgeç", style: TextStyle(color: Colors.grey)),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: kDarkGreen),
+            onPressed: () {
+              Navigator.pop(ctx);
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) => const LoginScreen())
+              );
+            },
+            child: const Text("Giriş Yap", style: TextStyle(color: Colors.white)),
+          )
+        ],
+      ),
+    );
   }
 
   Future<void> _verileriGetir() async {
@@ -272,13 +303,14 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     ),
                   ),
                   Positioned(
-  top: 8,
-  right: 8,
-  child: FavoriteButton(
-    urun: urun, // Mevcut ürün nesnesini buraya veriyoruz
-    size: 20,   // İkon boyutu
-  ),
-),
+                    top: 8,
+                    right: 8,
+                    
+                    child: FavoriteButton(
+                      urun: urun,
+                      size: 20,
+                    ),
+                  ),
                   if (indirimVar)
                     Positioned(
                       top: 8, left: 8,
@@ -333,46 +365,39 @@ class _ProductListScreenState extends State<ProductListScreen> {
                             Text("${urun.urunSatisFiyati} ₺", style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: kDarkCoffee)),
                           ]
                         ]),
+                        
                         InkWell(
+                          borderRadius: BorderRadius.circular(12),
                           onTap: () async {
-                            await SepetServisi.sepeteEkle(urun);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text("${urun.urunAdi} sepete eklendi!"), 
-                                duration: const Duration(seconds: 1), 
-                                backgroundColor: kOliveGreen,
-                                behavior: SnackBarBehavior.floating,
-                              )
-                            );
-                          },
-                          child: InkWell(
-  borderRadius: BorderRadius.circular(12), 
-  onTap: () async {
-    await SepetServisi.sepeteEkle(urun);
+                            bool girisYapti = await _oturumVarMi();
+                            if (!girisYapti) {
+                              _girisYapUyarisiAc("sepete eklemek");
+                              return; 
+                            }
 
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("${urun.urunAdi} sepete eklendi!"),
-          backgroundColor: kDarkCoffee, // Senin renk paletin
-          duration: const Duration(milliseconds: 800),
-        ),
-      );
-    }
-  },
-  child: Container(
-    padding: const EdgeInsets.all(8),
-    decoration: BoxDecoration(
-      color: kOliveGreen, 
-      borderRadius: BorderRadius.circular(12),
-    ),
-    child: const Icon(
-      Icons.add_shopping_cart_rounded, 
-      color: Colors.white, 
-      size: 18,
-    ),
-  ),
-),
+                            await SepetServisi.sepeteEkle(urun);
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("${urun.urunAdi} sepete eklendi!"),
+                                  backgroundColor: kDarkCoffee,
+                                  duration: const Duration(milliseconds: 800),
+                                ),
+                              );
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: kOliveGreen, 
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Icon(
+                              Icons.add_shopping_cart_rounded, 
+                              color: Colors.white, 
+                              size: 18,
+                            ),
+                          ),
                         ),
                       ],
                     ),
