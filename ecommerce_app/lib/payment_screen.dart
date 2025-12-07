@@ -3,8 +3,8 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'models/urun_model.dart';
-import 'models/card_model.dart';
+import 'models/urun_model.dart'; 
+import 'models/card_model.dart'; 
 import 'models/cart_service.dart';
 import 'sms_verification_screen.dart';
 
@@ -16,7 +16,6 @@ class PaymentScreen extends StatefulWidget {
   final double toplamTutar;
   final List<Urun> sepetUrunleri;
   final int secilenAdresId;
-
   const PaymentScreen({
     super.key,
     required this.toplamTutar,
@@ -29,17 +28,21 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProviderStateMixin {
+  
   String cardNumber = '';
   String expiryDate = '';
   String cardHolderName = '';
   String cvvCode = '';
-  
-  // 1. Kart İsmi Değişkeni
-  String cardName = ''; 
+  String cardName = '';
   
   bool isCvvFocused = false;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   
+  // Formun durumunu kontrol etmek için
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  
+  // Kayıtlı kart mı kullanılıyor kontrolü
+  bool _kayitliKartKullaniliyor = false;
+
   bool _isLoading = false;
   bool _kartKaydedilsinMi = false;
   
@@ -54,15 +57,33 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
     _kayitliKartlariGetir();
   }
 
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   String getBaseUrl() {
     return "http://10.180.131.237:5126/api";
+  }
+
+  String _kartNoFormatla(String hamNo) {
+    String temiz = hamNo.replaceAll(' ', '');
+    StringBuffer buffer = StringBuffer();
+    for (int i = 0; i < temiz.length; i++) {
+      buffer.write(temiz[i]);
+      var index = i + 1;
+      if (index % 4 == 0 && index != temiz.length) {
+        buffer.write(' ');
+      }
+    }
+    return buffer.toString();
   }
 
   Future<void> _kayitliKartlariGetir() async {
     final prefs = await SharedPreferences.getInstance();
     final int? musteriId = prefs.getInt('musteriId');
     if (musteriId == null) return;
-
     try {
       final response = await http.get(Uri.parse("${getBaseUrl()}/Kartlar/Listele/$musteriId"));
       if (response.statusCode == 200) {
@@ -73,7 +94,7 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
         });
       }
     } catch (e) {
-      print("Kart getirme hatası: $e");
+      print("Kart hata: $e");
       setState(() => _kartlarYukleniyor = false);
     }
   }
@@ -106,45 +127,51 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(yeniKart.toJson()),
       );
-      print("Kart başarıyla kaydedildi: $kaydedilecekIsim");
     } catch (e) {
       print("Kart kaydetme hatası: $e");
     }
   }
 
   Future<void> _odemeYapVeSiparisVer() async {
-    // 1. Form kontrolü
-    if (!formKey.currentState!.validate()) {
-      return;
+    // --- VALIDASYON MANTIĞI GÜNCELLENDİ ---
+    
+    bool valid = false;
+
+    if (_kayitliKartKullaniliyor) {
+      // Eğer kayıtlı kart seçtiysek, Form widget'ının ne dediğine bakma.
+      // Kendi değişkenlerimiz (cardNumber, cvv) dolu mu ona bak.
+      if (cardNumber.isNotEmpty && expiryDate.isNotEmpty && cvvCode.length >= 3) {
+        valid = true;
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Lütfen CVV kodunu giriniz.")));
+        return;
+      }
+    } else {
+      // Eğer elle yeni kart giriliyorsa, Form validasyonunu kullan.
+      if (formKey.currentState!.validate()) {
+        valid = true;
+      }
     }
 
-    // 2. Klavyeyi garanti kapat (Payment ekranındaki klavye)
-    FocusScope.of(context).unfocus();
+    if (!valid) return;
 
-    // 3. SMS Ekranına Git ve SONUCU BEKLE
-    // result değişkeni, SMS ekranından dönen 'true' değeri olacak
+    FocusScope.of(context).unfocus();
+    
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => const SmsVerificationScreen(),
-      ),
+      MaterialPageRoute(builder: (context) => const SmsVerificationScreen()),
     );
 
-    // 4. Eğer sonuç 'true' ise (Doğrulama başarılıysa) ödeme işlemini yap
     if (result == true) {
-      // SMS ekranı kapandı, şimdi API isteğini atıyoruz
       await _gerceklesecekOdemeIslemi();
-    } else {
-      // Kullanıcı SMS ekranında geri tuşuna bastı veya iptal etti
-      print("SMS doğrulaması yapılmadı.");
     }
   }
-
+  
   Future<void> _gerceklesecekOdemeIslemi() async {
     setState(() => _isLoading = true);
-
     try {
-      if (_kartKaydedilsinMi) {
+      // Sadece YENİ kart giriliyorsa ve kaydetme seçildiyse kaydet
+      if (!_kayitliKartKullaniliyor && _kartKaydedilsinMi) {
         await _kartKaydet();
       }
 
@@ -152,7 +179,6 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
       final int? musteriId = prefs.getInt('musteriId');
       if (musteriId == null) throw Exception("Oturum hatası");
 
-      // 2. Ürün Listesini Hazırla
       List<Map<String, dynamic>> urunListesi = widget.sepetUrunleri.map((urun) {
         return {
           "urunId": urun.urunId,
@@ -171,10 +197,8 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
         "teslimatAdresiId": widget.secilenAdresId
       };
 
-      var url = Uri.parse("${getBaseUrl()}/Satislar/SiparisVer");
-      
       var response = await http.post(
-        url,
+        Uri.parse("${getBaseUrl()}/Satislar/SiparisVer"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(requestBody),
       );
@@ -185,11 +209,8 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
       } else {
         throw Exception("Sipariş hatası: ${response.body}");
       }
-      
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Hata: $e"), backgroundColor: Colors.red));
-      }
+      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Hata: $e"), backgroundColor: Colors.red));
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -217,13 +238,22 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
 
   void _kartSec(KayitliKart kart) {
     setState(() {
-      cardNumber = kart.kartNumarasi;
+      // 1. Kart numarasını formun seveceği şekilde (boşluklu) formatla
+      cardNumber = _kartNoFormatla(kart.kartNumarasi);
+      
       cardHolderName = kart.kartSahibi;
       expiryDate = "${kart.sonKullanmaAy}/${kart.sonKullanmaYil.substring(2)}";
       cvvCode = ""; 
+      
+      // 2. Formu sıfırla ki yeni değerleri alsın
+      formKey = GlobalKey<FormState>();
+      
+      // 3. Durum işaretçisini güncelle
+      _kayitliKartKullaniliyor = true;
       _kartKaydedilsinMi = false; 
+      
       _tabController.animateTo(0);
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Kart bilgileri dolduruldu. Lütfen CVV giriniz.")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Lütfen CVV kodunu giriniz.")));
     });
   }
 
@@ -240,6 +270,15 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
           indicatorColor: kBookPaper,
           labelColor: kBookPaper, 
           unselectedLabelColor: kBookPaper.withOpacity(0.5), 
+          onTap: (index) {
+             // Eğer kullanıcı tab değiştirirse ve 'Kart Bilgileri'ne elle geçerse,
+             // manuel giriş moduna geçmesini sağlayalım.
+             if (index == 0) {
+               setState(() {
+                 _kayitliKartKullaniliyor = false;
+               });
+             }
+          },
           tabs: const [
             Tab(text: "KART BİLGİLERİ", icon: Icon(Icons.credit_card)),
             Tab(text: "KAYITLI KARTLARIM", icon: Icon(Icons.wallet)),
@@ -273,8 +312,9 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
             isSwipeGestureEnabled: true,
             onCreditCardWidgetChange: (CreditCardBrand creditCardBrand) {},
           ),
+          
           CreditCardForm(
-            formKey: formKey,
+            formKey: formKey, 
             obscureCvv: true,
             obscureNumber: true,
             cardNumber: cardNumber,
@@ -284,38 +324,48 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
             isExpiryDateVisible: true,
             cardHolderName: cardHolderName,
             expiryDate: expiryDate,
+            
             onCreditCardModelChange: (CreditCardModel? data) {
               setState(() {
-                cardNumber = data!.cardNumber;
-                expiryDate = data.expiryDate;
-                cardHolderName = data.cardHolderName;
-                cvvCode = data.cvvCode;
-                isCvvFocused = data.isCvvFocused;
+                // Burada kritik bir kontrol yapıyoruz.
+                // Eğer kayıtlı bir kart seçiliyse ve kullanıcı sadece CVV giriyorsa,
+                // Modelden gelen boş 'cardNumber' verisinin bizim dolu 'cardNumber'ımızı ezmesini engelliyoruz.
+                if (_kayitliKartKullaniliyor && (data!.cardNumber.isEmpty || data.cardNumber.length < 5)) {
+                   // Sadece CVV ve Focus'u güncelle, diğerlerini koru
+                   cvvCode = data.cvvCode;
+                   isCvvFocused = data.isCvvFocused;
+                } else {
+                   // Manuel girişte veya tam güncellemede her şeyi al
+                   cardNumber = data!.cardNumber;
+                   expiryDate = data.expiryDate;
+                   cardHolderName = data.cardHolderName;
+                   cvvCode = data.cvvCode;
+                   isCvvFocused = data.isCvvFocused;
+                }
               });
             },
           ),
           
-          // Kartı Kaydet Checkbox
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
-                CheckboxListTile(
-                  title: const Text("Kartımı sonraki alışverişler için kaydet"),
-                  value: _kartKaydedilsinMi,
-                  activeColor: kOliveGreen,
-                  contentPadding: EdgeInsets.zero,
-                  controlAffinity: ListTileControlAffinity.leading, // Checkbox solda olsun
-                  onChanged: (val) {
-                    setState(() {
-                      _kartKaydedilsinMi = val ?? false;
-                    });
-                  },
-                ),
+                // Checkbox sadece kayıtlı kart kullanılmıyorsa görünsün
+                if (!_kayitliKartKullaniliyor)
+                  CheckboxListTile(
+                    title: const Text("Kartımı sonraki alışverişler için kaydet"),
+                    value: _kartKaydedilsinMi,
+                    activeColor: kOliveGreen,
+                    contentPadding: EdgeInsets.zero,
+                    controlAffinity: ListTileControlAffinity.leading,
+                    onChanged: (val) {
+                      setState(() {
+                        _kartKaydedilsinMi = val ?? false;
+                      });
+                    },
+                  ),
                 
-                // 3. YENİ EKLENEN KISIM: KART İSMİ ALANI
-                // Sadece checkbox işaretliyse görünsün
-                if (_kartKaydedilsinMi)
+                if (_kartKaydedilsinMi && !_kayitliKartKullaniliyor)
                   Padding(
                     padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                     child: TextFormField(
@@ -370,7 +420,7 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
       ),
     );
   }
-
+  
   Widget _buildKayitliKartlarListesi() {
     if (_kartlarYukleniyor) {
       return const Center(child: CircularProgressIndicator(color: kOliveGreen));
@@ -378,21 +428,17 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
     if (_kayitliKartlar.isEmpty) {
       return const Center(child: Text("Kayıtlı kartınız bulunmuyor."));
     }
-
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: _kayitliKartlar.length,
       itemBuilder: (context, index) {
         final kart = _kayitliKartlar[index];
-
-        // GÜVENLİK KONTROLÜ: Kart numarası 4 haneden kısaysa hata vermesin
         String maskeliNumara = "**** **** **** ";
         if (kart.kartNumarasi.length >= 4) {
           maskeliNumara += kart.kartNumarasi.substring(kart.kartNumarasi.length - 4);
         } else {
           maskeliNumara += "####";
         }
-
         return Card(
           elevation: 4,
           margin: const EdgeInsets.only(bottom: 15),
@@ -409,30 +455,22 @@ class _PaymentScreenState extends State<PaymentScreen> with SingleTickerProvider
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Eğer modelde kartIsmi yoksa hata verir, o yüzden modeli güncellemelisin
                       Text(kart.kartIsmi, style: const TextStyle(color: Colors.white70, fontSize: 16, fontWeight: FontWeight.w600)),
                       const Icon(Icons.credit_card, color: Colors.white),
                     ],
                   ),
                   const SizedBox(height: 20),
-                  Text(
-                    maskeliNumara, // Güvenli numara
-                    style: const TextStyle(color: Colors.white, fontSize: 22, letterSpacing: 2, fontFamily: 'Courier'),
-                  ),
+                  Text(maskeliNumara, style: const TextStyle(color: Colors.white, fontSize: 22, letterSpacing: 2, fontFamily: 'Courier')),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(kart.kartSahibi.toUpperCase(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                      // Yılın son 2 hanesini alırken de güvenlik kontrolü
-                      Text("${kart.sonKullanmaAy}/${kart.sonKullanmaYil.length >= 2 ? kart.sonKullanmaYil.substring(2) : kart.sonKullanmaYil}", 
-                           style: const TextStyle(color: Colors.white)),
+                      Text("${kart.sonKullanmaAy}/${kart.sonKullanmaYil.length >= 2 ? kart.sonKullanmaYil.substring(2) : kart.sonKullanmaYil}", style: const TextStyle(color: Colors.white)),
                     ],
                   ),
                   const Divider(color: Colors.white24, height: 30),
-                  const Center(
-                    child: Text("SEÇ VE KULLAN", style: TextStyle(color: kBookPaper, fontWeight: FontWeight.bold)),
-                  )
+                  const Center(child: Text("SEÇ VE KULLAN", style: TextStyle(color: kBookPaper, fontWeight: FontWeight.bold)))
                 ],
               ),
             ),

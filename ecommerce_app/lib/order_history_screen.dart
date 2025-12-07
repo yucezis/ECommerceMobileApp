@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'models/satislar_model.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'models/urun_model.dart';
+//import 'models/urun_model.dart';
 
 
 const Color kBookPaper = Color(0xFFFEFAE0);
@@ -77,7 +77,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   void _iadePenceresiAc(SiparisGrubu siparis) {
     String secilenNeden = _iadeNedenleri.first;
     
-    // Seçilen ürünlerin ID'lerini tutacak liste
     List<int> secilenSatisIds = [];
 
     showDialog(
@@ -104,7 +103,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                       const Text("İade etmek istediğiniz ürünleri seçiniz:", style: TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: 10),
                       
-                      // 1. ÜRÜN LİSTESİ (CHECKBOX İLE)
                       Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey.shade300),
@@ -112,7 +110,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                         ),
                         child: Column(
                           children: siparis.urunler.map((satis) {
-                            // Eğer zaten iade edilmişse (kodu varsa) listeye koyma veya pasif yap
                             bool zatenIade = satis.iadeKodu != null && satis.iadeKodu!.isNotEmpty;
                             
                             return CheckboxListTile(
@@ -144,7 +141,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                       
                       const SizedBox(height: 20),
 
-                      // 2. NEDEN SEÇİMİ
                       const Text("İade Nedeni:", style: TextStyle(fontWeight: FontWeight.bold)),
                       ..._iadeNedenleri.map((neden) {
                         return RadioListTile<String>(
@@ -292,8 +288,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
         Map<String, List<Satis>> gruplar = {};
         
         for (var satis in hamListe) {
-          String key = (satis.siparisNo != null && satis.siparisNo!.isNotEmpty)
-              ? satis.siparisNo!
+          String key = (satis.siparisNo.isNotEmpty)
+              ? satis.siparisNo
               : "TEMP-${satis.satisId}"; 
               
           if (!gruplar.containsKey(key)) {
@@ -796,15 +792,12 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
             ),
           ),
 
-          // 2. İŞLEM BUTONLARI (Fatura / İade / İptal)
-          // Bu kısım siparişe özeldir, döngünün DIŞINDA olmalıdır.
-          if (durumId >= 1) 
+          if (durumId >= 1 && durumId != 4) 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // Fatura Butonu
                   TextButton.icon(
                     onPressed: () async {
                       final Uri url = Uri.parse("${getBaseUrl()}/Fatura/Olustur/${siparis.siparisNo}");
@@ -823,7 +816,6 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
 
                   const SizedBox(width: 8),
                   
-                  // İade / İptal Butonları
                   _buildIslemButonu(siparis),
                 ],
               ),
@@ -833,11 +825,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                padding: const EdgeInsets.only(right: 16, bottom: 5),
                child: Align(
                  alignment: Alignment.centerRight,
-                 child: _buildIslemButonu(siparis), // İptal butonu burada
+                 child: _buildIslemButonu(siparis),
                ),
              ),
           
-          // 3. ÜRÜN LİSTESİ VE DEĞERLENDİRME BUTONU
           ...siparis.urunler.map((urunSatis) {
             return Container(
               margin: const EdgeInsets.only(bottom: 8, left: 16, right: 16, top: 4), 
@@ -874,8 +865,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                     trailing: Text("${(urunSatis.fiyat * urunSatis.adet).toStringAsFixed(2)} ₺", style: const TextStyle(fontWeight: FontWeight.bold, color: kDarkCoffee)),
                   ),
 
-                  // DEĞERLENDİR BUTONU (Döngü içinde, her ürün için ayrı)
-                  if (durumId == 3) // Sadece Teslim Edildiyse (3)
+                  if (durumId == 3) 
                     Padding(
                       padding: const EdgeInsets.only(right: 10, bottom: 8),
                       child: Align(

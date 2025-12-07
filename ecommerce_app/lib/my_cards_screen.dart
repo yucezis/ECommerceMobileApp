@@ -303,7 +303,6 @@ class _MyCardsScreenState extends State<MyCardsScreen> {
 
                     return Column(
                       children: [
-                        // Kartın Kendisi (Görsel)
                         CreditCardWidget(
                           cardNumber: kart.kartNumarasi,
                           expiryDate: "${kart.sonKullanmaAy}/${kart.sonKullanmaYil.substring(2)}",
