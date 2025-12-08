@@ -21,7 +21,7 @@ The project is designed with a modular structure, prioritizing sustainability an
 
 ## Project Status & Features
 
-The management panel and backend infrastructure are largely complete, while the mobile application development process is actively ongoing.
+The management panel, backend infrastructure, and mobile application have been fully developed and are ready for deployment.
 
 ### Admin Panel & Backend
 -  **API Architecture:** RESTful services and database integration with Entity Framework Core.
