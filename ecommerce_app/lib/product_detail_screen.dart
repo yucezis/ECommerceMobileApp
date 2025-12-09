@@ -90,6 +90,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     );
   }
 
+  String _ortalamaPuanHesapla() {
+    if (_yorumlar.isEmpty) return "-"; 
+    double toplamPuan = 0;
+    for (var yorum in _yorumlar) {
+      toplamPuan += (yorum['puan'] as int);
+    }
+
+    double ortalama = toplamPuan / _yorumlar.length;
+    return ortalama.toStringAsFixed(1); 
+  }
+
   Future<void> _resimSec(StateSetter setModalState) async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
     if (image != null) {
@@ -454,7 +465,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        _buildModernBadge(Icons.star_rounded, "4.8", Colors.amber),
+                        _buildModernBadge(Icons.star_rounded, _ortalamaPuanHesapla() , Colors.amber),
                         _buildModernBadge(Icons.language, urun.urunDil ?? "-", Colors.blueGrey),
                         _buildModernBadge(Icons.auto_stories, "${urun.urunSayfa ?? '-'} Syf", kOliveGreen),
                       ],
