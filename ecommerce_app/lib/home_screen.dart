@@ -8,7 +8,6 @@ import 'product_list_screen.dart';
 import 'favorite_screen.dart';
 import 'product_detail_screen.dart';
 
-// RENK PALETİ
 const Color kBookPaper = Color(0xFFFEFAE0);
 const Color kDarkGreen = Color(0xFF283618);
 const Color kOliveGreen = Color(0xFF606C38);
@@ -26,9 +25,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // --- DEĞİŞKENLER ---
   late Future<List<Kategori>> _kategorilerFuture;
-  late Future<List<Urun>> _cokSatanlarFuture; // Çok satanlar için ayrı future
+  late Future<List<Urun>> _cokSatanlarFuture; 
   
   List<Urun> _tumUrunler = [];          
   List<Urun> _filtrelenmisUrunler = []; 
@@ -47,7 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return "http://10.180.131.237:5126/api"; 
   }
 
-  // 1. TÜM ÜRÜNLERİ ÇEK (Arama ve Öne Çıkanlar İçin)
   Future<void> _urunleriGetir() async {
     try {
       final response = await http.get(Uri.parse("${getBaseUrl()}/urun"));
@@ -91,7 +88,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  // 2. ARAMA MANTIĞI
   void _aramaYap(String kelime) {
     if (kelime.isEmpty) {
       setState(() => _filtrelenmisUrunler = _tumUrunler);
@@ -99,8 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _filtrelenmisUrunler = _tumUrunler.where((urun) {
           final ad = urun.urunAdi.toLowerCase();
-          final yazar = (urun.urunYazar ?? "").toLowerCase();
-          final marka = (urun.urunMarka ?? "").toLowerCase();
+          final yazar = (urun.urunYazar).toLowerCase();
+          final marka = (urun.urunMarka).toLowerCase();
           final aranan = kelime.toLowerCase();
           return ad.contains(aranan) || yazar.contains(aranan) || marka.contains(aranan);
         }).toList();
@@ -126,7 +122,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: _urunlerYukleniyor
                   ? const Center(child: CircularProgressIndicator(color: kDarkGreen))
                   : aramaAktif
-                      // ARAMA SONUÇLARI
                       ? _filtrelenmisUrunler.isEmpty
                           ? const Center(child: Text("Sonuç bulunamadı."))
                           : GridView.builder(
@@ -142,7 +137,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return _buildProductCard(_filtrelenmisUrunler[index]);
                               },
                             )
-                      // ANA SAYFA İÇERİĞİ
                       : SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,7 +154,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               const SizedBox(height: 30),
                               _buildSectionTitle("Çok Satanlar"),
                               const SizedBox(height: 15),
-                              // ÇOK SATANLAR LİSTESİ (ROZETLİ)
                               _buildBestsellersList(),
                               const SizedBox(height: 40),
                             ],
@@ -266,7 +259,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Genel Kart Tasarımı
   Widget _buildCardContent(Urun urun) {
     return Container(
       width: 150,
@@ -295,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Text(urun.urunAdi, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: kDarkCoffee)),
                 const SizedBox(height: 4),
-                Text(urun.urunYazar ?? urun.urunMarka, style: const TextStyle(fontSize: 12, color: kOliveGreen), maxLines: 1),
+                Text(urun.urunYazar, style: const TextStyle(fontSize: 12, color: kOliveGreen), maxLines: 1),
                 const SizedBox(height: 8),
                 Text("${urun.urunSatisFiyati} ₺", style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: kDarkGreen)),
               ],
@@ -306,7 +298,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Arama Sonuçları Kartı
   Widget _buildProductCard(Urun urun) {
     return GestureDetector(
       onTap: () {
@@ -345,7 +336,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // --- ÇOK SATANLAR (ROZETLİ) ---
   Widget _buildBestsellersList() {
     return FutureBuilder<List<Urun>>(
       future: _cokSatanlarFuture,
@@ -369,14 +359,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15), boxShadow: [BoxShadow(color: kDarkCoffee.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))]),
                 child: Row(
                   children: [
-                    // GÖRSEL VE ROZET
                     Stack(
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(urun.urunGorsel, width: 70, height: 90, fit: BoxFit.cover, errorBuilder: (c, o, s) => const Icon(Icons.book)),
                         ),
-                        // --- ROZET BURADA ---
                         Positioned(
                           top: 0, left: 0,
                           child: Container(
@@ -391,11 +379,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     const SizedBox(width: 15),
-                    // BİLGİLER VE FİYAT
                     Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Text(urun.urunAdi, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: kDarkCoffee)),
                       const SizedBox(height: 4),
-                      Text(urun.urunYazar ?? urun.urunMarka, style: const TextStyle(fontSize: 12, color: kOliveGreen)),
+                      Text(urun.urunYazar, style: const TextStyle(fontSize: 12, color: kOliveGreen)),
                       const SizedBox(height: 8),
                       Text("${urun.urunSatisFiyati} ₺", style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: kDarkGreen))
                     ]))
@@ -409,7 +396,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Kategori Listesi
   Widget _buildCategoriesList() {
     return SizedBox(
       height: 45,
