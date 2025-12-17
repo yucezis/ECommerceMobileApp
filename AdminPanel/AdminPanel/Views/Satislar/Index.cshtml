@@ -8,120 +8,173 @@
 }
 
 <style>
-    /* --- GENEL TASARIM --- */
+    :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3f37c9;
+        --bg-color: #f5f6fa;
+        --card-bg: #ffffff;
+        --text-main: #2b2d42;
+        --text-muted: #8d99ae;
+    }
+
     body {
-        background-color: #f5f6fa;
+        background-color: var(--bg-color);
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        font-size: 0.9rem; /* Genel fontu biraz küçülttük */
     }
 
-    .premium-card {
-        border-radius: 18px;
-        border: none;
-        background: #ffffff;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    /* --- Üst Başlık Kartı (Daha İnce) --- */
+    .header-card {
+        background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(67, 97, 238, 0.15);
     }
 
-    .premium-header {
-        background: linear-gradient(135deg, #4e73df, #6f9dfd);
-        border-radius: 18px;
-    }
-
-        .premium-header h3 {
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-
-    /* --- AKORDİYON DÜZELTMELERİ (YAMUKLUK FİX) --- */
+    /* --- Akordiyon Kart Yapısı --- */
     .accordion-item {
-        border: none;
-        margin-bottom: 1rem;
-        background: transparent;
-        border-radius: 12px !important;
+        border: 1px solid #e0e0e0; /* Hafif çerçeve eklendi */
+        background: var(--card-bg);
+        border-radius: 10px !important;
+        margin-bottom: 0.8rem; /* Kartlar arası boşluk azaldı */
         overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        transition: all 0.2s ease;
     }
+
+        .accordion-item:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
 
     .accordion-button {
-        background-color: #ffffff;
-        padding: 1.25rem;
-        border-radius: 12px !important;
-        box-shadow: none !important; /* Mavi focus çizgisini kaldırır */
-    }
-
-        /* Varsayılan Bootstrap okunu kaldırıyoruz ki içerik kaymasın */
-        .accordion-button::after {
-            display: none !important;
-        }
-
-        /* Akordiyon açıldığında alt köşe yuvarlaklığını koru/kaldır ayarı */
-        .accordion-button:not(.collapsed) {
-            background-color: #fff;
-            color: inherit;
-            border-bottom-right-radius: 0 !important;
-            border-bottom-left-radius: 0 !important;
-            border-bottom: 1px solid #eee;
-        }
-
-    .order-id-badge {
-        background-color: #e8f0ff;
-        color: #1a3eb1;
-        padding: 6px 12px;
-        border-radius: 8px;
-        font-family: 'Segoe UI', monospace;
-        font-size: 0.9rem;
-        font-weight: 700;
-        white-space: nowrap;
-    }
-
-    .badge {
-        padding: 0.6em 1em;
-        font-weight: 500;
-        border-radius: 8px;
-    }
-
-    /* --- TABLO --- */
-    .accordion-body {
         background-color: #fff;
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
-    }
-
-    .table thead {
-        background: #f8f9fc;
-    }
-
-    .table td {
-        vertical-align: middle;
-    }
-
-    /* --- MODAL --- */
-    .modal-content {
-        border-radius: 18px;
+        padding: 1rem 1.2rem; /* İç boşluklar ciddi oranda azaltıldı */
         border: none;
+        box-shadow: none !important;
     }
 
-    .modal-header {
-        background: linear-gradient(135deg, #4e73df, #6f9dfd);
+        .accordion-button:not(.collapsed) {
+            background-color: #f8faff;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .accordion-button::after {
+            background-size: 0.8rem; /* Ok işareti küçüldü */
+            opacity: 0.5;
+        }
+
+    /* --- Sipariş No ve İsim Alanı --- */
+    .order-hash {
+        font-family: 'Consolas', 'Monaco', monospace;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        background: #f1f3f5;
+        padding: 2px 8px;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+
+    .customer-name {
+        font-weight: 600;
+        color: var(--text-main);
+        font-size: 1rem;
+        white-space: nowrap; /* İsmin alt satıra inmesini engeller */
+    }
+
+    /* --- Fiyat ve Durum --- */
+    .price-tag {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-main);
+        min-width: 80px;
+        text-align: right;
+    }
+
+    /* Badges - Daha kompakt */
+    .status-badge {
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .bg-soft-warning {
+        background-color: #fff8e1;
+        color: #b76e00;
+        border: 1px solid #ffeebb;
+    }
+
+    .bg-soft-info {
+        background-color: #e3f2fd;
+        color: #0277bd;
+        border: 1px solid #bbdefb;
+    }
+
+    .bg-soft-success {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #c8e6c9;
+    }
+
+    .bg-soft-danger {
+        background-color: #ffebee;
+        color: #c62828;
+        border: 1px solid #ffcdd2;
+    }
+
+    .bg-soft-secondary {
+        background-color: #f5f5f5;
+        color: #616161;
+        border: 1px solid #e0e0e0;
+    }
+
+    /* --- Yönet Butonu --- */
+    .btn-manage {
+        border: 1px solid #dee2e6; /* Görünür çerçeve */
+        background-color: #fff;
+        color: #495057;
+        font-size: 0.85rem;
+        padding: 6px 12px;
+        border-radius: 6px;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .btn-manage:hover {
+            background-color: #f8f9fa;
+            border-color: #c0c4c8;
+            color: #000;
+        }
+
+    /* --- Tablo İyileştirmeleri --- */
+    .table-sm td, .table-sm th {
+        padding: 0.75rem;
+        font-size: 0.85rem;
     }
 </style>
 
-<div class="container-fluid mt-4">
+<div class="container-fluid py-4 px-md-4">
 
-    <div class="premium-card premium-header mb-4 p-4 text-white shadow-sm">
-        <h3 class="mb-0"><i class="bi bi-cart-check me-2"></i> Sipariş Yönetimi</h3>
+    <div class="header-card mb-4 p-4 text-white d-flex align-items-center justify-content-between shadow-sm">
+        <div>
+            <h5 class="mb-1 fw-bold"><i class="bi bi-receipt me-2"></i>Sipariş Yönetimi</h5>
+            <p class="mb-0 opacity-75 small">Siparişleri görüntüleyin ve yönetin.</p>
+        </div>
     </div>
 
     @if (TempData["Basarili"] != null)
     {
-        <div class="alert alert-success shadow-sm alert-dismissible fade show">
-            @TempData["Basarili"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="alert alert-success py-2 fs-6 border-0 shadow-sm rounded-3 mb-3">
+            <i class="bi bi-check-circle-fill me-2"></i> @TempData["Basarili"]
         </div>
     }
     @if (TempData["Hata"] != null)
     {
-        <div class="alert alert-danger shadow-sm alert-dismissible fade show">
-            @TempData["Hata"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="alert alert-danger py-2 fs-6 border-0 shadow-sm rounded-3 mb-3">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["Hata"]
         </div>
     }
 
@@ -134,135 +187,109 @@
 
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed d-block" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#collapse-@uniqueId">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@uniqueId">
 
-                            <div class="row align-items-center g-3">
+                            <div class="d-flex w-100 align-items-center justify-content-between pe-3">
 
-                                <div class="col-md-6 col-12">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <div class="order-id-badge">
-                                            #@siparis.SiparisNo
-                                        </div>
-                                        <div class="d-flex flex-column text-start">
-                                            <span class="fw-bold text-dark fs-5">@siparis.MusteriAdSoyad</span>
-                                            <small class="text-muted">
-                                                <i class="bi bi-calendar-event me-1"></i>
-                                                @siparis.Tarih.ToString("dd.MM.yyyy HH:mm")
-                                            </small>
-                                        </div>
+                                <div class="d-flex align-items-center gap-3" style="min-width: 0;">
+
+                                    <span class="order-hash" title="Sipariş No">#@siparis.SiparisNo</span>
+
+                                    <div class="d-flex flex-column">
+                                        <span class="customer-name text-nowrap">@siparis.MusteriAdSoyad</span>
+                                        <small class="text-muted" style="font-size: 0.75rem;">
+                                            @siparis.Tarih.ToString("dd.MM.yyyy HH:mm")
+                                        </small>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 col-12">
-                                    <div class="d-flex align-items-center justify-content-md-end justify-content-between gap-3 flex-wrap">
+                                <div class="d-flex align-items-center gap-3 ms-auto">
 
-                                        <span class="fs-4 fw-bold text-success text-nowrap">
-                                            @siparis.ToplamTutar.ToString("C")
-                                        </span>
+                                    <div class="price-tag d-none d-sm-block">
+                                        @siparis.ToplamTutar.ToString("C")
+                                    </div>
 
+                                    <div class="text-center" style="min-width: 100px;">
                                         @switch (siparis.Durum)
                                         {
                                             case SiparisDurum.SiparisAlindi:
-                                                <span class="badge bg-secondary">Sipariş Alındı</span>
+                                                <span class="status-badge bg-soft-secondary">Alındı</span>
                                                 break;
                                             case SiparisDurum.Hazirlaniyor:
-                                                <span class="badge bg-warning text-dark">Hazırlanıyor</span>
+                                                <span class="status-badge bg-soft-warning">Hazırlanıyor</span>
                                                 break;
                                             case SiparisDurum.KargoyaVerildi:
-                                                <span class="badge bg-info text-dark">Kargoda</span>
+                                                <span class="status-badge bg-soft-info">Kargoda</span>
                                                 break;
                                             case SiparisDurum.TeslimEdildi:
-                                                <span class="badge bg-success">Teslim Edildi</span>
+                                                <span class="status-badge bg-soft-success">Teslim</span>
                                                 break;
                                             case SiparisDurum.IptalEdildi:
-                                                <span class="badge bg-danger">İptal</span>
-                                                break;
-                                            default:
-                                                <span class="badge bg-secondary">Bilinmiyor</span>
+                                                <span class="status-badge bg-soft-danger">İptal</span>
                                                 break;
                                         }
-
-                                        <div class="btn btn-light border btn-sm rounded-3 px-3 py-2 text-dark"
-                                             style="z-index: 2; position: relative;"
-                                             onclick="event.stopPropagation();"
-                                             data-bs-toggle="modal"
-                                             data-bs-target="#modal-@uniqueId">
-                                            <i class="bi bi-gear-fill me-1"></i> Yönet
-                                        </div>
                                     </div>
+
+                                    <div class="btn-manage shadow-sm"
+                                         onclick="event.stopPropagation();"
+                                         data-bs-toggle="modal"
+                                         data-bs-target="#modal-@uniqueId">
+                                        <i class="bi bi-gear-fill"></i> <span class="d-none d-md-inline">Yönet</span>
+                                    </div>
+
                                 </div>
                             </div>
                         </button>
                     </h2>
 
                     <div id="collapse-@uniqueId" class="accordion-collapse collapse" data-bs-parent="#siparisListesi">
-                        <div class="accordion-body pt-0">
-                            <hr class="mt-0 mb-3 text-muted" style="opacity: 0.1;">
-
-                            <table class="table table-hover table-borderless align-middle mb-0">
-                                <thead class="text-secondary small text-uppercase">
-                                    <tr>
-                                        <th>Ürün</th>
-                                        <th>Marka</th>
-                                        <th class="text-center">Adet</th>
-                                        <th class="text-end">Birim Fiyat</th>
-                                        <th class="text-end">Toplam</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var urun in siparis.Urunler)
-                                    {
+                        <div class="accordion-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover mb-0">
+                                    <thead class="bg-light">
                                         <tr>
-                                            <td class="fw-semibold text-dark">
-                                                <i class="bi bi-box-seam text-primary me-2"></i>
-                                                @(urun.Urun?.UrunAdi ?? "Silinmiş Ürün")
-                                            </td>
-                                            <td class="text-muted small">@urun.Urun?.UrunMarka</td>
-                                            <td class="text-center">
-                                                <span class="badge bg-light text-dark border">@urun.Adet</span>
-                                            </td>
-                                            <td class="text-end text-muted">@urun.Fiyat.ToString("C")</td>
-                                            <td class="text-end fw-bold text-dark">@((urun.Fiyat * urun.Adet).ToString("C"))</td>
+                                            <th class="ps-4">Ürün</th>
+                                            <th>Marka</th>
+                                            <th class="text-center">Adet</th>
+                                            <th class="text-end">Birim</th>
+                                            <th class="text-end pe-4">Tutar</th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var urun in siparis.Urunler)
+                                        {
+                                            <tr>
+                                                <td class="ps-4 text-nowrap">
+                                                    <i class="bi bi-box-seam text-muted me-2"></i>
+                                                    <span class="fw-semibold">@(urun.Urun?.UrunAdi ?? "Silinmiş")</span>
+                                                </td>
+                                                <td class="text-muted small">@urun.Urun?.UrunMarka</td>
+                                                <td class="text-center">@urun.Adet</td>
+                                                <td class="text-end text-muted">@urun.Fiyat.ToString("C")</td>
+                                                <td class="text-end fw-bold pe-4">@((urun.Fiyat * urun.Adet).ToString("C"))</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="modal fade" id="modal-@uniqueId" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-dialog modal-sm modal-dialog-centered">
                         <div class="modal-content">
-                            <div class="modal-header text-white">
-                                <h5 class="modal-title">Sipariş Durumu</h5>
-                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            <div class="modal-header bg-light py-2">
+                                <h6 class="modal-title fw-bold">Durum Güncelle</h6>
+                                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal"></button>
                             </div>
-                            <div class="modal-body p-4">
-                                <div class="text-center mb-4">
-                                    <h6 class="text-muted text-uppercase small ls-1">Sipariş No</h6>
-                                    <span class="fs-3 fw-bold text-dark">#@siparis.SiparisNo</span>
-                                </div>
-
+                            <div class="modal-body p-3">
                                 <div class="d-grid gap-2">
-                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.Hazirlaniyor })"
-                                       class="btn btn-outline-warning p-2">
-                                        <i class="bi bi-box-seam me-2"></i> Hazırlanıyor
-                                    </a>
-                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.KargoyaVerildi })"
-                                       class="btn btn-outline-info p-2">
-                                        <i class="bi bi-truck me-2"></i> Kargoya Verildi
-                                    </a>
-                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.TeslimEdildi })"
-                                       class="btn btn-outline-success p-2">
-                                        <i class="bi bi-check-circle me-2"></i> Teslim Edildi
-                                    </a>
-                                    <hr>
-                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.IptalEdildi })"
-                                       class="btn btn-outline-danger p-2">
-                                        <i class="bi bi-x-circle me-2"></i> İptal Et
-                                    </a>
+                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.Hazirlaniyor })" class="btn btn-sm btn-outline-warning text-dark text-start"><i class="bi bi-box-seam me-2"></i> Hazırlanıyor</a>
+                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.KargoyaVerildi })" class="btn btn-sm btn-outline-info text-dark text-start"><i class="bi bi-truck me-2"></i> Kargoya Verildi</a>
+                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.TeslimEdildi })" class="btn btn-sm btn-outline-success text-start"><i class="bi bi-check-circle me-2"></i> Teslim Edildi</a>
+                                    <hr class="my-1">
+                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.IptalEdildi })" class="btn btn-sm btn-outline-danger text-start"><i class="bi bi-x-circle me-2"></i> İptal Et</a>
                                 </div>
                             </div>
                         </div>
@@ -272,9 +299,8 @@
         }
         else
         {
-            <div class="alert alert-light text-center shadow-sm p-5">
-                <i class="bi bi-inbox fs-1 text-muted mb-3 d-block"></i>
-                <span class="text-muted">Henüz hiç sipariş bulunmamaktadır.</span>
+            <div class="text-center py-5">
+                <span class="text-muted">Sipariş yok.</span>
             </div>
         }
     </div>
