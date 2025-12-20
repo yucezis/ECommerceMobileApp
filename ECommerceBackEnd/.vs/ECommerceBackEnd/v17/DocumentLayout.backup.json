@@ -30,9 +30,9 @@
               "Title": "Urun.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Urun.cs",
               "RelativeDocumentMoniker": "ECommerceBackEnd\\Models\\Urun.cs",
-              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Urun.cs*",
-              "RelativeToolTip": "ECommerceBackEnd\\Models\\Urun.cs*",
-              "ViewState": "AgIAABkAAAAAAAAAAAAcwC0AAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\bitirme_projesi\\ECommerceBackEnd\\ECommerceBackEnd\\Models\\Urun.cs",
+              "RelativeToolTip": "ECommerceBackEnd\\Models\\Urun.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAA2wC0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-20T08:47:20.128Z",
               "EditorCaption": ""
@@ -47,8 +47,7 @@
               "RelativeToolTip": "ECommerceBackEnd\\Controllers\\UrunController.cs",
               "ViewState": "AgIAAFgAAAAAAAAAAAAiwGkAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T17:36:08.645Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-19T17:36:08.645Z"
             }
           ]
         },
