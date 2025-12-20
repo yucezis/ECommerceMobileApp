@@ -54,13 +54,13 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> Gonder(int musteriId, string mesajIcerik)
         {
-            if (string.IsNullOrEmpty(mesajIcerik)) return RedirectToAction("Sohbet", new { musteriId = musteriId });
+            if (string.IsNullOrEmpty(mesajIcerik)) return BadRequest();
 
             var yeniMesaj = new
             {
                 MusteriId = musteriId,
                 Icerik = mesajIcerik,
-                GonderenAdminMi = true 
+                GonderenAdminMi = true
             };
 
             using (var client = new HttpClient())
@@ -68,8 +68,8 @@ namespace AdminPanel.Controllers
                 var content = new StringContent(JsonConvert.SerializeObject(yeniMesaj), Encoding.UTF8, "application/json");
                 await client.PostAsync($"{_apiUrl}/Mesajlar/Gonder", content);
             }
-
-            return RedirectToAction("Sohbet", new { musteriId = musteriId });
+            
+            return Ok();
         }
 
         public async Task<IActionResult> MesajlariGetir(int musteriId)

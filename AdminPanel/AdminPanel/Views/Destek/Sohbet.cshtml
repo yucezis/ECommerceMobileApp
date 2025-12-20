@@ -97,7 +97,6 @@
         border-radius: 15px 15px 0 15px
     }
 
-    /* Zaman Etiketi */
     .msg-time {
         font-size: 0.7rem;
         margin-top: 5px;
@@ -187,7 +186,7 @@
                 </div>
 
                 <div class="chat-footer">
-                    <form action="/Destek/Gonder" method="post" class="d-flex align-items-center">
+                    <form id="chatForm" class="d-flex align-items-center">
                         <input type="hidden" name="musteriId" id="musteriIdInput" value="@Model.Musteri.MusteriId" />
 
                         <input type="text" name="mesajIcerik" class="form-control rounded-pill chat-input me-3"
