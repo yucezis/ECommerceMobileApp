@@ -14,6 +14,6 @@ namespace ECommerceBackEnd.Models
         public string KategoriAdi { get; set; }
 
         [JsonIgnore]
-        public ICollection<Urun> uruns { get; set; }
+        public ICollection<Urun>? uruns { get; set; }
     }
 }

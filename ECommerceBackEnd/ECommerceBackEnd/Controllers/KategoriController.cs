@@ -1,9 +1,9 @@
 ﻿using ECommerceBackEnd.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace ECommerceBackEnd.Controllers
 {
-    // API PROJESİ - Controllers/KategoriController.cs
     [Route("api/[controller]")]
     [ApiController]
     public class KategoriController : ControllerBase
@@ -15,7 +15,6 @@ namespace ECommerceBackEnd.Controllers
             _context = context;
         }
 
-        // LİSTELEME
         [HttpGet]
         public IActionResult Get()
         {
@@ -23,7 +22,6 @@ namespace ECommerceBackEnd.Controllers
             return Ok(values);
         }
 
-        // ID'YE GÖRE GETİR (Güncelleme ekranı için gerekecek)
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -32,16 +30,19 @@ namespace ECommerceBackEnd.Controllers
             return Ok(value);
         }
 
-        // EKLEME
         [HttpPost]
-        public IActionResult Post(Kategori k)
+        public IActionResult Post([FromBody] Kategori k)
         {
+            if (k == null) return BadRequest();
+
+            k.KategoriID = 0;
+
             _context.kategoris.Add(k);
             _context.SaveChanges();
+
             return Ok();
         }
 
-        // SİLME
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -53,15 +54,29 @@ namespace ECommerceBackEnd.Controllers
             return Ok();
         }
 
-        // GÜNCELLEME
         [HttpPut]
-        public IActionResult Put(Kategori k)
+        public IActionResult Put([FromBody] Kategori k)
         {
+            Console.WriteLine($"GELEN İSTEK -> ID: {k?.KategoriID} | AD: {k?.KategoriAdi}");
+
+            if (k == null || k.KategoriID == 0)
+            {
+                Console.WriteLine("HATA: Veri boş veya ID 0 geldi.");
+                return BadRequest("Veri alınamadı.");
+            }
+
             var value = _context.kategoris.Find(k.KategoriID);
-            if (value == null) return NotFound();
+
+            if (value == null)
+            {
+                Console.WriteLine("HATA: Bu ID veritabanında yok.");
+                return NotFound();
+            }
 
             value.KategoriAdi = k.KategoriAdi;
             _context.SaveChanges();
+
+            Console.WriteLine("BAŞARILI: Veritabanı güncellendi.");
             return Ok();
         }
     }

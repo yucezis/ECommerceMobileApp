@@ -1,12 +1,21 @@
 ﻿@using AdminPanelEticaret.Models
+
 @model List<KategoriViewModel>
 
+
+
 @{
+
     ViewData["Title"] = "Kategoriler";
+
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
 }
 
+
+
 <style>
+
     .table thead th {
         font-weight: 600;
     }
@@ -40,115 +49,229 @@
     .modal-footer {
         border-top: none;
     }
+
 </style>
 
+
+
 <div class="container mt-5">
+
+    @if (TempData["Hata"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> <strong>Hata!</strong> @TempData["Hata"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Mesaj"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> <strong>Başarılı!</strong> @TempData["Mesaj"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
     <div class="card shadow-lg border-0 rounded-3">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+
             <h3 class="mb-0"><i class="bi bi-tags-fill me-2"></i> Kategoriler</h3>
+
             <button class="btn btn-light btn-sm fw-semibold" data-toggle="modal" data-target="#kategoriEkleModal">
                 <i class="bi bi-plus-circle me-1"></i> Yeni Kategori Ekle
             </button>
+
         </div>
 
+
+
         <div class="card-body p-4">
+
             <div class="table-responsive">
+
                 <table class="table table-hover align-middle text-center mb-0">
+
                     <thead class="table-primary">
+
                         <tr>
+
                             <th>ID</th>
+
                             <th>Kategori</th>
+
                             <th>Sil</th>
+
                             <th>Güncelle</th>
+
                         </tr>
+
                     </thead>
+
                     <tbody>
+
                         @foreach (var k in Model)
+
                         {
+
                             <tr>
+
                                 <td>@k.KategoriID</td>
+
                                 <td>@k.KategoriAdi</td>
+
                                 <td>
+
                                     <a href="/Kategori/KategoriSil/@k.KategoriID"
                                        class="btn btn-sm btn-outline-danger"
                                        onclick="return confirm('Silmek istediğinize emin misiniz?');">
+
                                         <i class="bi bi-trash3 me-1"></i> Sil
+
                                     </a>
+
                                 </td>
+
                                 <td>
+
                                     <button class="btn btn-sm btn-outline-success"
                                             data-toggle="modal"
                                             data-target="#guncelleModal-@k.KategoriID">
+
                                         <i class="bi bi-pencil-square me-1"></i> Güncelle
+
                                     </button>
 
-                                    <!-- Güncelleme Modalı -->
+
+
                                     <div class="modal fade" id="guncelleModal-@k.KategoriID" tabindex="-1" aria-labelledby="guncelleLabel-@k.KategoriID" aria-hidden="true">
+
                                         <div class="modal-dialog modal-dialog-centered">
+
                                             <div class="modal-content">
+
                                                 <div class="modal-header">
+
                                                     <h5 class="modal-title" id="guncelleLabel-@k.KategoriID">
+
                                                         <i class="bi bi-pencil me-2"></i> Kategori Güncelle
+
                                                     </h5>
+
                                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+
                                                 </div>
 
+
+
                                                 <form asp-action="KategoriGuncelle" method="post">
+
                                                     <div class="modal-body">
+
                                                         <input type="hidden" name="KategoriID" value="@k.KategoriID" />
+
                                                         <div class="mb-3">
+
                                                             <label class="form-label fw-semibold">Kategori Adı</label>
+
                                                             <input type="text" name="KategoriAdi" class="form-control form-control-lg"
                                                                    value="@k.KategoriAdi" required placeholder="Kategori adını giriniz..." />
+
                                                         </div>
+
                                                     </div>
+
                                                     <div class="modal-footer">
+
                                                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">İptal</button>
+
                                                         <button type="submit" class="btn btn-primary">
+
                                                             <i class="bi bi-check-circle me-1"></i> Güncelle
+
                                                         </button>
+
                                                     </div>
+
                                                 </form>
+
                                             </div>
+
                                         </div>
+
                                     </div>
 
+
+
                                 </td>
+
                             </tr>
+
                         }
+
                     </tbody>
+
                 </table>
+
             </div>
+
         </div>
+
     </div>
+
 </div>
 
-<!-- Ekleme Modalı -->
+
+
 <div class="modal fade" id="kategoriEkleModal" tabindex="-1" aria-labelledby="kategoriEkleLabel" aria-hidden="true">
+
     <div class="modal-dialog modal-dialog-centered">
+
         <div class="modal-content">
+
             <div class="modal-header">
+
                 <h5 class="modal-title" id="kategoriEkleLabel">
+
                     <i class="bi bi-plus-circle me-2"></i> Yeni Kategori Ekle
+
                 </h5>
+
                 <button type="button" class="btn-close btn-close-white" data-dismiss="modal" aria-label="Kapat"></button>
+
             </div>
+
             <form method="post" action="/Kategori/KategoriEkle">
                 <div class="modal-body">
+
                     <div class="form-group mb-3">
+
                         <label class="form-label fw-semibold">Kategori Adı</label>
+
                         <input type="text" class="form-control form-control-lg" name="KategoriAdi" required placeholder="Kategori adını giriniz..." />
+
                     </div>
+
                 </div>
+
                 <div class="modal-footer">
+
                     <button type="submit" class="btn btn-success">
+
                         <i class="bi bi-plus-lg me-1"></i> Ekle
+
                     </button>
+
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">İptal</button>
+
                 </div>
+
             </form>
+
         </div>
+
     </div>
+
 </div>
+
+
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">

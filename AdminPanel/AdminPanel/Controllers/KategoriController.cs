@@ -1,6 +1,5 @@
 ﻿// MVC PROJESİ - Controllers/KategoriController.cs
 using AdminPanel.Models;
-using AdminPanelEticaret.Models; // Modellerin olduğu yer
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -12,7 +11,6 @@ namespace AdminPanelEticaret.Controllers
 {
     public class KategoriController : Controller
     {
-        //  (Port numarasına dikkat et!)
         Uri baseAddress = new Uri("http://localhost:5126/api/Kategori");
         private readonly HttpClient _client;
 
@@ -44,16 +42,24 @@ namespace AdminPanelEticaret.Controllers
         [HttpPost]
         public async Task<IActionResult> KategoriEkle(KategoriViewModel k)
         {
+            k.KategoriID = 0;
+
             string data = JsonConvert.SerializeObject(k);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await _client.PostAsync(_client.BaseAddress, content);
+            HttpResponseMessage response = await _client.PostAsync("", content);
 
             if (response.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index");
+                TempData["Mesaj"] = "Kategori başarıyla eklendi.";
             }
-            return View(k);
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                TempData["Hata"] = $"Hata Oluştu! Kod: {response.StatusCode} | Detay: {errorContent}";
+            }
+
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> KategoriSil(int id)
@@ -64,33 +70,28 @@ namespace AdminPanelEticaret.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> KategoriGuncelleSayfasi(int id)
-        {
-            HttpResponseMessage response = await _client.GetAsync(_client.BaseAddress + "/" + id);
-
-            if (response.IsSuccessStatusCode)
-            {
-                string data = await response.Content.ReadAsStringAsync();
-                var kategori = JsonConvert.DeserializeObject<KategoriViewModel>(data);
-                return View("KategoriGuncelle", kategori); 
-            }
-            return RedirectToAction("Index");
-        }
-
         [HttpPost]
         public async Task<IActionResult> KategoriGuncelle(KategoriViewModel k)
         {
-            string data = JsonConvert.SerializeObject(k);
+            var gonderilecekVeri = new
+            {
+                KategoriID = k.KategoriID,    
+                KategoriAdi = k.KategoriAdi  
+            };
+
+            string data = JsonConvert.SerializeObject(gonderilecekVeri);
             StringContent content = new StringContent(data, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await _client.PutAsync(_client.BaseAddress, content);
 
             if (response.IsSuccessStatusCode)
             {
+                TempData["Basarili"] = "Kategori başarıyla güncellendi.";
                 return RedirectToAction("Index");
             }
-            return View(k);
+
+            TempData["Hata"] = $"Güncelleme başarısız! Kod: {response.StatusCode}";
+            return RedirectToAction("Index");
         }
     }
 }
