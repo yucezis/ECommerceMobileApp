@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\bitirme_projesi\\AdminPanel\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\views\\satislar\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\views\\satislar\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\helpers.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|c:\\bitirme_projesi\\adminpanel\\adminpanel\\controllers\\mustericontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DF49FA7B-F77D-44A5-9649-44060370A447}|AdminPanel\\AdminPanel.csproj|solutionrelative:adminpanel\\controllers\\mustericontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -30,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 812,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,20 +46,46 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Helpers.cs",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Helpers.cs",
+              "RelativeDocumentMoniker": "AdminPanel\\Helpers.cs",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Helpers.cs",
+              "RelativeToolTip": "AdminPanel\\Helpers.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAiwCwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-20T09:23:17.009Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Satislar\\Index.cshtml",
+              "RelativeDocumentMoniker": "AdminPanel\\Views\\Satislar\\Index.cshtml",
+              "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Satislar\\Index.cshtml",
+              "RelativeToolTip": "AdminPanel\\Views\\Satislar\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-20T09:21:39.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "MusteriController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\MusteriController.cs",
               "RelativeDocumentMoniker": "AdminPanel\\Controllers\\MusteriController.cs",
               "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\MusteriController.cs",
               "RelativeToolTip": "AdminPanel\\Controllers\\MusteriController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-20T09:09:58.393Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "SatislarController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\SatislarController.cs",
               "RelativeDocumentMoniker": "AdminPanel\\Controllers\\SatislarController.cs",
@@ -59,12 +93,11 @@
               "RelativeToolTip": "AdminPanel\\Controllers\\SatislarController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T09:05:30.127Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-20T09:05:30.127Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Urun\\Index.cshtml",
               "RelativeDocumentMoniker": "AdminPanel\\Views\\Urun\\Index.cshtml",
@@ -72,12 +105,11 @@
               "RelativeToolTip": "AdminPanel\\Views\\Urun\\Index.cshtml",
               "ViewState": "AgIAABIAAAAAAAAAAAAmwB8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-20T08:45:57.906Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-20T08:45:57.906Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "UrunViewModel.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Models\\UrunViewModel.cs",
               "RelativeDocumentMoniker": "AdminPanel\\Models\\UrunViewModel.cs",
@@ -89,7 +121,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "UrunController.cs",
               "DocumentMoniker": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Controllers\\UrunController.cs",
               "RelativeDocumentMoniker": "AdminPanel\\Controllers\\UrunController.cs",
@@ -97,8 +129,7 @@
               "RelativeToolTip": "AdminPanel\\Controllers\\UrunController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAHMAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T08:45:11.468Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-20T08:45:11.468Z"
             }
           ]
         },

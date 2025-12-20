@@ -30,5 +30,22 @@ namespace AdminPanel.Helpers
             if (string.IsNullOrEmpty(surname) || surname.Length < 2) return surname;
             return surname.Substring(0, 1) + new string('*', 3);
         }
+
+        public static string MaskFullName(string fullName)
+        {
+            if (string.IsNullOrWhiteSpace(fullName)) return "";
+
+            var parts = fullName.Trim().Split(' ');
+
+            if (parts.Length < 2) return fullName;
+
+            var surname = parts.Last();
+
+            var names = string.Join(" ", parts.Take(parts.Length - 1));
+
+            var maskedSurname = MaskSurname(surname);
+
+            return $"{names} {maskedSurname}";
+        }
     }
 }

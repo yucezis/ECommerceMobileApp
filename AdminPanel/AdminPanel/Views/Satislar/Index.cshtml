@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Rendering
 @using AdminPanel.Models
 @model List<SiparisGrupViewModel>
+@using AdminPanel.Helpers 
 
 @{
     ViewData["Title"] = "Satışlar";
@@ -20,22 +21,20 @@
     body {
         background-color: var(--bg-color);
         font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        font-size: 0.9rem; /* Genel fontu biraz küçülttük */
+        font-size: 0.9rem; 
     }
 
-    /* --- Üst Başlık Kartı (Daha İnce) --- */
     .header-card {
         background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
         border-radius: 12px;
         box-shadow: 0 4px 12px rgba(67, 97, 238, 0.15);
     }
 
-    /* --- Akordiyon Kart Yapısı --- */
     .accordion-item {
-        border: 1px solid #e0e0e0; /* Hafif çerçeve eklendi */
+        border: 1px solid #e0e0e0; 
         background: var(--card-bg);
         border-radius: 10px !important;
-        margin-bottom: 0.8rem; /* Kartlar arası boşluk azaldı */
+        margin-bottom: 0.8rem; 
         overflow: hidden;
         transition: all 0.2s ease;
     }
@@ -47,7 +46,7 @@
 
     .accordion-button {
         background-color: #fff;
-        padding: 1rem 1.2rem; /* İç boşluklar ciddi oranda azaltıldı */
+        padding: 1rem 1.2rem;
         border: none;
         box-shadow: none !important;
     }
@@ -58,11 +57,10 @@
         }
 
         .accordion-button::after {
-            background-size: 0.8rem; /* Ok işareti küçüldü */
+            background-size: 0.8rem; 
             opacity: 0.5;
         }
 
-    /* --- Sipariş No ve İsim Alanı --- */
     .order-hash {
         font-family: 'Consolas', 'Monaco', monospace;
         color: var(--text-muted);
@@ -77,10 +75,9 @@
         font-weight: 600;
         color: var(--text-main);
         font-size: 1rem;
-        white-space: nowrap; /* İsmin alt satıra inmesini engeller */
+        white-space: nowrap; 
     }
 
-    /* --- Fiyat ve Durum --- */
     .price-tag {
         font-size: 1rem;
         font-weight: 700;
@@ -89,7 +86,6 @@
         text-align: right;
     }
 
-    /* Badges - Daha kompakt */
     .status-badge {
         padding: 4px 10px;
         border-radius: 6px;
@@ -129,9 +125,8 @@
         border: 1px solid #e0e0e0;
     }
 
-    /* --- Yönet Butonu --- */
     .btn-manage {
-        border: 1px solid #dee2e6; /* Görünür çerçeve */
+        border: 1px solid #dee2e6;
         background-color: #fff;
         color: #495057;
         font-size: 0.85rem;
@@ -149,7 +144,6 @@
             color: #000;
         }
 
-    /* --- Tablo İyileştirmeleri --- */
     .table-sm td, .table-sm th {
         padding: 0.75rem;
         font-size: 0.85rem;
@@ -196,7 +190,7 @@
                                     <span class="order-hash" title="Sipariş No">#@siparis.SiparisNo</span>
 
                                     <div class="d-flex flex-column">
-                                        <span class="customer-name text-nowrap">@siparis.MusteriAdSoyad</span>
+                                        <span class="customer-name text-nowrap">@DataMasker.MaskFullName(siparis.MusteriAdSoyad)</span>
                                         <small class="text-muted" style="font-size: 0.75rem;">
                                             @siparis.Tarih.ToString("dd.MM.yyyy HH:mm")
                                         </small>
