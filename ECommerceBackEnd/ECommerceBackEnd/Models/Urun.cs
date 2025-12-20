@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization; // JsonIgnore için gerekli
+using System.Text.Json.Serialization; 
 
 namespace ECommerceBackEnd.Models
 {
@@ -24,7 +24,7 @@ namespace ECommerceBackEnd.Models
         public short UrunStok { get; set; }
 
         public decimal UrunSatisFiyati { get; set; }
-        public string? UrunDil {  get; set; }
+        public string? UrunDil { get; set; }
         public int? UrunSayfa { get; set; }
         public bool UrunStokDurum { get; set; }
 
@@ -34,7 +34,9 @@ namespace ECommerceBackEnd.Models
 
         public int KategoriID { get; set; }
 
-        public virtual Kategori Kategori { get; set; }
+        [JsonIgnore]
+        public virtual Kategori? Kategori { get; set; }
+
         public bool Durum { get; set; }
 
         public decimal? IndirimliFiyat { get; set; }
@@ -43,9 +45,8 @@ namespace ECommerceBackEnd.Models
         public string? Aciklama { get; set; }
 
         [JsonIgnore]
-        public ICollection<Satislar> satislars { get; set; }
+        public ICollection<Satislar>? satislars { get; set; }
 
-        
         [NotMapped]
         public string? KategoriAdi { get; set; }
     }

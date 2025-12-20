@@ -104,11 +104,18 @@ namespace AdminPanelEticaret.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
+                    TempData["Basarili"] = "Ürün başarıyla güncellendi.";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    var hata = await response.Content.ReadAsStringAsync();
+                    TempData["Hata"] = $"Güncelleme Hatası! Kod: {response.StatusCode} | Detay: {hata}";
                     return RedirectToAction("Index");
                 }
             }
-            return RedirectToAction("Index");
         }
+
         private async Task KategorileriDropdownDoldur()
         {
             List<KategoriViewModel> kategoriler = new List<KategoriViewModel>();
