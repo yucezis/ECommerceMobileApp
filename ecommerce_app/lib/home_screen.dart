@@ -111,7 +111,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: kBookPaper,
-      drawer: _buildDrawer(),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -470,19 +469,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildDrawer() {
-    return Drawer(
-      backgroundColor: kBookPaper,
-      child: Column(
-        children: [
-          UserAccountsDrawerHeader(
-            decoration: const BoxDecoration(color: kDarkGreen),
-            accountName: const Text("Hoşgeldiniz", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-            accountEmail: const Text("Kitap dünyasına dalın!"),
-            currentAccountPicture: CircleAvatar(backgroundColor: kBookPaper, child: const Icon(Icons.person, size: 40, color: kDarkGreen)),
-          ),
-        ],
-      ),
-    );
-  }
+ 
 }

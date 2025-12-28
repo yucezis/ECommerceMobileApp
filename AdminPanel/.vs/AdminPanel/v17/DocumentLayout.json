@@ -62,8 +62,7 @@
               "RelativeToolTip": "AdminPanel\\Views\\Destek\\_MesajlarPartial.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-20T10:00:05.032Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-20T10:00:05.032Z"
             },
             {
               "$type": "Document",
@@ -75,8 +74,7 @@
               "RelativeToolTip": "AdminPanel\\Controllers\\DestekController.cs",
               "ViewState": "AgIAAC0AAAAAAAAAAAAYwDYAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-20T09:51:42.149Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-20T09:51:42.149Z"
             },
             {
               "$type": "Document",
@@ -86,7 +84,7 @@
               "RelativeDocumentMoniker": "AdminPanel\\Views\\Destek\\Sohbet.cshtml",
               "ToolTip": "C:\\bitirme_projesi\\AdminPanel\\AdminPanel\\Views\\Destek\\Sohbet.cshtml",
               "RelativeToolTip": "AdminPanel\\Views\\Destek\\Sohbet.cshtml",
-              "ViewState": "AgIAAKYAAAAAAAAAAAAawLYAAABJAAAAAAAAAA==",
+              "ViewState": "AgIAAKYAAAAAAAAAAAAawLoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-20T09:50:19.248Z",
               "EditorCaption": ""
@@ -101,8 +99,7 @@
               "RelativeToolTip": "AdminPanel\\Views\\Satislar\\Index.cshtml",
               "ViewState": "AgIAAJoAAAAAAAAAAADwvwUAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-20T09:21:39.802Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-20T09:21:39.802Z"
             },
             {
               "$type": "Document",
@@ -173,16 +170,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            }
-          ]
-        },
-        {
-          "DockedHeight": 125,
-          "SelectedChildIndex": -1,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             }
           ]
         }
