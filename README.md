@@ -12,7 +12,7 @@ The project is designed with a modular structure, prioritizing sustainability an
 - **Database:** MS SQL Server
 
 <p align="center">
-  <img src="https://r.resimlink.com/HXKA9z.png" alt="Resim Açıklaması" width="350">
+  <img src="https://r.resimlink.com/ZmKE9-O4SMC.png" alt="Resim Açıklaması" width="600">
   <br>
   <small>This diagram illustrates the overall system architecture of the project, including the API, Admin Panel, Mobile App, and Database layers.</small>
 </p>
