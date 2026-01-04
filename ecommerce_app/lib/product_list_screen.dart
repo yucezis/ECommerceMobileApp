@@ -86,7 +86,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
       String endpoint = "/Urun";
       
       if (widget.listType == ProductListType.bestSeller) {
-        endpoint = "/Urun/CokSatanlar";
+        endpoint = "/Urun/CokSatanlar?adet=10";
       }
 
       final response = await http.get(Uri.parse("${getBaseUrl()}$endpoint"));

@@ -78,15 +78,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<List<Urun>> cokSatanlariGetir() async {
-    final response = await http.get(Uri.parse("${getBaseUrl()}/Urun/CokSatanlar"));
-    if (response.statusCode == 200) {
-      List<dynamic> body = jsonDecode(response.body);
-      return body.map((item) => Urun.fromJson(item)).toList();
-    } else {
-      throw Exception("Çok satanlar yüklenemedi");
-    }
+  Future<List<Urun>> cokSatanlariGetir({int adet = 3}) async {
+  final response = await http.get(Uri.parse("${getBaseUrl()}/Urun/CokSatanlar?adet=$adet"));
+
+  if (response.statusCode == 200) {
+    List<dynamic> body = jsonDecode(response.body);
+    return body.map((item) => Urun.fromJson(item)).toList();
+  } else {
+    throw Exception("Çok satanlar yüklenemedi");
   }
+}
 
   void _aramaYap(String kelime) {
     if (kelime.isEmpty) {
@@ -183,10 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                icon: const Icon(Icons.menu_rounded, color: kBookPaper, size: 28),
-                onPressed: () => _scaffoldKey.currentState?.openDrawer(),
-              ),
+              
               const Row(
                 children: [
                   Icon(Icons.auto_stories, color: kBookPaper),

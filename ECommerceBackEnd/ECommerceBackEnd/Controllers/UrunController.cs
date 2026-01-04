@@ -98,13 +98,13 @@ namespace ECommerceBackEnd.Controllers
         }
 
         [HttpGet("CokSatanlar")]
-        public IActionResult GetCokSatanlar()
+        public IActionResult GetCokSatanlar(int adet=3)
         {
             var cokSatanlar = _context.uruns
-                .Include(u => u.Kategori)
-                .OrderByDescending(u => u.satislars.Sum(s => s.Adet))
-                .Take(3)
-                .ToList();
+        .Include(u => u.Kategori)
+        .OrderByDescending(u => u.satislars.Sum(s => s.Adet))
+        .Take(adet) 
+        .ToList();
 
             foreach (var urun in cokSatanlar)
             {
