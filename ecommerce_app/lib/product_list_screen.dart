@@ -148,8 +148,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
       builder: (context) {
         return Container(
           padding: const EdgeInsets.all(20),
-          height: 320,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
