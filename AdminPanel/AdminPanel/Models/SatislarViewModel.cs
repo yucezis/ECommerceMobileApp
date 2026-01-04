@@ -27,6 +27,7 @@ namespace AdminPanel.Models
         Hazirlaniyor = 1,
         KargoyaVerildi = 2,
         TeslimEdildi = 3,
-        IptalEdildi = 4
+        IptalEdildi = 4,
+        IadeEdildi = 5
     }
 }

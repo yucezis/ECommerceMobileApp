@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Rendering
 @using AdminPanel.Models
+@using AdminPanel.Helpers
 @model List<SiparisGrupViewModel>
-@using AdminPanel.Helpers 
 
 @{
     ViewData["Title"] = "Satışlar";
@@ -21,7 +21,7 @@
     body {
         background-color: var(--bg-color);
         font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        font-size: 0.9rem; 
+        font-size: 0.9rem;
     }
 
     .header-card {
@@ -31,10 +31,10 @@
     }
 
     .accordion-item {
-        border: 1px solid #e0e0e0; 
+        border: 1px solid #e0e0e0;
         background: var(--card-bg);
         border-radius: 10px !important;
-        margin-bottom: 0.8rem; 
+        margin-bottom: 0.8rem;
         overflow: hidden;
         transition: all 0.2s ease;
     }
@@ -57,7 +57,7 @@
         }
 
         .accordion-button::after {
-            background-size: 0.8rem; 
+            background-size: 0.8rem;
             opacity: 0.5;
         }
 
@@ -75,7 +75,7 @@
         font-weight: 600;
         color: var(--text-main);
         font-size: 1rem;
-        white-space: nowrap; 
+        white-space: nowrap;
     }
 
     .price-tag {
@@ -124,6 +124,18 @@
         color: #616161;
         border: 1px solid #e0e0e0;
     }
+
+    /* --- YENİ EKLENEN MOR RENK --- */
+    .bg-soft-purple {
+        background-color: #f3e5f5;
+        color: #7b1fa2;
+        border: 1px solid #e1bee7;
+    }
+
+    .text-purple {
+        color: #7b1fa2;
+    }
+    /* ----------------------------- */
 
     .btn-manage {
         border: 1px solid #dee2e6;
@@ -221,6 +233,10 @@
                                             case SiparisDurum.IptalEdildi:
                                                 <span class="status-badge bg-soft-danger">İptal</span>
                                                 break;
+                                            /* --- YENİ EKLENEN İADE DURUMU --- */
+                                            case SiparisDurum.IadeEdildi:
+                                                <span class="status-badge bg-soft-purple">İade Edildi</span>
+                                                break;
                                         }
                                     </div>
 
@@ -282,8 +298,14 @@
                                     <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.Hazirlaniyor })" class="btn btn-sm btn-outline-warning text-dark text-start"><i class="bi bi-box-seam me-2"></i> Hazırlanıyor</a>
                                     <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.KargoyaVerildi })" class="btn btn-sm btn-outline-info text-dark text-start"><i class="bi bi-truck me-2"></i> Kargoya Verildi</a>
                                     <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.TeslimEdildi })" class="btn btn-sm btn-outline-success text-start"><i class="bi bi-check-circle me-2"></i> Teslim Edildi</a>
+
                                     <hr class="my-1">
+
                                     <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.IptalEdildi })" class="btn btn-sm btn-outline-danger text-start"><i class="bi bi-x-circle me-2"></i> İptal Et</a>
+
+                                    <a href="@Url.Action("DurumDegistir","Satislar", new { siparisNo = siparis.SiparisNo, durumId = (int)SiparisDurum.IadeEdildi })" class="btn btn-sm btn-outline-secondary text-start text-purple">
+                                        <i class="bi bi-arrow-return-left me-2"></i> İade Alındı
+                                    </a>
                                 </div>
                             </div>
                         </div>
